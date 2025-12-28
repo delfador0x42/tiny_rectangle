@@ -2,8 +2,6 @@
 //  MASShortcutMigration.swift
 //  tiny_window_manager
 //
-//  Created by Ryan Hanson on 12/22/20.
-//  Copyright © 2020 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

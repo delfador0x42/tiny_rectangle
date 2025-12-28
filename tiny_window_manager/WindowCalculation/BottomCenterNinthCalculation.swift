@@ -2,8 +2,6 @@
 //  BottomCenterNinthCalculation.swift
 //  tiny_window_manager
 //
-//  Created by Daniel Schultz on 1/2/22.
-//  Copyright © 2022 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

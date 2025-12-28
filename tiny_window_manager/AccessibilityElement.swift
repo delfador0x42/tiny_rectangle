@@ -2,8 +2,6 @@
 //  AccessibilityElement.swift
 //  tiny_window_manager, Ported from Spectacle, Combined with snippets from ModMove
 //
-//  Created by Ryan Hanson on 6/12/19.
-//  Copyright © 2019 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

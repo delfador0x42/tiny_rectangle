@@ -2,8 +2,6 @@
 //  CenterThreeFourthsCalculation.swift
 //  tiny_window_manager
 //
-//  Created by Tom Grimwood-Taylor on 26/07/2025.
-//  Copyright © 2025 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

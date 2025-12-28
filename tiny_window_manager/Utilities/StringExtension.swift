@@ -2,7 +2,6 @@
 //  StringExtension.swift
 //  tiny_window_manager
 //
-//  Copyright © 2024 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

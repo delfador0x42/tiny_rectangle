@@ -2,8 +2,6 @@
 //  SnapAreaViewController.swift
 //  tiny_window_manager
 //
-//  Created by Ryan Hanson on 8/13/22.
-//  Copyright © 2022 Ryan Hanson. All rights reserved.
 //
 
 import Cocoa

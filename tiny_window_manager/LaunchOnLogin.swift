@@ -2,8 +2,6 @@
 //  LaunchOnLogin.swift
 //  tiny_window_manager
 //
-//  Created by Ryan Hanson on 2/20/23.
-//  Copyright © 2023 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

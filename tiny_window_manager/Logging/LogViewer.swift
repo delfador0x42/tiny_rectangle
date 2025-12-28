@@ -2,8 +2,6 @@
 //  LogViewer.swift
 //  Multitouch
 //
-//  Created by Ryan Hanson on 8/6/19.
-//  Copyright © 2019 Ryan Hanson. All rights reserved.
 //
 
 import Cocoa

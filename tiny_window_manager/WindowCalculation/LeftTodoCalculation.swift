@@ -2,7 +2,6 @@
 //  LeftTodoCalculation.swift
 //  tiny_window_manager
 //
-//  Copyright © 2023 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

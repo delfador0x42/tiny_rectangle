@@ -2,7 +2,6 @@
 //  CenterProminentlyCalculation.swift
 //  tiny_window_manager
 //
-//  Copyright © 2019 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

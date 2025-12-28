@@ -2,8 +2,6 @@
 //  RepeatedExecutionsInThirdsCalculation.swift
 //  tiny_window_manager
 //
-//  Created by Charlie Harding on 12/06/20.
-//  Copyright © 2020 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

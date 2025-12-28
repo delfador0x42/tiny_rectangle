@@ -2,8 +2,6 @@
 //  TodoManager.swift
 //  tiny_window_manager
 //
-//  Created by Charlie Harding on 7/25/21.
-//  Copyright © 2021 Ryan Hanson. All rights reserved.
 //
 import Cocoa
 import MASShortcut

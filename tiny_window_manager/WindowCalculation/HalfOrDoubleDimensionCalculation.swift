@@ -2,8 +2,6 @@
 //  HalfOrDoubleDimensionCalculation.swift
 //  tiny_window_manager
 //
-//  Created by Isaac Young on 23/04/24.
-//  Copyright © 2024 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

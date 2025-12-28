@@ -2,8 +2,6 @@
 //  tiny_window_managerTests.swift
 //  tiny_window_managerTests
 //
-//  Created by Ryan Hanson on 6/11/19.
-//  Copyright © 2019 Ryan Hanson. All rights reserved.
 //
 
 import XCTest

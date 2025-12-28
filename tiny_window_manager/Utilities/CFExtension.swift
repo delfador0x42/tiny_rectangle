@@ -2,7 +2,6 @@
 //  CFExtension.swift
 //  tiny_window_manager
 //
-//  Copyright © 2022 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

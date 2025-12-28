@@ -2,8 +2,6 @@
 //  SubsequentExecutionMode.swift
 //  tiny_window_manager
 //
-//  Created by Ryan Hanson on 8/15/19.
-//  Copyright © 2019 Ryan Hanson. All rights reserved.
 //
 
 import Foundation

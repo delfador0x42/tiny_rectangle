@@ -2,8 +2,6 @@
 //  CenterTwoThirdsCalculation.swift
 //  tiny_window_manager
 //
-//  Created by Mikhail Savin on 7/14/25.
-//  Copyright © 2025 Mikhail Savin. All rights reserved.
 //
 
 import Foundation
