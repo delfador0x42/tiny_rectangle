@@ -2,6 +2,9 @@
 //  WindowAction.swift
 //  tiny_window_manager
 //
+//  This file defines all the window positioning actions the app can perform.
+//  Each action (like "left half", "maximize", "top right corner") is represented
+//  as an enum case with associated properties for display, shortcuts, and behavior.
 //
 
 import Foundation
@@ -9,140 +12,222 @@ import Carbon
 import Cocoa
 import MASShortcut
 
-fileprivate let alt = NSEvent.ModifierFlags.option.rawValue
-fileprivate let ctrl = NSEvent.ModifierFlags.control.rawValue
-fileprivate let shift = NSEvent.ModifierFlags.shift.rawValue
-fileprivate let cmd = NSEvent.ModifierFlags.command.rawValue
+// MARK: - Keyboard Modifier Constants
 
+/// These are the raw values for keyboard modifier keys.
+/// They can be combined with the bitwise OR operator (|) to create shortcuts.
+/// Example: ctrl|alt creates a shortcut requiring both Control and Option keys.
+fileprivate let alt = NSEvent.ModifierFlags.option.rawValue    // Option/Alt key (⌥)
+fileprivate let ctrl = NSEvent.ModifierFlags.control.rawValue  // Control key (⌃)
+fileprivate let shift = NSEvent.ModifierFlags.shift.rawValue   // Shift key (⇧)
+fileprivate let cmd = NSEvent.ModifierFlags.command.rawValue   // Command key (⌘)
+
+// MARK: - WindowAction Enum
+
+/// Represents all possible window positioning/sizing actions.
+/// Each case has a unique integer ID (rawValue) used for persistence and identification.
+/// The IDs are not sequential because some were deprecated or reserved.
 enum WindowAction: Int, Codable {
-    case leftHalf = 0,
-    rightHalf = 1,
-    maximize = 2,
-    maximizeHeight = 3,
-    previousDisplay = 4,
-    nextDisplay = 5,
-    larger = 8,
-    smaller = 9,
-    bottomHalf = 10,
-    topHalf = 11,
-    center = 12,
-    bottomLeft = 13,
-    bottomRight = 14,
-    topLeft = 15,
-    topRight = 16,
-    restore = 19,
-    firstThird = 20,
-    firstTwoThirds = 21,
-    centerThird = 22,
-    lastTwoThirds = 23,
-    lastThird = 24,
-    moveLeft = 25,
-    moveRight = 26,
-    moveUp = 27,
-    moveDown = 28,
-    almostMaximize = 29,
-    centerHalf = 30,
-    firstFourth = 31,
-    secondFourth = 32,
-    thirdFourth = 33,
-    lastFourth = 34,
-    firstThreeFourths = 35,
-    lastThreeFourths = 36,
-    topLeftSixth = 37,
-    topCenterSixth = 38,
-    topRightSixth = 39,
-    bottomLeftSixth = 40,
-    bottomCenterSixth = 41,
-    bottomRightSixth = 42,
-    specified = 43,
-    reverseAll = 44,
-    topLeftNinth = 45,
-    topCenterNinth = 46,
-    topRightNinth = 47,
-    middleLeftNinth = 48,
-    middleCenterNinth = 49,
-    middleRightNinth = 50,
-    bottomLeftNinth = 51,
-    bottomCenterNinth = 52,
-    bottomRightNinth = 53,
-    topLeftThird = 54,
-    topRightThird = 55,
-    bottomLeftThird = 56,
-    bottomRightThird = 57,
-    topLeftEighth = 58,
-    topCenterLeftEighth = 59,
-    topCenterRightEighth = 60,
-    topRightEighth = 61,
-    bottomLeftEighth = 62,
-    bottomCenterLeftEighth = 63,
-    bottomCenterRightEighth = 64,
-    bottomRightEighth = 65,
-    tileAll = 66,
-    cascadeAll = 67,
-    leftTodo = 68,
-    rightTodo = 69,
-    cascadeActiveApp = 70,
-    centerProminently = 71,
-    doubleHeightUp = 72,
-    doubleHeightDown = 73,
-    doubleWidthLeft = 74,
-    doubleWidthRight = 75,
-    halveHeightUp = 76,
-    halveHeightDown = 77,
-    halveWidthLeft = 78,
-    halveWidthRight = 79,
-    largerWidth = 80,
-    smallerWidth = 81,
-    largerHeight = 82,
-    smallerHeight = 83,
-    centerTwoThirds = 84,
-    centerThreeFourths = 85
 
-    // Order matters here - it's used in the menu
-    static let active = [leftHalf, rightHalf, centerHalf, topHalf, bottomHalf,
-                         topLeft, topRight, bottomLeft, bottomRight,
-                         firstThird, centerThird, lastThird, firstTwoThirds, centerTwoThirds, lastTwoThirds,
-                         maximize, almostMaximize, maximizeHeight, larger, smaller, largerWidth, smallerWidth, largerHeight, smallerHeight,
-                         center, centerProminently, restore,
-                         nextDisplay, previousDisplay,
-                         moveLeft, moveRight, moveUp, moveDown,
-                         firstFourth, secondFourth, thirdFourth, lastFourth, firstThreeFourths, centerThreeFourths, lastThreeFourths,
-                         topLeftSixth, topCenterSixth, topRightSixth, bottomLeftSixth, bottomCenterSixth, bottomRightSixth,
-                         specified, reverseAll,
-                         topLeftNinth, topCenterNinth, topRightNinth,
-                         middleLeftNinth, middleCenterNinth, middleRightNinth,
-                         bottomLeftNinth, bottomCenterNinth, bottomRightNinth,
-                         topLeftThird, topRightThird, bottomLeftThird, bottomRightThird,
-                         topLeftEighth, topCenterLeftEighth, topCenterRightEighth, topRightEighth,
-                         bottomLeftEighth, bottomCenterLeftEighth, bottomCenterRightEighth, bottomRightEighth,
-                         doubleHeightUp, doubleHeightDown, doubleWidthLeft, doubleWidthRight,
-                         halveHeightUp, halveHeightDown, halveWidthLeft, halveWidthRight,
-                         tileAll, cascadeAll,
-                         leftTodo, rightTodo,
-                         cascadeActiveApp
+    // MARK: Basic Halves (split screen into 2 parts)
+    case leftHalf = 0
+    case rightHalf = 1
+    case bottomHalf = 10
+    case topHalf = 11
+    case centerHalf = 30  // Half-width, centered horizontally
+
+    // MARK: Corners (split screen into 4 quarters)
+    case topLeft = 15
+    case topRight = 16
+    case bottomLeft = 13
+    case bottomRight = 14
+
+    // MARK: Thirds (split screen into 3 parts)
+    case firstThird = 20
+    case centerThird = 22
+    case lastThird = 24
+    case firstTwoThirds = 21
+    case centerTwoThirds = 84
+    case lastTwoThirds = 23
+
+    // MARK: Fourths (split screen into 4 parts)
+    case firstFourth = 31
+    case secondFourth = 32
+    case thirdFourth = 33
+    case lastFourth = 34
+    case firstThreeFourths = 35
+    case centerThreeFourths = 85
+    case lastThreeFourths = 36
+
+    // MARK: Sixths (2 rows × 3 columns)
+    case topLeftSixth = 37
+    case topCenterSixth = 38
+    case topRightSixth = 39
+    case bottomLeftSixth = 40
+    case bottomCenterSixth = 41
+    case bottomRightSixth = 42
+
+    // MARK: Ninths (3 rows × 3 columns)
+    case topLeftNinth = 45
+    case topCenterNinth = 46
+    case topRightNinth = 47
+    case middleLeftNinth = 48
+    case middleCenterNinth = 49
+    case middleRightNinth = 50
+    case bottomLeftNinth = 51
+    case bottomCenterNinth = 52
+    case bottomRightNinth = 53
+
+    // MARK: Corner Thirds (2×2 grid, each cell is 1/3 screen)
+    case topLeftThird = 54
+    case topRightThird = 55
+    case bottomLeftThird = 56
+    case bottomRightThird = 57
+
+    // MARK: Eighths (2 rows × 4 columns)
+    case topLeftEighth = 58
+    case topCenterLeftEighth = 59
+    case topCenterRightEighth = 60
+    case topRightEighth = 61
+    case bottomLeftEighth = 62
+    case bottomCenterLeftEighth = 63
+    case bottomCenterRightEighth = 64
+    case bottomRightEighth = 65
+
+    // MARK: Maximize & Size Actions
+    case maximize = 2
+    case almostMaximize = 29       // Maximize with small margins
+    case maximizeHeight = 3        // Full height, keep current width
+    case larger = 8                // Grow window
+    case smaller = 9               // Shrink window
+    case largerWidth = 80
+    case smallerWidth = 81
+    case largerHeight = 82
+    case smallerHeight = 83
+
+    // MARK: Resize by Doubling/Halving
+    case doubleHeightUp = 72       // Double height, anchor at bottom
+    case doubleHeightDown = 73     // Double height, anchor at top
+    case doubleWidthLeft = 74      // Double width, anchor at right
+    case doubleWidthRight = 75     // Double width, anchor at left
+    case halveHeightUp = 76        // Halve height, keep top
+    case halveHeightDown = 77      // Halve height, keep bottom
+    case halveWidthLeft = 78       // Halve width, keep left
+    case halveWidthRight = 79      // Halve width, keep right
+
+    // MARK: Centering & Positioning
+    case center = 12               // Center without resizing
+    case centerProminently = 71    // Center with a specific size
+    case restore = 19              // Restore to previous size/position
+
+    // MARK: Display Navigation
+    case previousDisplay = 4       // Move window to previous monitor
+    case nextDisplay = 5           // Move window to next monitor
+
+    // MARK: Movement (no resize)
+    case moveLeft = 25
+    case moveRight = 26
+    case moveUp = 27
+    case moveDown = 28
+
+    // MARK: Multi-Window Actions
+    case tileAll = 66              // Tile all windows on screen
+    case cascadeAll = 67           // Cascade all windows
+    case cascadeActiveApp = 70     // Cascade windows of active app only
+    case reverseAll = 44           // Reverse all window positions
+
+    // MARK: Special/Custom
+    case specified = 43            // Custom user-specified position
+    case leftTodo = 68             // Custom todo layout (left)
+    case rightTodo = 69            // Custom todo layout (right)
+
+    // MARK: - Active Actions List
+
+    /// All actions that appear in the menu, in display order.
+    /// The order here determines the order in dropdown menus.
+    static let active: [WindowAction] = [
+        // Halves
+        leftHalf, rightHalf, centerHalf, topHalf, bottomHalf,
+        // Corners
+        topLeft, topRight, bottomLeft, bottomRight,
+        // Thirds
+        firstThird, centerThird, lastThird, firstTwoThirds, centerTwoThirds, lastTwoThirds,
+        // Size actions
+        maximize, almostMaximize, maximizeHeight, larger, smaller, largerWidth, smallerWidth, largerHeight, smallerHeight,
+        // Positioning
+        center, centerProminently, restore,
+        // Display navigation
+        nextDisplay, previousDisplay,
+        // Movement
+        moveLeft, moveRight, moveUp, moveDown,
+        // Fourths
+        firstFourth, secondFourth, thirdFourth, lastFourth, firstThreeFourths, centerThreeFourths, lastThreeFourths,
+        // Sixths
+        topLeftSixth, topCenterSixth, topRightSixth, bottomLeftSixth, bottomCenterSixth, bottomRightSixth,
+        // Special
+        specified, reverseAll,
+        // Ninths
+        topLeftNinth, topCenterNinth, topRightNinth,
+        middleLeftNinth, middleCenterNinth, middleRightNinth,
+        bottomLeftNinth, bottomCenterNinth, bottomRightNinth,
+        // Corner thirds
+        topLeftThird, topRightThird, bottomLeftThird, bottomRightThird,
+        // Eighths
+        topLeftEighth, topCenterLeftEighth, topCenterRightEighth, topRightEighth,
+        bottomLeftEighth, bottomCenterLeftEighth, bottomCenterRightEighth, bottomRightEighth,
+        // Resize by doubling/halving
+        doubleHeightUp, doubleHeightDown, doubleWidthLeft, doubleWidthRight,
+        halveHeightUp, halveHeightDown, halveWidthLeft, halveWidthRight,
+        // Multi-window
+        tileAll, cascadeAll,
+        leftTodo, rightTodo,
+        cascadeActiveApp
     ]
 
+    // MARK: - Triggering Actions
+
+    /// Triggers this action via a notification (default source: keyboard shortcut)
     func post() {
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self))
     }
-    
+
+    /// Triggers this action as if it came from the menu bar
     func postMenu() {
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self, source: .menuItem))
     }
 
+    /// Triggers this action from a drag-to-snap gesture
     func postSnap(windowElement: AccessibilityElement?, windowId: CGWindowID?, screen: NSScreen) {
-        NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self, updateRestoreRect: false, screen: screen, windowElement: windowElement, windowId: windowId, source: .dragToSnap))
+        NotificationCenter.default.post(
+            name: notificationName,
+            object: ExecutionParameters(
+                self,
+                updateRestoreRect: false,
+                screen: screen,
+                windowElement: windowElement,
+                windowId: windowId,
+                source: .dragToSnap
+            )
+        )
     }
-    
+
+    /// Triggers this action from a URL scheme
     func postUrl() {
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self, source: .url))
     }
-    
+
+    /// Triggers this action from a title bar interaction
     func postTitleBar(windowElement: AccessibilityElement?) {
-        NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self, windowElement: windowElement, source: .titleBar))
+        NotificationCenter.default.post(
+            name: notificationName,
+            object: ExecutionParameters(self, windowElement: windowElement, source: .titleBar)
+        )
     }
 
-    // Determines where separators should be used in the menu
+    // MARK: - Menu Display Properties
+
+    /// Returns true if this action should have a separator above it in the menu.
+    /// This groups related actions together visually.
     var firstInGroup: Bool {
         switch self {
         case .leftHalf, .topLeft, .firstThird, .maximize, .nextDisplay, .moveLeft, .firstFourth, .topLeftSixth:
@@ -152,7 +237,11 @@ enum WindowAction: Int, Codable {
         }
     }
 
+    /// A string identifier for this action.
+    /// Used for notifications and as a unique key.
     var name: String {
+        // Using String(describing:) would be cleaner, but this explicit mapping
+        // ensures stability if case names ever change
         switch self {
         case .leftHalf: return "leftHalf"
         case .rightHalf: return "rightHalf"
@@ -239,6 +328,11 @@ enum WindowAction: Int, Codable {
         }
     }
 
+    // MARK: - Localization
+
+    /// The human-readable name shown in the UI (localized).
+    /// Returns nil for actions that don't appear in standard menus.
+    /// The `key` is used to look up the localized string in Main.strings.
     var displayName: String? {
         var key: String
         var value: String
@@ -385,18 +479,32 @@ enum WindowAction: Int, Codable {
         return NSLocalizedString(key, tableName: "Main", value: value, comment: "")
     }
 
+    /// The notification name used to trigger this action.
+    /// Based on the `name` property.
     var notificationName: Notification.Name {
         return Notification.Name(name)
     }
 
+    // MARK: - Behavior Properties
+
+    /// Whether this action changes the window's size.
+    /// Some actions only move the window (center, move to display).
     var resizes: Bool {
         switch self {
-        case .center, .centerProminently, .nextDisplay, .previousDisplay: return false
-        case .moveUp, .moveDown, .moveLeft, .moveRight: return Defaults.resizeOnDirectionalMove.enabled
-        default: return true
+        // These actions only move, never resize
+        case .center, .centerProminently, .nextDisplay, .previousDisplay:
+            return false
+        // Directional moves optionally resize based on user preference
+        case .moveUp, .moveDown, .moveLeft, .moveRight:
+            return Defaults.resizeOnDirectionalMove.enabled
+        // All other actions resize the window
+        default:
+            return true
         }
     }
-    
+
+    /// Whether this action can position windows partially outside the screen.
+    /// Only the "double size" actions allow this (they expand in one direction).
     var allowedToExtendOutsideCurrentScreenArea: Bool {
         switch self {
         case .doubleHeightUp, .doubleHeightDown, .doubleWidthLeft, .doubleWidthRight:
@@ -405,22 +513,35 @@ enum WindowAction: Int, Codable {
             return false
         }
     }
-    
+
+    /// Whether this action can be triggered by dragging a window to a screen edge.
+    /// Some actions (like restore, resize, multi-window) don't make sense as snap targets.
     var isDragSnappable: Bool {
         switch self {
-        case .restore, .previousDisplay, .nextDisplay, .moveUp, .moveDown, .moveLeft, .moveRight, .specified, .reverseAll, .tileAll, .cascadeAll, .larger, .smaller, .largerWidth, .smallerWidth, .cascadeActiveApp,
-            // Ninths
-            .topLeftNinth, .topCenterNinth, .topRightNinth, .middleLeftNinth, .middleCenterNinth, .middleRightNinth, .bottomLeftNinth, .bottomCenterNinth, .bottomRightNinth,
-            // Corner thirds
-            .topLeftThird, .topRightThird, .bottomLeftThird, .bottomRightThird,
-            // Eighths
-            .topLeftEighth, .topCenterLeftEighth, .topCenterRightEighth, .topRightEighth, .bottomLeftEighth, .bottomCenterLeftEighth, .bottomCenterRightEighth, .bottomRightEighth:
+        // These actions can't be triggered by dragging to screen edges
+        case .restore, .previousDisplay, .nextDisplay,
+             .moveUp, .moveDown, .moveLeft, .moveRight,
+             .specified, .reverseAll, .tileAll, .cascadeAll,
+             .larger, .smaller, .largerWidth, .smallerWidth, .cascadeActiveApp,
+             // Ninths (too many zones, not practical for snapping)
+             .topLeftNinth, .topCenterNinth, .topRightNinth,
+             .middleLeftNinth, .middleCenterNinth, .middleRightNinth,
+             .bottomLeftNinth, .bottomCenterNinth, .bottomRightNinth,
+             // Corner thirds
+             .topLeftThird, .topRightThird, .bottomLeftThird, .bottomRightThird,
+             // Eighths (too many zones)
+             .topLeftEighth, .topCenterLeftEighth, .topCenterRightEighth, .topRightEighth,
+             .bottomLeftEighth, .bottomCenterLeftEighth, .bottomCenterRightEighth, .bottomRightEighth:
             return false
+        // All other actions can be snap targets
         default:
             return true
         }
     }
 
+    // MARK: - Default Keyboard Shortcuts
+
+    /// Default shortcut using Spectacle-style keybindings (Cmd+Option based).
     var spectacleDefault: Shortcut? {
         switch self {
         case .leftHalf: return Shortcut( cmd|alt, kVK_LeftArrow )
@@ -443,6 +564,8 @@ enum WindowAction: Int, Codable {
         }
     }
 
+    /// Default shortcut using an alternative keybinding scheme (Ctrl+Option based).
+    /// This provides a different set of defaults for users who prefer this style.
     var alternateDefault: Shortcut? {
         switch self {
         case .leftHalf: return Shortcut( ctrl|alt, kVK_LeftArrow )
@@ -477,6 +600,11 @@ enum WindowAction: Int, Codable {
         }
     }
 
+    // MARK: - Visual Assets
+
+    /// The icon image for this action, used in menus and UI.
+    /// Returns an empty NSImage for actions without dedicated icons.
+    /// Template images (ending in "Template") adapt to light/dark mode automatically.
     var image: NSImage {
         switch self {
         case .leftHalf: return NSImage(imageLiteralResourceName: "leftHalfTemplate")
@@ -563,6 +691,14 @@ enum WindowAction: Int, Codable {
         }
     }
 
+    // MARK: - Gap/Margin Properties
+
+    /// Which edges of this window position are "shared" with adjacent windows.
+    /// Used for applying window gaps - shared edges get half the gap size
+    /// so adjacent windows end up with a full gap between them.
+    ///
+    /// For example, leftHalf shares its right edge with rightHalf,
+    /// so both get half the gap on that edge.
     var gapSharedEdge: Edge {
         switch self {
         case .leftHalf: return .right
@@ -582,6 +718,8 @@ enum WindowAction: Int, Codable {
         }
     }
 
+    /// Which dimensions (horizontal, vertical, both, or none) should have gaps applied.
+    /// Controls whether window margins/padding are added for this action.
     var gapsApplicable: Dimension {
         switch self {
         case .leftHalf, .rightHalf, .bottomHalf, .topHalf, .centerHalf, .bottomLeft, .bottomRight, .topLeft, .topRight, .firstThird, .firstTwoThirds, .centerThird, .centerTwoThirds, .lastTwoThirds, .lastThird,
@@ -602,20 +740,37 @@ enum WindowAction: Int, Codable {
             return Defaults.applyGapsToMaximize.userDisabled ? .none : .both;
         case .maximizeHeight:
             return Defaults.applyGapsToMaximizeHeight.userDisabled ? .none : .vertical;
-        case .almostMaximize, .previousDisplay, .nextDisplay, .larger, .smaller, .largerWidth, .smallerWidth, .largerHeight, .smallerHeight, .center, .centerProminently, .restore, .specified, .reverseAll, .tileAll, .cascadeAll, .cascadeActiveApp:
+        // These actions don't use gaps
+        case .almostMaximize, .previousDisplay, .nextDisplay,
+             .larger, .smaller, .largerWidth, .smallerWidth, .largerHeight, .smallerHeight,
+             .center, .centerProminently, .restore,
+             .specified, .reverseAll, .tileAll, .cascadeAll, .cascadeActiveApp:
             return .none
         }
     }
-    
-    var category: WindowActionCategory? { // used to specify a submenu
+
+    // MARK: - Menu Organization
+
+    /// The submenu category for this action, if it belongs in a submenu.
+    /// Returns nil if the action should appear in the main menu.
+    var category: WindowActionCategory? {
         switch self {
-        case .firstFourth, .secondFourth, .thirdFourth, .lastFourth, .firstThreeFourths, .centerThreeFourths, .lastThreeFourths: return .fourths
-        case .topLeftSixth, .topCenterSixth, .topRightSixth, .bottomLeftSixth, .bottomCenterSixth, .bottomRightSixth: return .sixths
-        case .moveUp, .moveDown, .moveLeft, .moveRight: return .move
-        default: return nil
+        case .firstFourth, .secondFourth, .thirdFourth, .lastFourth,
+             .firstThreeFourths, .centerThreeFourths, .lastThreeFourths:
+            return .fourths
+        case .topLeftSixth, .topCenterSixth, .topRightSixth,
+             .bottomLeftSixth, .bottomCenterSixth, .bottomRightSixth:
+            return .sixths
+        case .moveUp, .moveDown, .moveLeft, .moveRight:
+            return .move
+        default:
+            return nil
         }
     }
-    
+
+    /// A broader classification of the action type, used for grouping in settings.
+    /// Different from `category` - this is about what kind of action it is,
+    /// not where it appears in menus.
     var classification: WindowActionCategory? {
         switch self {
         case .firstThird, .firstTwoThirds, .centerThird, .centerTwoThirds, .lastTwoThirds, .lastThird:
@@ -624,97 +779,121 @@ enum WindowAction: Int, Codable {
             return .size
         case .previousDisplay, .nextDisplay:
             return .display
-        default: return nil
+        default:
+            return nil
         }
     }
 }
 
-enum SubWindowAction {
-    case leftThird,
-    centerVerticalThird,
-    rightThird,
-    leftTwoThirds,
-    rightTwoThirds,
-    
-    topThird,
-    centerHorizontalThird,
-    bottomThird,
-    topTwoThirds,
-    bottomTwoThirds,
-    
-    leftFourth,
-    centerLeftFourth,
-    centerRightFourth,
-    rightFourth,
-    
-    topFourth,
-    centerTopFourth,
-    centerBottomFourth,
-    bottomFourth,
-    
-    rightThreeFourths,
-    bottomThreeFourths,
-    leftThreeFourths,
-    topThreeFourths,
-    centerVerticalThreeFourths,
-    centerHorizontalThreeFourths,
-    
-    centerVerticalHalf,
-    centerHorizontalHalf,
-    
-    topLeftSixthLandscape,
-    topCenterSixthLandscape,
-    topRightSixthLandscape,
-    bottomLeftSixthLandscape,
-    bottomCenterSixthLandscape,
-    bottomRightSixthLandscape,
-    
-    topLeftSixthPortrait,
-    topRightSixthPortrait,
-    leftCenterSixthPortrait,
-    rightCenterSixthPortrait,
-    bottomLeftSixthPortrait,
-    bottomRightSixthPortrait,
-    
-    topLeftTwoSixthsLandscape,
-    topLeftTwoSixthsPortrait,
-    topRightTwoSixthsLandscape,
-    topRightTwoSixthsPortrait,
-    
-    bottomLeftTwoSixthsLandscape,
-    bottomLeftTwoSixthsPortrait,
-    bottomRightTwoSixthsLandscape,
-    bottomRightTwoSixthsPortrait,
-    
-    topLeftNinth,
-    topCenterNinth,
-    topRightNinth,
-    middleLeftNinth,
-    middleCenterNinth,
-    middleRightNinth,
-    bottomLeftNinth,
-    bottomCenterNinth,
-    bottomRightNinth,
-         
-    topLeftThird,
-    topRightThird,
-    bottomLeftThird,
-    bottomRightThird,
-         
-    topLeftEighth,
-    topCenterLeftEighth,
-    topCenterRightEighth,
-    topRightEighth,
-    bottomLeftEighth,
-    bottomCenterLeftEighth,
-    bottomCenterRightEighth,
-    bottomRightEighth,
-        
-    maximize,
-    
-    leftTodo,
-    rightTodo
+// MARK: - SubWindowAction Enum
 
+/// Represents window positions used internally for calculations.
+/// This is more granular than WindowAction - it includes orientation-specific
+/// variants (landscape vs portrait) for sixths, etc.
+///
+/// Used primarily for calculating exact window rectangles and gap edges.
+enum SubWindowAction {
+
+    // MARK: Vertical Thirds (left to right)
+    case leftThird
+    case centerVerticalThird
+    case rightThird
+    case leftTwoThirds
+    case rightTwoThirds
+
+    // MARK: Horizontal Thirds (top to bottom)
+    case topThird
+    case centerHorizontalThird
+    case bottomThird
+    case topTwoThirds
+    case bottomTwoThirds
+
+    // MARK: Vertical Fourths (left to right)
+    case leftFourth
+    case centerLeftFourth
+    case centerRightFourth
+    case rightFourth
+
+    // MARK: Horizontal Fourths (top to bottom)
+    case topFourth
+    case centerTopFourth
+    case centerBottomFourth
+    case bottomFourth
+
+    // MARK: Three-Fourths Variations
+    case rightThreeFourths
+    case bottomThreeFourths
+    case leftThreeFourths
+    case topThreeFourths
+    case centerVerticalThreeFourths
+    case centerHorizontalThreeFourths
+
+    // MARK: Centered Halves
+    case centerVerticalHalf
+    case centerHorizontalHalf
+
+    // MARK: Sixths - Landscape (2 rows × 3 columns)
+    case topLeftSixthLandscape
+    case topCenterSixthLandscape
+    case topRightSixthLandscape
+    case bottomLeftSixthLandscape
+    case bottomCenterSixthLandscape
+    case bottomRightSixthLandscape
+
+    // MARK: Sixths - Portrait (3 rows × 2 columns)
+    case topLeftSixthPortrait
+    case topRightSixthPortrait
+    case leftCenterSixthPortrait
+    case rightCenterSixthPortrait
+    case bottomLeftSixthPortrait
+    case bottomRightSixthPortrait
+
+    // MARK: Two-Sixths Combinations
+    case topLeftTwoSixthsLandscape
+    case topLeftTwoSixthsPortrait
+    case topRightTwoSixthsLandscape
+    case topRightTwoSixthsPortrait
+    case bottomLeftTwoSixthsLandscape
+    case bottomLeftTwoSixthsPortrait
+    case bottomRightTwoSixthsLandscape
+    case bottomRightTwoSixthsPortrait
+
+    // MARK: Ninths (3×3 grid)
+    case topLeftNinth
+    case topCenterNinth
+    case topRightNinth
+    case middleLeftNinth
+    case middleCenterNinth
+    case middleRightNinth
+    case bottomLeftNinth
+    case bottomCenterNinth
+    case bottomRightNinth
+
+    // MARK: Corner Thirds
+    case topLeftThird
+    case topRightThird
+    case bottomLeftThird
+    case bottomRightThird
+
+    // MARK: Eighths (2×4 grid)
+    case topLeftEighth
+    case topCenterLeftEighth
+    case topCenterRightEighth
+    case topRightEighth
+    case bottomLeftEighth
+    case bottomCenterLeftEighth
+    case bottomCenterRightEighth
+    case bottomRightEighth
+
+    // MARK: Special
+    case maximize
+    case leftTodo
+    case rightTodo
+
+    // MARK: - Properties
+
+    /// Which edges are shared with adjacent windows for gap calculations.
+    /// See WindowAction.gapSharedEdge for detailed explanation.
     var gapSharedEdge: Edge {
         switch self {
         case .leftThird: return .right
@@ -791,24 +970,53 @@ enum SubWindowAction {
     }
 }
 
+// MARK: - Shortcut Struct
+
+/// Represents a keyboard shortcut (key + modifiers like Cmd, Ctrl, etc.)
+/// Used to define and store keyboard shortcuts for window actions.
+///
+/// Example usage:
+/// ```swift
+/// // Create a shortcut for Ctrl+Option+Left Arrow
+/// let shortcut = Shortcut(ctrl|alt, kVK_LeftArrow)
+/// ```
 struct Shortcut: Codable {
+
+    /// The virtual key code (from Carbon/Events.h).
+    /// Examples: kVK_LeftArrow, kVK_ANSI_F, kVK_Return
     let keyCode: Int
+
+    /// Bitmask of modifier keys (Cmd, Ctrl, Option, Shift).
+    /// Use the file-level constants: cmd, ctrl, alt, shift
+    /// Combine with bitwise OR: ctrl|alt
     let modifierFlags: UInt
-    
+
+    // MARK: - Initializers
+
+    /// Creates a shortcut from modifier flags and key code.
+    /// - Parameters:
+    ///   - modifierFlags: Bitmask of modifiers (e.g., ctrl|alt)
+    ///   - keyCode: The virtual key code (e.g., kVK_LeftArrow)
     init(_ modifierFlags: UInt, _ keyCode: Int) {
         self.keyCode = keyCode
         self.modifierFlags = modifierFlags
     }
-    
+
+    /// Creates a shortcut from a MASShortcut object.
+    /// Used when reading shortcuts from the MASShortcut framework.
     init(masShortcut: MASShortcut) {
         self.keyCode = masShortcut.keyCode
         self.modifierFlags = masShortcut.modifierFlags.rawValue
     }
-    
+
+    // MARK: - Conversion Methods
+
+    /// Converts this shortcut to a MASShortcut for use with the MASShortcut framework.
     func toMASSHortcut() -> MASShortcut {
         MASShortcut(keyCode: keyCode, modifierFlags: NSEvent.ModifierFlags(rawValue: modifierFlags))
     }
-    
+
+    /// Returns a human-readable string like "⌃⌥←" for display in the UI.
     func displayString() -> String {
         let masShortcut = toMASSHortcut()
         return masShortcut.modifierFlagsString + (masShortcut.keyCodeString ?? "")
