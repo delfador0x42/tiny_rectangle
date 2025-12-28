@@ -292,7 +292,7 @@
                     </items>
                 </menu>
             </objects>
-            <point key="canvasLocation" x="-168" y="-75"/>
+            <point key="canvasLocation" x="-220" y="-298"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="9jZ-4I-Wps">
@@ -312,7 +312,7 @@
                 </windowController>
                 <customObject id="jE6-FX-lql" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-204" y="230"/>
+            <point key="canvasLocation" x="-195" y="51"/>
         </scene>
         <!--Prefs View Controller-->
         <scene sceneID="vcH-Iu-BJm">
