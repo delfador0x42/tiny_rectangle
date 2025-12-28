@@ -6,6 +6,12 @@
 //  Copyright © 2019 Ryan Hanson. All rights reserved.
 //
 
+
+// test comment can you see this ????
+
+
+// Yes I can see this .... try to add a new file in Logging directory
+
 import Cocoa
 import Sparkle
 import ServiceManagement
