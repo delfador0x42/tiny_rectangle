@@ -13,7 +13,6 @@
 		3F54DC392F0137F50093B9E9 /* nebula_icon_2.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3F54DC372F0137F50093B9E9 /* nebula_icon_2.icon */; };
 		3F54DC3A2F0137F50093B9E9 /* nebula_icon_2.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3F54DC372F0137F50093B9E9 /* nebula_icon_2.icon */; };
 		3F54DC3B2F0137F50093B9E9 /* nebula_icon_2.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3F54DC372F0137F50093B9E9 /* nebula_icon_2.icon */; };
-		3F54DC3D2F013A9F0093B9E9 /* File.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3F54DC3C2F013A9F0093B9E9 /* File.txt */; };
 		482E9E422EB1528D00D7928A /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 482E9E412EB1528D00D7928A /* AppIcon.icon */; };
 		6490B39127BF907A0056C220 /* BottomLeftEighthCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B39027BF907A0056C220 /* BottomLeftEighthCalculation.swift */; };
 		6490B39327BF90F90056C220 /* EighthsRepeated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B39227BF90F90056C220 /* EighthsRepeated.swift */; };
@@ -184,7 +183,6 @@
 /* Begin PBXFileReference section */
 		30166BCF24F27D6A00A38608 /* SpecifiedCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecifiedCalculation.swift; sourceTree = "<group>"; };
 		3F54DC372F0137F50093B9E9 /* nebula_icon_2.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = nebula_icon_2.icon; sourceTree = "<group>"; };
-		3F54DC3C2F013A9F0093B9E9 /* File.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = File.txt; sourceTree = "<group>"; };
 		3F76BFC12F011EB7005324C7 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		423DC1992AE681F900C98564 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Main.xcstrings; sourceTree = "<group>"; };
 		42627A972ADA03D200D047C6 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Main.xcstrings; sourceTree = "<group>"; };
@@ -574,7 +572,6 @@
 			children = (
 				9824700C22AF9B7D0037B409 /* AppDelegate.swift */,
 				9824701022AF9B7E0037B409 /* Assets.xcassets */,
-				3F54DC3C2F013A9F0093B9E9 /* File.txt */,
 				482E9E412EB1528D00D7928A /* AppIcon.icon */,
 				3F54DC372F0137F50093B9E9 /* nebula_icon_2.icon */,
 				9824701222AF9B7E0037B409 /* Main.storyboard */,
@@ -886,7 +883,6 @@
 				9824701422AF9B7E0037B409 /* Main.storyboard in Resources */,
 				981F27D12340E3E1006CD263 /* InternetAccessPolicy.plist in Resources */,
 				98987AA42391890400BE72C4 /* LogViewer.storyboard in Resources */,
-				3F54DC3D2F013A9F0093B9E9 /* File.txt in Resources */,
 				482E9E422EB1528D00D7928A /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,17 @@
               -159.96875
             ]
           }
+        },
+        {
+          "image-name" : "Nebula Background.png",
+          "name" : "Nebula Background",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -152.9453125,
+              -159.96875
+            ]
+          }
         }
       ],
       "shadow" : {
