@@ -2,61 +2,125 @@
 //  GridCycling.swift
 //  tiny_window_manager
 //
-//
 
 import Foundation
 
+/// Handles cycling through grid positions when the user repeatedly triggers the same action.
+///
+/// When a user presses the same keyboard shortcut multiple times, we want to cycle
+/// through different grid positions. For example, pressing "ninths" repeatedly cycles:
+/// top-left → top-center → top-right → middle-left → ... → bottom-right → back to top-left
+///
+/// The cycling direction can be left or right (for reverse cycling).
 struct GridCycling {
 
-    // Cycling order for ninths (direction: .right)
+    // MARK: - Cycling Orders
+
+    // These arrays define the order in which we cycle through positions.
+    // The order follows a natural reading pattern: left-to-right, top-to-bottom.
+
+    /// Ninths: 3×3 grid, cycles through all 9 positions
+    /// ```
+    /// [1] [2] [3]
+    /// [4] [5] [6]
+    /// [7] [8] [9]
+    /// ```
     private static let ninthsOrder: [SubWindowAction] = [
         .topLeftNinth, .topCenterNinth, .topRightNinth,
         .middleLeftNinth, .middleCenterNinth, .middleRightNinth,
         .bottomLeftNinth, .bottomCenterNinth, .bottomRightNinth
     ]
 
-    // Cycling order for eighths (direction: .right)
+    /// Eighths: 4×2 grid, cycles through all 8 positions
+    /// ```
+    /// [1] [2] [3] [4]
+    /// [5] [6] [7] [8]
+    /// ```
     private static let eighthsOrder: [SubWindowAction] = [
         .topLeftEighth, .topCenterLeftEighth, .topCenterRightEighth, .topRightEighth,
         .bottomLeftEighth, .bottomCenterLeftEighth, .bottomCenterRightEighth, .bottomRightEighth
     ]
 
-    // Cycling order for corner thirds (direction: .right)
+    /// Corner thirds: 2×2 grid of larger cells, cycles through all 4 corners
+    /// ```
+    /// [1] [2]
+    /// [3] [4]
+    /// ```
     private static let cornerThirdsOrder: [SubWindowAction] = [
         .topLeftThird, .topRightThird, .bottomLeftThird, .bottomRightThird
     ]
 
+    // MARK: - Public API
+
+    /// Finds the next grid position calculation in the cycle.
+    ///
+    /// - Parameters:
+    ///   - gridType: Which type of grid we're cycling through (ninths, eighths, cornerThirds)
+    ///   - currentSubAction: The user's current position in the grid
+    ///   - direction: Which direction to cycle (.right = forward, .left = backward)
+    /// - Returns: A calculation function for the next position, or nil if current position isn't in the cycle
     static func nextCalculation(for gridType: GridType, currentSubAction: SubWindowAction, direction: Direction) -> SimpleCalc? {
-        let order: [SubWindowAction]
-        let calculationGetter: (SubWindowAction) -> SimpleCalc?
 
-        switch gridType {
-        case .ninths:
-            order = ninthsOrder
-            calculationGetter = { getNinthCalculation(for: $0) }
-        case .eighths:
-            order = eighthsOrder
-            calculationGetter = { getEighthCalculation(for: $0) }
-        case .cornerThirds:
-            order = cornerThirdsOrder
-            calculationGetter = { getCornerThirdCalculation(for: $0) }
-        }
+        // Get the cycling order and calculation lookup function for this grid type
+        let (order, getCalculation) = cyclingConfiguration(for: gridType)
 
+        // Find where the user currently is in the cycle
         guard let currentIndex = order.firstIndex(of: currentSubAction) else {
+            // Current position isn't part of this grid's cycle
             return nil
         }
 
-        let nextIndex: Int
-        switch direction {
-        case .right:
-            nextIndex = (currentIndex + 1) % order.count
-        case .left:
-            nextIndex = (currentIndex - 1 + order.count) % order.count
-        }
+        // Calculate the next index, wrapping around at the ends
+        let nextIndex = calculateNextIndex(
+            currentIndex: currentIndex,
+            totalCount: order.count,
+            direction: direction
+        )
 
-        return calculationGetter(order[nextIndex])
+        // Get the calculation for the next position
+        let nextSubAction = order[nextIndex]
+        return getCalculation(nextSubAction)
     }
 
+    // MARK: - Private Helpers
+
+    /// Returns the cycling order and calculation lookup function for a grid type.
+    private static func cyclingConfiguration(for gridType: GridType) -> (order: [SubWindowAction], getCalculation: (SubWindowAction) -> SimpleCalc?) {
+        switch gridType {
+        case .ninths:
+            return (ninthsOrder, getNinthCalculation)
+        case .eighths:
+            return (eighthsOrder, getEighthCalculation)
+        case .cornerThirds:
+            return (cornerThirdsOrder, getCornerThirdCalculation)
+        }
+    }
+
+    /// Calculates the next index in a circular array.
+    ///
+    /// - Parameters:
+    ///   - currentIndex: Current position in the array
+    ///   - totalCount: Total number of elements in the array
+    ///   - direction: Which way to move (.right = +1, .left = -1)
+    /// - Returns: The next index, wrapping around if necessary
+    private static func calculateNextIndex(currentIndex: Int, totalCount: Int, direction: Direction) -> Int {
+        switch direction {
+        case .right:
+            // Move forward, wrap from last to first
+            return (currentIndex + 1) % totalCount
+        case .left:
+            // Move backward, wrap from first to last
+            // Adding totalCount before mod ensures we don't get negative numbers
+            return (currentIndex - 1 + totalCount) % totalCount
+        }
+    }
+
+    // MARK: - Calculation Lookups
+
+    // These functions map SubWindowAction values to their corresponding calculation functions.
+    // Each returns a SimpleCalc (a function that takes a screen rect and returns a RectResult).
+
+    /// Looks up the calculation function for a ninths position
     private static func getNinthCalculation(for subAction: SubWindowAction) -> SimpleCalc? {
         switch subAction {
         case .topLeftNinth:
@@ -82,6 +146,7 @@ struct GridCycling {
         }
     }
 
+    /// Looks up the calculation function for an eighths position
     private static func getEighthCalculation(for subAction: SubWindowAction) -> SimpleCalc? {
         switch subAction {
         case .topLeftEighth:
@@ -105,6 +170,7 @@ struct GridCycling {
         }
     }
 
+    /// Looks up the calculation function for a corner thirds position
     private static func getCornerThirdCalculation(for subAction: SubWindowAction) -> SimpleCalc? {
         switch subAction {
         case .topLeftThird:
