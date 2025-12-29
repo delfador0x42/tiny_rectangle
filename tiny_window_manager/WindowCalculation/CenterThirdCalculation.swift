@@ -1,34 +1,70 @@
 //
-//  HorizCenterThirdCalculation.swift
+//  CenterThirdCalculation.swift
 //  tiny_window_manager
 //
 //
 
 import Foundation
 
+/// Positions a window in the CENTER third of the screen.
+///
+/// Divides the screen into three equal parts and places the window in the middle:
+/// - Landscape screens: Window occupies the middle 1/3 horizontally (full height)
+///   ```
+///   [ left | CENTER | right ]
+///   ```
+/// - Portrait screens: Window occupies the middle 1/3 vertically (full width)
+///   ```
+///   [  top   ]
+///   [ CENTER ]
+///   [ bottom ]
+///   ```
 class CenterThirdCalculation: WindowCalculation, OrientationAware {
-    
+
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
-        let visibleFrameOfScreen = params.visibleFrameOfScreen
-        return orientationBasedRect(visibleFrameOfScreen)
+        let screenFrame = params.visibleFrameOfScreen
+        return orientationBasedRect(screenFrame)
     }
-    
-    func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
-        var rect = visibleFrameOfScreen
-        rect.origin.x = visibleFrameOfScreen.minX + floor(visibleFrameOfScreen.width / 3.0)
-        rect.origin.y = visibleFrameOfScreen.minY
-        rect.size.width = visibleFrameOfScreen.width / 3.0
-        rect.size.height = visibleFrameOfScreen.height
+
+    // MARK: - Landscape Mode (Wide Screens)
+
+    /// For landscape: window takes the middle 1/3 of width, full height
+    func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        // Window is 1/3 of screen width
+        let thirdWidth = screenFrame.width / 3.0
+
+        // Position at the start of the middle third (skip the first third)
+        let middleThirdStartX = screenFrame.minX + floor(thirdWidth)
+
+        let rect = CGRect(
+            x: middleThirdStartX,
+            y: screenFrame.minY,
+            width: thirdWidth,
+            height: screenFrame.height
+        )
+
         return RectResult(rect, subAction: .centerVerticalThird)
     }
-    
-    func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
-        var rect = visibleFrameOfScreen
-        rect.origin.x = visibleFrameOfScreen.minX
-        rect.origin.y = visibleFrameOfScreen.minY + floor(visibleFrameOfScreen.height / 3.0)
-        rect.size.width = visibleFrameOfScreen.width
-        rect.size.height = visibleFrameOfScreen.height / 3.0
+
+    // MARK: - Portrait Mode (Tall Screens)
+
+    /// For portrait: window takes the middle 1/3 of height, full width
+    func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        // Window is 1/3 of screen height
+        let thirdHeight = screenFrame.height / 3.0
+
+        // Position at the start of the middle third (skip the first third)
+        let middleThirdStartY = screenFrame.minY + floor(thirdHeight)
+
+        let rect = CGRect(
+            x: screenFrame.minX,
+            y: middleThirdStartY,
+            width: screenFrame.width,
+            height: thirdHeight
+        )
+
         return RectResult(rect, subAction: .centerHorizontalThird)
     }
+
 }
 

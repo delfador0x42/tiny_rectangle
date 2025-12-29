@@ -6,53 +6,76 @@
 
 import Foundation
 
+/// Centers a window on the current screen.
+/// If the window is larger than the screen, it will be resized to fit.
 class CenterCalculation: WindowCalculation {
-    
+
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        let currentScreen = params.usableScreens.currentScreen
 
-        var screenFrame: CGRect?
-        if !Defaults.alwaysAccountForStage.userEnabled {
-            screenFrame = params.usableScreens.currentScreen.adjustedVisibleFrame(params.ignoreTodo, true)
+        // Determine the screen frame to use for centering
+        // When "always account for stage" is disabled, we calculate a custom frame
+        var screenFrame: CGRect? = nil
+        let shouldUseCustomFrame = !Defaults.alwaysAccountForStage.userEnabled
+        if shouldUseCustomFrame {
+            screenFrame = currentScreen.adjustedVisibleFrame(params.ignoreTodo, true)
         }
-                
+
+        // Calculate where the centered window should be positioned
         let rectResult = calculateRect(params.asRectParams(visibleFrame: screenFrame))
-        
-        let resultingAction: WindowAction = rectResult.resultingAction ?? params.action
 
-        return WindowCalculationResult(rect: rectResult.rect,
-                                       screen: params.usableScreens.currentScreen,
-                                       resultingAction: resultingAction,
-                                       resultingScreenFrame: screenFrame)
+        // Use the action from the result if available, otherwise keep the original action
+        let resultingAction = rectResult.resultingAction ?? params.action
+
+        return WindowCalculationResult(
+            rect: rectResult.rect,
+            screen: currentScreen,
+            resultingAction: resultingAction,
+            resultingScreenFrame: screenFrame
+        )
     }
-    
+
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        let screenFrame = params.visibleFrameOfScreen
+        let windowRect = params.window.rect
 
-        let visibleFrameOfScreen = params.visibleFrameOfScreen
-        var calculatedWindowRect = params.window.rect
+        // Check if the window is too big for the screen
+        let windowIsTooTall = windowRect.height > screenFrame.height
+        let windowIsTooWide = windowRect.width > screenFrame.width
 
-        let heightExceeded = params.window.rect.height > visibleFrameOfScreen.height
-        let widthExceeded = params.window.rect.width > visibleFrameOfScreen.width
-        
-        if heightExceeded && widthExceeded {
-            return RectResult(visibleFrameOfScreen, resultingAction: .maximize)
+        // If window exceeds screen in both dimensions, just maximize it
+        if windowIsTooTall && windowIsTooWide {
+            return RectResult(screenFrame, resultingAction: .maximize)
         }
-        
-        if heightExceeded {
-            calculatedWindowRect.size.height = visibleFrameOfScreen.height
-            calculatedWindowRect.origin.y = visibleFrameOfScreen.minY
+
+        // Start with the current window size and position
+        var centeredRect = windowRect
+
+        // Handle vertical positioning
+        if windowIsTooTall {
+            // Window is taller than screen: resize to screen height and align to top
+            centeredRect.size.height = screenFrame.height
+            centeredRect.origin.y = screenFrame.minY
         } else {
-            calculatedWindowRect.origin.y = round((visibleFrameOfScreen.height - params.window.rect.height) / 2.0) + visibleFrameOfScreen.minY
+            // Window fits: center it vertically
+            let verticalSpace = screenFrame.height - windowRect.height
+            let verticalOffset = round(verticalSpace / 2.0)
+            centeredRect.origin.y = screenFrame.minY + verticalOffset
         }
-        
-        if widthExceeded {
-            calculatedWindowRect.size.width = visibleFrameOfScreen.width
-            calculatedWindowRect.origin.x = visibleFrameOfScreen.minX
+
+        // Handle horizontal positioning
+        if windowIsTooWide {
+            // Window is wider than screen: resize to screen width and align to left
+            centeredRect.size.width = screenFrame.width
+            centeredRect.origin.x = screenFrame.minX
         } else {
-            calculatedWindowRect.origin.x = round((visibleFrameOfScreen.width - params.window.rect.width) / 2.0) + visibleFrameOfScreen.minX
+            // Window fits: center it horizontally
+            let horizontalSpace = screenFrame.width - windowRect.width
+            let horizontalOffset = round(horizontalSpace / 2.0)
+            centeredRect.origin.x = screenFrame.minX + horizontalOffset
         }
 
-        return RectResult(calculatedWindowRect)
-
+        return RectResult(centeredRect)
     }
-    
+
 }
