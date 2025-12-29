@@ -6,23 +6,36 @@
 
 import Foundation
 
+/// Positions a window to fill the bottom half of the screen.
+/// When triggered repeatedly, cycles through 1/2 → 2/3 → 1/3 heights.
 class BottomHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalculation {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        let isFirstExecution = params.lastAction == nil
+        let shouldCycleSizes = Defaults.subsequentExecutionMode.resizes
 
-        if params.lastAction == nil || !Defaults.subsequentExecutionMode.resizes {
+        if isFirstExecution || !shouldCycleSizes {
             return calculateFirstRect(params)
         }
-        
+
         return calculateRepeatedRect(params)
     }
-    
-    func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
-        let visibleFrameOfScreen = params.visibleFrameOfScreen
 
-        var rect = visibleFrameOfScreen
-        rect.size.height = floor(visibleFrameOfScreen.height * CGFloat(fraction))
+    /// Creates a rect that spans the full width and a fraction of the height.
+    /// The window is anchored to the bottom-left corner of the screen.
+    func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
+        let screenFrame = params.visibleFrameOfScreen
+
+        let width = screenFrame.width
+        let height = floor(screenFrame.height * CGFloat(fraction))
+
+        let rect = CGRect(
+            x: screenFrame.origin.x,
+            y: screenFrame.origin.y,
+            width: width,
+            height: height
+        )
+
         return RectResult(rect)
     }
-    
 }
