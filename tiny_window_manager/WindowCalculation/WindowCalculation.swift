@@ -159,27 +159,61 @@ class WindowCalculationFactory {
     static let bottomLeftSixthCalculation = BottomLeftSixthCalculation()
     static let bottomCenterSixthCalculation = BottomCenterSixthCalculation()
     static let bottomRightSixthCalculation = BottomRightSixthCalculation()
-    static let topLeftNinthCalculation = TopLeftNinthCalculation()
-    static let topCenterNinthCalculation = TopCenterNinthCalculation()
-    static let topRightNinthCalculation = TopRightNinthCalculation()
-    static let middleLeftNinthCalculation = MiddleLeftNinthCalculation()
-    static let middleCenterNinthCalculation = MiddleCenterNinthCalculation()
-    static let middleRightNinthCalculation = MiddleRightNinthCalculation()
-    static let bottomLeftNinthCalculation = BottomLeftNinthCalculation()
-    static let bottomCenterNinthCalculation = BottomCenterNinthCalculation()
-    static let bottomRightNinthCalculation = BottomRightNinthCalculation()
-    static let topLeftThirdCalculation = TopLeftThirdCalculation()
-    static let topRightThirdCalculation = TopRightThirdCalculation()
-    static let bottomLeftThirdCalculation = BottomLeftThirdCalculation()
-    static let bottomRightThirdCalculation = BottomRightThirdCalculation()
-    static let topLeftEighthCalculation = TopLeftEighthCalculation()
-    static let topCenterLeftEighthCalculation = TopCenterLeftEighthCalculation()
-    static let topCenterRightEighthCalculation = TopCenterRightEighthCalculation()
-    static let topRightEighthCalculation = TopRightEighthCalculation()
-    static let bottomLeftEighthCalculation = BottomLeftEighthCalculation()
-    static let bottomCenterLeftEighthCalculation = BottomCenterLeftEighthCalculation()
-    static let bottomCenterRightEighthCalculation = BottomCenterRightEighthCalculation()
-    static let bottomRightEighthCalculation = BottomRightEighthCalculation()
+    // MARK: - Ninths (3x3 grid, same in both orientations)
+    static let topLeftNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 0, row: 0, action: .topLeftNinth, subAction: .topLeftNinth)
+    static let topCenterNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 1, row: 0, action: .topCenterNinth, subAction: .topCenterNinth)
+    static let topRightNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 2, row: 0, action: .topRightNinth, subAction: .topRightNinth)
+    static let middleLeftNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 0, row: 1, action: .middleLeftNinth, subAction: .middleLeftNinth)
+    static let middleCenterNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 1, row: 1, action: .middleCenterNinth, subAction: .middleCenterNinth)
+    static let middleRightNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 2, row: 1, action: .middleRightNinth, subAction: .middleRightNinth)
+    static let bottomLeftNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 0, row: 2, action: .bottomLeftNinth, subAction: .bottomLeftNinth)
+    static let bottomCenterNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 1, row: 2, action: .bottomCenterNinth, subAction: .bottomCenterNinth)
+    static let bottomRightNinthCalculation = GridCalculation(
+        gridType: .ninths, column: 2, row: 2, action: .bottomRightNinth, subAction: .bottomRightNinth)
+
+    // MARK: - Corner Thirds (2x2 grid, 2/3 size cells)
+    static let topLeftThirdCalculation = GridCalculation(
+        gridType: .cornerThirds, column: 0, row: 0, action: .topLeftThird, subAction: .topLeftThird)
+    static let topRightThirdCalculation = GridCalculation(
+        gridType: .cornerThirds, column: 1, row: 0, action: .topRightThird, subAction: .topRightThird)
+    static let bottomLeftThirdCalculation = GridCalculation(
+        gridType: .cornerThirds, column: 0, row: 1, action: .bottomLeftThird, subAction: .bottomLeftThird)
+    static let bottomRightThirdCalculation = GridCalculation(
+        gridType: .cornerThirds, column: 1, row: 1, action: .bottomRightThird, subAction: .bottomRightThird)
+
+    // MARK: - Eighths (4x2 landscape, 2x4 portrait)
+    static let topLeftEighthCalculation = GridCalculation(
+        gridType: .eighths, landscapeColumn: 0, landscapeRow: 0, portraitColumn: 0, portraitRow: 0,
+        action: .topLeftEighth, subAction: .topLeftEighth)
+    static let topCenterLeftEighthCalculation = GridCalculation(
+        gridType: .eighths, landscapeColumn: 1, landscapeRow: 0, portraitColumn: 1, portraitRow: 0,
+        action: .topCenterLeftEighth, subAction: .topCenterLeftEighth)
+    static let topCenterRightEighthCalculation = GridCalculation(
+        gridType: .eighths, landscapeColumn: 2, landscapeRow: 0, portraitColumn: 0, portraitRow: 1,
+        action: .topCenterRightEighth, subAction: .topCenterRightEighth)
+    static let topRightEighthCalculation = GridCalculation(
+        gridType: .eighths, landscapeColumn: 3, landscapeRow: 0, portraitColumn: 1, portraitRow: 1,
+        action: .topRightEighth, subAction: .topRightEighth)
+    static let bottomLeftEighthCalculation = GridCalculation(
+        gridType: .eighths, landscapeColumn: 0, landscapeRow: 1, portraitColumn: 0, portraitRow: 2,
+        action: .bottomLeftEighth, subAction: .bottomLeftEighth)
+    static let bottomCenterLeftEighthCalculation = GridCalculation(
+        gridType: .eighths, landscapeColumn: 1, landscapeRow: 1, portraitColumn: 1, portraitRow: 2,
+        action: .bottomCenterLeftEighth, subAction: .bottomCenterLeftEighth)
+    static let bottomCenterRightEighthCalculation = GridCalculation(
+        gridType: .eighths, landscapeColumn: 2, landscapeRow: 1, portraitColumn: 0, portraitRow: 3,
+        action: .bottomCenterRightEighth, subAction: .bottomCenterRightEighth)
+    static let bottomRightEighthCalculation = GridCalculation(
+        gridType: .eighths, landscapeColumn: 3, landscapeRow: 1, portraitColumn: 1, portraitRow: 3,
+        action: .bottomRightEighth, subAction: .bottomRightEighth)
     static let specifiedCalculation = SpecifiedCalculation()
     static let leftTodoCalculation = LeftTodoCalculation()
     static let rightTodoCalculation = RightTodoCalculation()
