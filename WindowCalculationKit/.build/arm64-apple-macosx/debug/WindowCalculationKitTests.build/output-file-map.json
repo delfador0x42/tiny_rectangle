@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/master.swiftdeps"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Tests/WindowCalculationKitTests/WindowCalculationKitTests.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/WindowCalculationKitTests.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/WindowCalculationKitTests.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/WindowCalculationKitTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/WindowCalculationKitTests.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/WindowCalculationKitTests.dia"
+  }
+}

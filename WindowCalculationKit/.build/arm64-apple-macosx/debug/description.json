@@ -1,0 +1,809 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.xctest/Contents/MacOS/WindowCalculationKitPackageTests",
+      "packagePath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit",
+      "productName" : "WindowCalculationKitPackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.WindowCalculationKit-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/sources",
+      "importPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Calculations/GridCalculation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/CalculationParams.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/RectResult.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/Calculation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/OrientationAware.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/RepeatedExecution.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/ActionIdentifier.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/CycleSize.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/GridType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/WindowCalculationKit.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "WindowCalculationKit",
+      "moduleOutputPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules/WindowCalculationKit.swiftmodule",
+      "objects" : [
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridCalculation.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CalculationParams.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RectResult.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/Calculation.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/OrientationAware.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RepeatedExecution.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/ActionIdentifier.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CycleSize.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridType.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/WindowCalculationKit.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j16",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/include/WindowCalculationKit-Swift.h",
+        "-swift-version",
+        "6",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "windowcalculationkit"
+      ],
+      "outputFileMapPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridCalculation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CalculationParams.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RectResult.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/Calculation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/OrientationAware.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RepeatedExecution.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/ActionIdentifier.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CycleSize.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/WindowCalculationKit.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules/WindowCalculationKit.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Calculations/GridCalculation.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/CalculationParams.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/RectResult.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/Calculation.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/OrientationAware.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/RepeatedExecution.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/ActionIdentifier.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/CycleSize.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/GridType.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/WindowCalculationKit.swift"
+      ],
+      "tempsPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.WindowCalculationKitPackageTests-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/sources",
+      "importPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules/WindowCalculationKitTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "WindowCalculationKitPackageTests",
+      "moduleOutputPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules/WindowCalculationKitPackageTests.swiftmodule",
+      "objects" : [
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j16",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/include/WindowCalculationKitPackageTests-Swift.h",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "windowcalculationkit"
+      ],
+      "outputFileMapPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules/WindowCalculationKitPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.WindowCalculationKitTests-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/sources",
+      "importPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Tests/WindowCalculationKitTests/WindowCalculationKitTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules/WindowCalculationKit.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "WindowCalculationKitTests",
+      "moduleOutputPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules/WindowCalculationKitTests.swiftmodule",
+      "objects" : [
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/WindowCalculationKitTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j16",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "6",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "windowcalculationkit"
+      ],
+      "outputFileMapPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/WindowCalculationKitTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules/WindowCalculationKitTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Tests/WindowCalculationKitTests/WindowCalculationKitTests.swift"
+      ],
+      "tempsPath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "WindowCalculationKit" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "WindowCalculationKit",
+      "-package-name",
+      "windowcalculationkit",
+      "-c",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Calculations/GridCalculation.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/CalculationParams.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/RectResult.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/Calculation.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/OrientationAware.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/RepeatedExecution.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/ActionIdentifier.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/CycleSize.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/GridType.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/WindowCalculationKit.swift",
+      "-I",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j16",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/include/WindowCalculationKit-Swift.h",
+      "-swift-version",
+      "6",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "windowcalculationkit",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "WindowCalculationKitPackageTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "WindowCalculationKitPackageTests",
+      "-package-name",
+      "windowcalculationkit",
+      "-c",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j16",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/include/WindowCalculationKitPackageTests-Swift.h",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "windowcalculationkit",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "WindowCalculationKitTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "WindowCalculationKitTests",
+      "-package-name",
+      "windowcalculationkit",
+      "-c",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Tests/WindowCalculationKitTests/WindowCalculationKitTests.swift",
+      "-I",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j16",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "6",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "windowcalculationkit",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "WindowCalculationKit" : [
+
+    ],
+    "WindowCalculationKitPackageTests" : [
+      "WindowCalculationKitTests",
+      "WindowCalculationKit"
+    ],
+    "WindowCalculationKitTests" : [
+      "WindowCalculationKit"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Calculations/GridCalculation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/CalculationParams.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/RectResult.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/Calculation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/OrientationAware.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/RepeatedExecution.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/ActionIdentifier.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/CycleSize.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/GridType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/WindowCalculationKit.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/sources"
+    },
+    "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/sources"
+    },
+    "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/ActionIdentifier.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/Calculation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CalculationParams.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CycleSize.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridCalculation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/OrientationAware.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RectResult.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RepeatedExecution.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/WindowCalculationKit.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/WindowCalculationKitTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Tests/WindowCalculationKitTests/WindowCalculationKitTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKitTests.build/sources"
+    },
+    "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

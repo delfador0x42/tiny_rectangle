@@ -1,0 +1,75 @@
+{
+  "": {
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/master.swiftdeps"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Calculations/GridCalculation.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridCalculation.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridCalculation.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridCalculation~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridCalculation.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridCalculation.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/CalculationParams.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CalculationParams.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CalculationParams.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CalculationParams~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CalculationParams.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CalculationParams.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Core/RectResult.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RectResult.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RectResult.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RectResult~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RectResult.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RectResult.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/Calculation.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/Calculation.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/Calculation.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/Calculation~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/Calculation.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/Calculation.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/OrientationAware.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/OrientationAware.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/OrientationAware.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/OrientationAware~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/OrientationAware.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/OrientationAware.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Protocols/RepeatedExecution.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RepeatedExecution.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RepeatedExecution.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RepeatedExecution~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RepeatedExecution.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/RepeatedExecution.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/ActionIdentifier.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/ActionIdentifier.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/ActionIdentifier.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/ActionIdentifier~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/ActionIdentifier.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/ActionIdentifier.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/CycleSize.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CycleSize.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CycleSize.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CycleSize~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CycleSize.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/CycleSize.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/Types/GridType.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridType.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridType.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridType~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridType.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/GridType.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/Sources/WindowCalculationKit/WindowCalculationKit.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/WindowCalculationKit.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/WindowCalculationKit.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/WindowCalculationKit~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/WindowCalculationKit.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/WindowCalculationKit/.build/arm64-apple-macosx/debug/WindowCalculationKit.build/WindowCalculationKit.dia"
+  }
+}
