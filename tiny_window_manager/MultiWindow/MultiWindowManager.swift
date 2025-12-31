@@ -5,7 +5,6 @@
 //
 
 import Cocoa
-import MASShortcut
 
 /// Manages operations that affect multiple windows at once.
 ///

@@ -24,7 +24,6 @@
 //
 
 import Cocoa
-import MASShortcut
 
 // MARK: - Todo Manager
 
@@ -41,156 +40,31 @@ class TodoManager {
     /// The screen where the todo sidebar is displayed
     static var todoScreen: NSScreen?
 
-    // MARK: - UserDefaults Keys for Keyboard Shortcuts
-
-    /// UserDefaults key for the toggle todo mode shortcut
-    static let toggleDefaultsKey = "toggleTodo"
-
-    /// UserDefaults key for the reflow windows shortcut
-    static let reflowDefaultsKey = "reflowTodo"
-
-    /// All shortcut defaults keys (for bulk operations)
-    static let defaultsKeys = [toggleDefaultsKey, reflowDefaultsKey]
-
     // MARK: - Enable/Disable Todo Mode
 
     /// Enables or disables todo mode.
-    ///
-    /// - Parameters:
-    ///   - enabled: Whether to enable todo mode
-    ///   - bringToFront: Whether to bring the todo window to the front (default: true)
     static func setTodoMode(_ enabled: Bool, _ bringToFront: Bool = true) {
         print(#function, "called")
         Defaults.todoMode.enabled = enabled
-        registerUnregisterReflowShortcut()
         moveAllIfNeeded(bringToFront)
     }
 
-    // MARK: - Shortcut Initialization
+    // MARK: - Stub methods for compatibility
 
-    /// Initializes the toggle shortcut with the default key combo (Ctrl+Option+B).
-    /// Only sets the default if no shortcut is already saved.
-    static func initToggleShortcut() {
-        print(#function, "called")
-        // Don't overwrite existing shortcut
-        guard UserDefaults.standard.dictionary(forKey: toggleDefaultsKey) == nil else {
-            return
-        }
-
-        guard let dictTransformer = ValueTransformer(forName: NSValueTransformerName(rawValue: MASDictionaryTransformerName)) else {
-            return
-        }
-
-        // Default: Ctrl + Option + B
-        let toggleShortcut = MASShortcut(
-            keyCode: kVK_ANSI_B,
-            modifierFlags: [.control, .option]
-        )
-        let toggleShortcutDict = dictTransformer.reverseTransformedValue(toggleShortcut)
-        UserDefaults.standard.set(toggleShortcutDict, forKey: toggleDefaultsKey)
-    }
-
-    /// Initializes the reflow shortcut with the default key combo (Ctrl+Option+N).
-    /// Only sets the default if no shortcut is already saved.
-    static func initReflowShortcut() {
-        print(#function, "called")
-        // Don't overwrite existing shortcut
-        guard UserDefaults.standard.dictionary(forKey: reflowDefaultsKey) == nil else {
-            return
-        }
-
-        guard let dictTransformer = ValueTransformer(forName: NSValueTransformerName(rawValue: MASDictionaryTransformerName)) else {
-            return
-        }
-
-        // Default: Ctrl + Option + N
-        let reflowShortcut = MASShortcut(
-            keyCode: kVK_ANSI_N,
-            modifierFlags: [.control, .option]
-        )
-        let reflowShortcutDict = dictTransformer.reverseTransformedValue(reflowShortcut)
-        UserDefaults.standard.set(reflowShortcutDict, forKey: reflowDefaultsKey)
-    }
-
-    // MARK: - Shortcut Registration
-
-    /// Registers the toggle shortcut with the system
-    private static func registerToggleShortcut() {
-        print(#function, "called")
-        MASShortcutBinder.shared()?.bindShortcut(withDefaultsKey: toggleDefaultsKey, toAction: {
-            let enabled = !Defaults.todoMode.enabled
-            setTodoMode(enabled)
-        })
-    }
-
-    /// Registers the reflow shortcut with the system
-    private static func registerReflowShortcut() {
-        print(#function, "called")
-        MASShortcutBinder.shared()?.bindShortcut(withDefaultsKey: reflowDefaultsKey, toAction: {
-            moveAll()
-        })
-    }
-
-    /// Unregisters the toggle shortcut from the system
-    private static func unregisterToggleShortcut() {
-        print(#function, "called")
-        MASShortcutBinder.shared()?.breakBinding(withDefaultsKey: toggleDefaultsKey)
-    }
-
-    /// Unregisters the reflow shortcut from the system
-    private static func unregisterReflowShortcut() {
-        print(#function, "called")
-        MASShortcutBinder.shared()?.breakBinding(withDefaultsKey: reflowDefaultsKey)
-    }
-
-    /// Registers or unregisters the toggle shortcut based on whether Todo feature is enabled
     static func registerUnregisterToggleShortcut() {
-        print(#function, "called")
-        if Defaults.todo.userEnabled {
-            registerToggleShortcut()
-        } else {
-            unregisterToggleShortcut()
-        }
+        // Shortcuts removed - no-op
     }
 
-    /// Registers or unregisters the reflow shortcut based on whether Todo Mode is active
     static func registerUnregisterReflowShortcut() {
-        print(#function, "called")
-        let shouldRegister = Defaults.todo.userEnabled && Defaults.todoMode.enabled
-
-        if shouldRegister {
-            registerReflowShortcut()
-        } else {
-            unregisterReflowShortcut()
-        }
+        // Shortcuts removed - no-op
     }
 
-    // MARK: - Shortcut Display Info
-
-    /// Returns the key character and modifier flags for the toggle shortcut.
-    /// Used for displaying the shortcut in the menu.
     static func getToggleKeyDisplay() -> (String?, NSEvent.ModifierFlags)? {
-        print(#function, "called")
-        return getShortcutDisplay(forKey: toggleDefaultsKey)
+        return nil
     }
 
-    /// Returns the key character and modifier flags for the reflow shortcut.
-    /// Used for displaying the shortcut in the menu.
     static func getReflowKeyDisplay() -> (String?, NSEvent.ModifierFlags)? {
-        print(#function, "called")
-        return getShortcutDisplay(forKey: reflowDefaultsKey)
-    }
-
-    /// Helper to extract shortcut display info from UserDefaults
-    private static func getShortcutDisplay(forKey key: String) -> (String?, NSEvent.ModifierFlags)? {
-        print(#function, "called")
-        guard let shortcutDict = UserDefaults.standard.dictionary(forKey: key),
-              let dictTransformer = ValueTransformer(forName: NSValueTransformerName(rawValue: MASDictionaryTransformerName)),
-              let shortcut = dictTransformer.transformedValue(shortcutDict) as? MASShortcut
-        else {
-            return nil
-        }
-        return (shortcut.keyCodeStringForKeyEquivalent, shortcut.modifierFlags)
+        return nil
     }
 
     // MARK: - Todo Window Detection

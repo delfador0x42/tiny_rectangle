@@ -5,7 +5,6 @@
 //
 
 import Cocoa
-import MASShortcut
 
 /// Handles reversing (mirroring) the horizontal positions of all windows on a screen.
 ///

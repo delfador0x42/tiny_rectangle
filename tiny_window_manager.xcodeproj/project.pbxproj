@@ -57,7 +57,7 @@
 		985B9BF522B93EEC00A2E8F0 /* ApplicationToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985B9BF422B93EEC00A2E8F0 /* ApplicationToggle.swift */; };
 		985B9BF822BB6F5100A2E8F0 /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 985B9BF622BB6F5000A2E8F0 /* MessageView.xib */; };
 		985B9BF922BB6F5100A2E8F0 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985B9BF722BB6F5000A2E8F0 /* MessageView.swift */; };
-		9877B63A29C8AC0E00F02D74 /* MASShortcut in Frameworks */ = {isa = PBXBuildFile; productRef = 9877B63929C8AC0E00F02D74 /* MASShortcut */; };
+		9877B63A29C8AC0E00F02D74 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 9877B63929C8AC0E00F02D74 /* KeyboardShortcuts */; };
 		9877B63D29C8AC3600F02D74 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 9877B63C29C8AC3600F02D74 /* Sparkle */; };
 		98910B3E231130AF0066EC23 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98910B3D231130AF0066EC23 /* SettingsViewController.swift */; };
 		98987AA42391890400BE72C4 /* LogViewer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98987AA22391890300BE72C4 /* LogViewer.storyboard */; };
@@ -74,7 +74,6 @@
 		98C6DEF023CE191700CC0C1E /* GapCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C6DEEF23CE191700CC0C1E /* GapCalculation.swift */; };
 		98C97FFD25893B040061F01F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C97FFC25893B040061F01F /* Config.swift */; };
 		98D1441324560B1E0090C603 /* AlertUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D1441224560B1E0090C603 /* AlertUtil.swift */; };
-		98D16A442592AD55005228CB /* MASShortcutMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D16A432592AD55005228CB /* MASShortcutMigration.swift */; };
 		98D16A492592B460005228CB /* NotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D16A482592B460005228CB /* NotificationExtension.swift */; };
 		98D4B6C525B6256C009C7BF6 /* TodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D4B6C425B6256C009C7BF6 /* TodoManager.swift */; };
 		AA040C67290B2640003181D5 /* RunLoopThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA040C66290B2640003181D5 /* RunLoopThread.swift */; };
@@ -191,7 +190,6 @@
 		98C6DEEF23CE191700CC0C1E /* GapCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GapCalculation.swift; sourceTree = "<group>"; };
 		98C97FFC25893B040061F01F /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		98D1441224560B1E0090C603 /* AlertUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtil.swift; sourceTree = "<group>"; };
-		98D16A432592AD55005228CB /* MASShortcutMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASShortcutMigration.swift; sourceTree = "<group>"; };
 		98D16A482592B460005228CB /* NotificationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtension.swift; sourceTree = "<group>"; };
 		98D4B6C425B6256C009C7BF6 /* TodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoManager.swift; sourceTree = "<group>"; };
 		AA040C66290B2640003181D5 /* RunLoopThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoopThread.swift; sourceTree = "<group>"; };
@@ -233,7 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9877B63A29C8AC0E00F02D74 /* MASShortcut in Frameworks */,
+				9877B63A29C8AC0E00F02D74 /* KeyboardShortcuts in Frameworks */,
 				9877B63D29C8AC3600F02D74 /* Sparkle in Frameworks */,
 				9821405E22B3ED3600ABFB3F /* ServiceManagement.framework in Frameworks */,
 				12D896200936C0DE9FF41FB4 /* (null) in Frameworks */,
@@ -327,7 +325,6 @@
 			children = (
 				9824703A22B139780037B409 /* CUtil.swift */,
 				98D1441224560B1E0090C603 /* AlertUtil.swift */,
-				98D16A432592AD55005228CB /* MASShortcutMigration.swift */,
 				98D16A482592B460005228CB /* NotificationExtension.swift */,
 				98BEFA472620DEDC00D9D54F /* NSImageExtension.swift */,
 				98192DD9270F606C00015E66 /* Debounce.swift */,
@@ -547,7 +544,7 @@
 			);
 			name = tiny_window_manager;
 			packageProductDependencies = (
-				9877B63929C8AC0E00F02D74 /* MASShortcut */,
+				9877B63929C8AC0E00F02D74 /* KeyboardShortcuts */,
 				9877B63C29C8AC3600F02D74 /* Sparkle */,
 			);
 			productName = tiny_window_manager;
@@ -655,7 +652,7 @@
 			);
 			mainGroup = 9824700022AF9B7D0037B409;
 			packageReferences = (
-				9877B63829C8AC0E00F02D74 /* XCRemoteSwiftPackageReference "MASShortcut" */,
+				9877B63829C8AC0E00F02D74 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				9877B63B29C8AC3600F02D74 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 9824700A22AF9B7D0037B409 /* Products */;
@@ -742,7 +739,6 @@
 				AA0AC004291C48DE00D125D2 /* SequenceExtension.swift in Sources */,
 				985B9BF522B93EEC00A2E8F0 /* ApplicationToggle.swift in Sources */,
 				AA0AC002291C1B9100D125D2 /* AXExtension.swift in Sources */,
-				98D16A442592AD55005228CB /* MASShortcutMigration.swift in Sources */,
 				98C2755E231FF6A9009B9292 /* EventMonitor.swift in Sources */,
 				9821406022B3EFB200ABFB3F /* Defaults.swift in Sources */,
 				30166BD224F27D6A00A3860B /* CycleSize.swift in Sources */,
@@ -1262,12 +1258,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9877B63829C8AC0E00F02D74 /* XCRemoteSwiftPackageReference "MASShortcut" */ = {
+		9877B63829C8AC0E00F02D74 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rxhanson/MASShortcut";
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
 			};
 		};
 		9877B63B29C8AC3600F02D74 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
@@ -1281,10 +1277,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9877B63929C8AC0E00F02D74 /* MASShortcut */ = {
+		9877B63929C8AC0E00F02D74 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9877B63829C8AC0E00F02D74 /* XCRemoteSwiftPackageReference "MASShortcut" */;
-			productName = MASShortcut;
+			package = 9877B63829C8AC0E00F02D74 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
 		};
 		9877B63C29C8AC3600F02D74 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;

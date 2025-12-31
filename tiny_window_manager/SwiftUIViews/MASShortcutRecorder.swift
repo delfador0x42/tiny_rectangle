@@ -1,102 +1,40 @@
 //
-//  MASShortcutRecorder.swift
+//  ShortcutRecorder.swift
 //  tiny_window_manager
 //
-//  NSViewRepresentable wrapper for MASShortcutView.
-//  Allows using the existing MASShortcut library in SwiftUI views.
+//  SwiftUI wrapper for KeyboardShortcuts recorder.
 //
 
 import SwiftUI
-import MASShortcut
+import KeyboardShortcuts
 
-// MARK: - MASShortcutRecorder
+// MARK: - ShortcutRecorder
 
-/// A SwiftUI wrapper for MASShortcutView that records keyboard shortcuts.
-///
-/// Usage:
-/// ```swift
-/// MASShortcutRecorder(action: .leftHalf)
-/// ```
-///
-/// The shortcut is automatically persisted to UserDefaults using the action's name as the key.
-struct MASShortcutRecorder: NSViewRepresentable {
-
-    /// The window action this recorder is associated with.
+/// A SwiftUI view that records keyboard shortcuts for a WindowAction.
+struct ShortcutRecorder: View {
     let action: WindowAction
 
-    /// Optional: Use a custom UserDefaults key instead of action.name
-    var customKey: String?
-
-    /// The UserDefaults key used for storing this shortcut.
-    private var defaultsKey: String {
-        customKey ?? action.name
-    }
-
-    // MARK: - NSViewRepresentable
-
-    func makeNSView(context: Context) -> MASShortcutView {
-        let view = MASShortcutView()
-
-        // Bind to UserDefaults using the action's name as the key
-        view.setAssociatedUserDefaultsKey(defaultsKey, withTransformerName: MASDictionaryTransformerName)
-
-        // Apply permissive validator if "Allow Any Shortcut" is enabled
-        if Defaults.allowAnyShortcut.enabled {
-            view.shortcutValidator = PassthroughShortcutValidator()
-        }
-
-        return view
-    }
-
-    func updateNSView(_ nsView: MASShortcutView, context: Context) {
-        // Update validator if setting changes
-        if Defaults.allowAnyShortcut.enabled {
-            nsView.shortcutValidator = PassthroughShortcutValidator()
-        } else {
-            nsView.shortcutValidator = MASShortcutValidator()
-        }
+    var body: some View {
+        KeyboardShortcuts.Recorder(for: .init(action))
     }
 }
 
-// MARK: - Generic Key Recorder
+// MARK: - Backwards Compatibility Aliases
 
-/// A SwiftUI wrapper for MASShortcutView using a custom string key.
-/// Useful for shortcuts not tied to WindowAction (e.g., TodoManager shortcuts).
-///
-/// Usage:
-/// ```swift
-/// MASShortcutKeyRecorder(key: "toggleTodo")
-/// ```
-struct MASShortcutKeyRecorder: NSViewRepresentable {
+/// Alias for backwards compatibility with existing code.
+typealias MASShortcutRecorder = ShortcutRecorder
 
-    /// The UserDefaults key for this shortcut.
+/// A SwiftUI view that records keyboard shortcuts using a custom string key.
+struct ShortcutKeyRecorder: View {
     let key: String
 
-    // MARK: - NSViewRepresentable
-
-    func makeNSView(context: Context) -> MASShortcutView {
-        let view = MASShortcutView()
-
-        // Bind to UserDefaults
-        view.setAssociatedUserDefaultsKey(key, withTransformerName: MASDictionaryTransformerName)
-
-        // Apply permissive validator if "Allow Any Shortcut" is enabled
-        if Defaults.allowAnyShortcut.enabled {
-            view.shortcutValidator = PassthroughShortcutValidator()
-        }
-
-        return view
-    }
-
-    func updateNSView(_ nsView: MASShortcutView, context: Context) {
-        // Update validator if setting changes
-        if Defaults.allowAnyShortcut.enabled {
-            nsView.shortcutValidator = PassthroughShortcutValidator()
-        } else {
-            nsView.shortcutValidator = MASShortcutValidator()
-        }
+    var body: some View {
+        KeyboardShortcuts.Recorder(for: KeyboardShortcuts.Name(key))
     }
 }
+
+/// Alias for backwards compatibility with existing code.
+typealias MASShortcutKeyRecorder = ShortcutKeyRecorder
 
 // MARK: - Preview
 
@@ -104,13 +42,13 @@ struct MASShortcutKeyRecorder: NSViewRepresentable {
     VStack(spacing: 20) {
         HStack {
             Text("Left Half:")
-            MASShortcutRecorder(action: .leftHalf)
+            ShortcutRecorder(action: .leftHalf)
                 .frame(width: 140, height: 25)
         }
 
         HStack {
             Text("Maximize:")
-            MASShortcutRecorder(action: .maximize)
+            ShortcutRecorder(action: .maximize)
                 .frame(width: 140, height: 25)
         }
     }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MASShortcut
 
 // MARK: - Main Preferences View
 

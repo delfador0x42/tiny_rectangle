@@ -273,20 +273,7 @@ private struct TodoModeSection: View {
                         }
                     }
 
-                    // Shortcuts
-                    HStack(spacing: 20) {
-                        HStack {
-                            Text("Toggle:")
-                            MASShortcutKeyRecorder(key: TodoManager.toggleDefaultsKey)
-                                .frame(width: 120, height: 25)
-                        }
-
-                        HStack {
-                            Text("Reflow:")
-                            MASShortcutKeyRecorder(key: TodoManager.reflowDefaultsKey)
-                                .frame(width: 120, height: 25)
-                        }
-                    }
+                    // Shortcuts removed - todo shortcuts are no longer supported
                 }
                 .padding(.leading, 20)
             }

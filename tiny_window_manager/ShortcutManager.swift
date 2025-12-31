@@ -2,153 +2,173 @@
 //  ShortcutManager.swift
 //  tiny_window_manager
 //
-//  Goal of this file:
-//  - Register default keyboard shortcuts for each WindowAction
-//  - Bind those shortcuts so pressing keys triggers WindowAction.post (which posts a Notification)
-//  - Listen for those Notifications and run the actual window management logic
+//  Manages keyboard shortcuts for window actions using KeyboardShortcuts library.
 //
 
 import Foundation
-import MASShortcut
+import KeyboardShortcuts
+
+// MARK: - KeyboardShortcuts.Name Extension
+
+extension KeyboardShortcuts.Name {
+    /// Creates a shortcut name from a WindowAction.
+    init(_ action: WindowAction) {
+        self.init(action.name)
+    }
+}
+
+// MARK: - ShortcutManager
 
 final class ShortcutManager {
 
-    // MARK: - Dependencies (injected)
-
-    /// The thing that ultimately executes a window action (move/resize/etc).
     private let windowManager: WindowManager
-
-    /// Convenience accessor so we don’t repeat MASShortcutBinder.shared()? everywhere.
-    /// If MASShortcutBinder is unavailable (nil), we just no-op safely.
-    private var binder: MASShortcutBinder? { MASShortcutBinder.shared() }
-
-    // MARK: - Lifecycle
 
     init(windowManager: WindowManager) {
         print(#function, "called")
         self.windowManager = windowManager
-
-        configureMASShortcutBinder()
-        setupShortcutsAndObservers()
-
-        // If app defaults change (user edits shortcuts in preferences),
-        // re-register the default shortcuts so MASShortcut can see them.
-        Notification.Name.changeDefaults.onPost { [weak self] _ in
-            self?.registerDefaultShortcuts()
-        }
+        registerDefaults()
+        bindAllShortcuts()
+        subscribeToAllWindowActions()
     }
 
     deinit {
         print(#function, "called")
-        // Always clean up NotificationCenter observers when the object is going away.
         unsubscribeFromAllWindowActions()
     }
 
     // MARK: - Public API
 
-    /// Rebuild everything from UserDefaults:
-    /// - stop observing
-    /// - unbind shortcuts
-    /// - register defaults again
-    /// - bind shortcuts again
-    /// - start observing again
-    public func reloadFromDefaults() {
+    func reloadFromDefaults() {
         print(#function, "called")
-        tearDown()
-        setupShortcutsAndObservers()
+        registerDefaults()
     }
 
-    /// Public wrapper so other code can explicitly enable shortcuts.
-    /// (Calls the internal helper that binds all actions.)
-    public func bindShortcuts() {
+    func bindShortcuts() {
         print(#function, "called")
-        bindAllShortcuts()
+        for action in WindowAction.active {
+            KeyboardShortcuts.enable(.init(action))
+        }
     }
 
-    /// Public wrapper so other code can explicitly disable shortcuts.
-    /// (Calls the internal helper that unbinds all actions.)
-    public func unbindShortcuts() {
+    func unbindShortcuts() {
         print(#function, "called")
-        unbindAllShortcuts()
+        for action in WindowAction.active {
+            KeyboardShortcuts.disable(.init(action))
+        }
     }
 
-    /// Returns the key equivalent (like "⌘⌥M") and modifier flags for an action, if set.
-    public func getKeyEquivalent(action: WindowAction) -> (String?, NSEvent.ModifierFlags)? {
+    /// Returns the key equivalent string and modifier flags for menu display.
+    func getKeyEquivalent(action: WindowAction) -> (String?, NSEvent.ModifierFlags)? {
         print(#function, "called")
-        guard let shortcut = binder?.value(forKey: action.name) as? MASShortcut else {
+        guard let shortcut = KeyboardShortcuts.getShortcut(for: .init(action)) else {
             return nil
         }
-        return (shortcut.keyCodeStringForKeyEquivalent, shortcut.modifierFlags)
+        // KeyboardShortcuts uses NSEvent.ModifierFlags directly
+        let keyString = shortcut.key.flatMap { keyEquivalentString(for: $0) }
+        return (keyString, shortcut.modifiers)
     }
 
-    // MARK: - Setup / Teardown helpers
+    /// Converts a KeyboardShortcuts.Key to a string for menu display.
+    private func keyEquivalentString(for key: KeyboardShortcuts.Key) -> String? {
+        // Use the key's rawValue to get the character
+        // KeyboardShortcuts.Key uses Carbon key codes
+        let keyCode = key.rawValue
 
-    private func configureMASShortcutBinder() {
+        // Try to get the character from the key code
+        if let char = characterForKeyCode(Int(keyCode)) {
+            return String(char)
+        }
+        return nil
+    }
+
+    /// Converts a Carbon key code to its character representation.
+    private func characterForKeyCode(_ keyCode: Int) -> Character? {
+        // Common key mappings (subset of Carbon key codes)
+        switch keyCode {
+        case 0: return "a"
+        case 1: return "s"
+        case 2: return "d"
+        case 3: return "f"
+        case 4: return "h"
+        case 5: return "g"
+        case 6: return "z"
+        case 7: return "x"
+        case 8: return "c"
+        case 9: return "v"
+        case 11: return "b"
+        case 12: return "q"
+        case 13: return "w"
+        case 14: return "e"
+        case 15: return "r"
+        case 16: return "y"
+        case 17: return "t"
+        case 18: return "1"
+        case 19: return "2"
+        case 20: return "3"
+        case 21: return "4"
+        case 22: return "6"
+        case 23: return "5"
+        case 24: return "="
+        case 25: return "9"
+        case 26: return "7"
+        case 27: return "-"
+        case 28: return "8"
+        case 29: return "0"
+        case 30: return "]"
+        case 31: return "o"
+        case 32: return "u"
+        case 33: return "["
+        case 34: return "i"
+        case 35: return "p"
+        case 37: return "l"
+        case 38: return "j"
+        case 39: return "'"
+        case 40: return "k"
+        case 41: return ";"
+        case 42: return "\\"
+        case 43: return ","
+        case 44: return "/"
+        case 45: return "n"
+        case 46: return "m"
+        case 47: return "."
+        case 123: return "←"
+        case 124: return "→"
+        case 125: return "↓"
+        case 126: return "↑"
+        default: return nil
+        }
+    }
+
+    // MARK: - Private: Setup
+
+    private func registerDefaults() {
         print(#function, "called")
-        // MASShortcut uses Cocoa bindings; this tells it how to transform dictionaries.
-        binder?.bindingOptions = [
-            NSBindingOption.valueTransformerName: MASDictionaryTransformerName
-        ]
+        for action in WindowAction.active {
+            let name = KeyboardShortcuts.Name(action)
+            // Only set default if user hasn't already set a shortcut
+            guard KeyboardShortcuts.getShortcut(for: name) == nil else { continue }
+
+            if let defaultShortcut = defaultShortcutForAction(action) {
+                // KeyboardShortcuts.Key uses Int for rawValue (non-optional init)
+                let key = KeyboardShortcuts.Key(rawValue: defaultShortcut.keyCode)
+                let modifiers = NSEvent.ModifierFlags(rawValue: defaultShortcut.modifierFlags)
+                // KeyboardShortcuts.Shortcut takes NSEvent.ModifierFlags directly
+                KeyboardShortcuts.setShortcut(.init(key, modifiers: modifiers), for: name)
+            }
+        }
     }
 
-    private func setupShortcutsAndObservers() {
-        print(#function, "called")
-        registerDefaultShortcuts()
-        bindAllShortcuts()
-        subscribeToAllWindowActions()
-    }
-
-    private func tearDown() {
-        print(#function, "called")
-        unsubscribeFromAllWindowActions()
-        unbindAllShortcuts()
-    }
-
-    // MARK: - Binding shortcuts (internal helpers)
     private func bindAllShortcuts() {
         print(#function, "called")
         for action in WindowAction.active {
-            binder?.bindShortcut(withDefaultsKey: action.name, toAction: action.post)
-        }
-    }
-
-    private func unbindAllShortcuts() {
-        print(#function, "called")
-        for action in WindowAction.active {
-            binder?.breakBinding(withDefaultsKey: action.name)
-        }
-    }
-
-    // MARK: - Default shortcut registration
-
-    /// Register “factory defaults” shortcuts for each WindowAction.
-    /// MASShortcut stores shortcuts in UserDefaults keyed by action.name.
-    private func registerDefaultShortcuts() {
-        print(#function, "called")
-        var defaults: [String: MASShortcut] = [:]
-
-        for action in WindowAction.active {
-            guard let defaultShortcut = defaultShortcutForAction(action) else {
-                continue
+            KeyboardShortcuts.onKeyUp(for: .init(action)) {
+                action.post()
             }
-
-            // Convert your “defaultShortcut” model into MASShortcut’s object.
-            let mas = MASShortcut(
-                keyCode: defaultShortcut.keyCode,
-                modifierFlags: NSEvent.ModifierFlags(rawValue: defaultShortcut.modifierFlags)
-            )
-
-            defaults[action.name] = mas
         }
-
-        binder?.registerDefaultShortcuts(defaults)
     }
 
-    /// Chooses which default shortcut set to use based on user preference.
     private func defaultShortcutForAction(_ action: WindowAction) -> Shortcut? {
         print(#function, "called")
-        // NOTE: I'm assuming `alternateDefault` / `spectacleDefault` are of type `Shortcut?`.
-        // Replace `Shortcut` with your actual type if it's named differently.
         if Defaults.alternateDefaultShortcuts.enabled {
             return action.alternateDefault
         } else {
@@ -156,7 +176,7 @@ final class ShortcutManager {
         }
     }
 
-    // MARK: - Notifications wiring
+    // MARK: - Notifications
 
     private func subscribeToAllWindowActions() {
         print(#function, "called")
@@ -175,49 +195,38 @@ final class ShortcutManager {
         NotificationCenter.default.removeObserver(self)
     }
 
-    // MARK: - Notification handler (the “main entry point” when a shortcut fires)
-
-    /// This is called when a WindowAction posts its notification.
     @objc private func windowActionTriggered(notification: NSNotification) {
         print(#function, "called")
         guard var parameters = notification.object as? ExecutionParameters else {
             return
         }
 
-        // 1) Let special systems handle it first (if they claim it, we stop).
         if MultiWindowManager.execute(parameters: parameters) { return }
         if TodoManager.execute(parameters: parameters) { return }
 
-        // 2) Optionally modify parameters if user wants repeated shortcuts to cycle monitors.
         parameters = adjustParametersForCycleMonitorIfNeeded(parameters)
-
-        // 3) Execute the action.
         windowManager.execute(parameters)
     }
 
-    // MARK: - Cycle-monitor logic (pulled out for readability)
+    // MARK: - Cycle Monitor Logic
 
     private func adjustParametersForCycleMonitorIfNeeded(_ parameters: ExecutionParameters) -> ExecutionParameters {
         print(#function, "called")
-        // Only do cycle-monitor behavior when the preference is enabled…
         guard Defaults.subsequentExecutionMode.value == .cycleMonitor else {
             return parameters
         }
 
-        // …and only for action categories where cycling makes sense.
         guard parameters.action.classification != .size,
               parameters.action.classification != .display else {
             return parameters
         }
 
-        // We need a window element and window id to check "repeat action" logic.
         guard let windowElement = parameters.windowElement ?? AccessibilityElement.getFrontWindowElement(),
               let windowId = parameters.windowId ?? windowElement.getWindowId() else {
             NSSound.beep()
             return parameters
         }
 
-        // If the user repeats the same action, switch to the next screen (if available).
         guard isRepeatAction(parameters: parameters, windowElement: windowElement, windowId: windowId) else {
             return parameters
         }
@@ -229,7 +238,6 @@ final class ShortcutManager {
             return parameters
         }
 
-        // Build a new ExecutionParameters targeting the next screen.
         let updated = ExecutionParameters(
             parameters.action,
             updateRestoreRect: parameters.updateRestoreRect,
@@ -238,19 +246,15 @@ final class ShortcutManager {
             windowId: windowId
         )
 
-        // Bypass “subsequent action” logic by clearing the last action for this window.
         AppDelegate.windowHistory.lasttiny_window_managerActions.removeValue(forKey: windowId)
-
         return updated
     }
 
-    /// Returns true if the user is repeating the same action on the same window.
     private func isRepeatAction(parameters: ExecutionParameters,
                                 windowElement: AccessibilityElement,
                                 windowId: CGWindowID) -> Bool {
         print(#function, "called")
 
-        // Special-case: maximize counts as a "repeat" if the window is already maximized.
         if parameters.action == .maximize {
             let screenSize = ScreenDetection()
                 .detectScreens(using: windowElement)?
@@ -263,7 +267,6 @@ final class ShortcutManager {
             }
         }
 
-        // General case: if last action for this window matches the current action.
         let lastAction = AppDelegate.windowHistory.lasttiny_window_managerActions[windowId]?.action
         return parameters.action == lastAction
     }

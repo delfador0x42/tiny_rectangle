@@ -18,7 +18,8 @@
 import Cocoa
 import ServiceManagement
 import Sparkle
-import MASShortcut
+import SwiftUI
+import KeyboardShortcuts
 
 // MARK: - SettingsViewController Class
 
@@ -99,11 +100,11 @@ class SettingsViewController: NSViewController {
     /// Dropdown: Which side of screen for todo sidebar (left or right)
     @IBOutlet weak var todoAppSidePopUpButton: NSPopUpButton!
 
-    /// Shortcut view: Keyboard shortcut to toggle todo mode
-    @IBOutlet weak var toggleTodoShortcutView: MASShortcutView!
+    /// Shortcut view: Keyboard shortcut to toggle todo mode (legacy, unused)
+    @IBOutlet weak var toggleTodoShortcutView: NSView?
 
-    /// Shortcut view: Keyboard shortcut to reflow windows around todo sidebar
-    @IBOutlet weak var reflowTodoShortcutView: MASShortcutView!
+    /// Shortcut view: Keyboard shortcut to reflow windows around todo sidebar (legacy, unused)
+    @IBOutlet weak var reflowTodoShortcutView: NSView?
 
     // MARK: - Outlets (Stage Manager)
     // Stage Manager is a macOS feature for organizing windows
@@ -519,11 +520,9 @@ class SettingsViewController: NSViewController {
         todoAppWidthUnitPopUpButton.selectItem(withTag: Defaults.todoSidebarWidthUnit.value.rawValue)
         todoAppSidePopUpButton.selectItem(withTag: Defaults.todoSidebarSide.value.rawValue)
 
-        // Initialize shortcut views
-        TodoManager.initToggleShortcut()
-        TodoManager.initReflowShortcut()
-        toggleTodoShortcutView.setAssociatedUserDefaultsKey(TodoManager.toggleDefaultsKey, withTransformerName: MASDictionaryTransformerName)
-        reflowTodoShortcutView.setAssociatedUserDefaultsKey(TodoManager.reflowDefaultsKey, withTransformerName: MASDictionaryTransformerName)
+        // Hide legacy shortcut views (no longer used)
+        toggleTodoShortcutView?.isHidden = true
+        reflowTodoShortcutView?.isHidden = true
 
         showHideTodoModeSettings(animated: false)
     }
@@ -705,9 +704,11 @@ class SettingsViewController: NSViewController {
         smallerWidthLabel.translatesAutoresizingMaskIntoConstraints = false
         widthStepLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        // Shortcut views for width actions
-        let largerWidthShortcutView = MASShortcutView(frame: NSRect(x: 0, y: 0, width: 160, height: 19))
-        let smallerWidthShortcutView = MASShortcutView(frame: NSRect(x: 0, y: 0, width: 160, height: 19))
+        // Shortcut views for width actions (using KeyboardShortcuts.Recorder in NSHostingView)
+        let largerWidthShortcutView = NSHostingView(rootView: KeyboardShortcuts.Recorder(for: .init(WindowAction.largerWidth)))
+        largerWidthShortcutView.translatesAutoresizingMaskIntoConstraints = false
+        let smallerWidthShortcutView = NSHostingView(rootView: KeyboardShortcuts.Recorder(for: .init(WindowAction.smallerWidth)))
+        smallerWidthShortcutView.translatesAutoresizingMaskIntoConstraints = false
 
         // Width step size field
         let widthStepField = AutoSaveFloatField(frame: NSRect(x: 0, y: 0, width: 160, height: 19))
@@ -723,17 +724,6 @@ class SettingsViewController: NSViewController {
         integerFormatter.allowsFloats = false
         integerFormatter.minimum = 1
         widthStepField.formatter = integerFormatter
-
-        // Bind shortcut views to UserDefaults
-        largerWidthShortcutView.setAssociatedUserDefaultsKey(WindowAction.largerWidth.name, withTransformerName: MASDictionaryTransformerName)
-        smallerWidthShortcutView.setAssociatedUserDefaultsKey(WindowAction.smallerWidth.name, withTransformerName: MASDictionaryTransformerName)
-
-        // Apply permissive validator if "Allow Any Shortcut" is enabled
-        if Defaults.allowAnyShortcut.enabled {
-            let passThroughValidator = PassthroughShortcutValidator()
-            largerWidthShortcutView.shortcutValidator = passThroughValidator
-            smallerWidthShortcutView.shortcutValidator = passThroughValidator
-        }
 
         // Icons for the actions
         let largerWidthIcon = NSImageView(frame: NSRect(x: 0, y: 0, width: 21, height: 14))

@@ -10,7 +10,6 @@
 import Foundation
 import Carbon
 import Cocoa
-import MASShortcut
 
 // MARK: - Keyboard Modifier Constants
 
@@ -1006,28 +1005,5 @@ struct Shortcut: Codable {
         print(#function, "called")
         self.keyCode = keyCode
         self.modifierFlags = modifierFlags
-    }
-
-    /// Creates a shortcut from a MASShortcut object.
-    /// Used when reading shortcuts from the MASShortcut framework.
-    init(masShortcut: MASShortcut) {
-        print(#function, "called")
-        self.keyCode = masShortcut.keyCode
-        self.modifierFlags = masShortcut.modifierFlags.rawValue
-    }
-
-    // MARK: - Conversion Methods
-
-    /// Converts this shortcut to a MASShortcut for use with the MASShortcut framework.
-    func toMASSHortcut() -> MASShortcut {
-        print(#function, "called")
-        return MASShortcut(keyCode: keyCode, modifierFlags: NSEvent.ModifierFlags(rawValue: modifierFlags))
-    }
-
-    /// Returns a human-readable string like "⌃⌥←" for display in the UI.
-    func displayString() -> String {
-        print(#function, "called")
-        let masShortcut = toMASSHortcut()
-        return masShortcut.modifierFlagsString + (masShortcut.keyCodeString ?? "")
     }
 }

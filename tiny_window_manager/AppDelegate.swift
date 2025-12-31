@@ -187,11 +187,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
            let intLastVersion = Int(lastVersion) {
             // User is upgrading from a previous version - run migrations
 
-            // Version 46: Migrated keyboard shortcut storage format
-            if intLastVersion < 46 {
-                MASShortcutMigration.migrate()
-            }
-
             // Version 64: Migrated snap area data model
             if intLastVersion < 64 {
                 SnapAreaModel.instance.migrate()
