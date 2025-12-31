@@ -55,15 +55,20 @@ class NextPrevDisplayCalculation: WindowCalculation {
         print(#function, "called")
         let wasMaximized = params.lastAction?.action == .maximize
         let autoMaximizeEnabled = !Defaults.autoMaximize.userDisabled
+        let screen = params.visibleFrameOfScreen
 
         if wasMaximized && autoMaximizeEnabled {
             // Keep the window maximized on the new display
-            let rectResult = WindowCalculationFactory.maximizeCalculation.calculateRect(params)
-            return RectResult(rectResult.rect, resultingAction: .maximize)
+            if let rect = WindowAction.maximize.calculateRect(in: screen, window: params.window.rect) {
+                return RectResult(rect, resultingAction: .maximize)
+            }
         }
 
         // Default: center the window on the new display
-        return WindowCalculationFactory.centerCalculation.calculateRect(params)
+        if let rect = WindowAction.center.calculateRect(in: screen, window: params.window.rect) {
+            return RectResult(rect, resultingAction: .center)
+        }
+        return RectResult(.null)
     }
 
     // MARK: - Private Helpers
@@ -103,7 +108,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
         }
 
         // Find the calculation that handles this action type
-        guard let calculation = WindowCalculationFactory.calculationsByAction[lastAction.action] else {
+        guard let calculation = WindowCalculationFactory.calculation(for: lastAction.action) else {
             return nil
         }
 

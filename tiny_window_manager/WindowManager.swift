@@ -225,8 +225,8 @@ class WindowManager {
         let currentNormalizedRect = currentWindowRect.screenFlipped
         let currentWindow = Window(id: windowId, rect: currentNormalizedRect)
 
-        // Look up the calculation class for this action (e.g., LeftHalfCalculation)
-        let windowCalculation = WindowCalculationFactory.calculationsByAction[action]
+        // Look up the calculation for this action (uses simplified single-class calculation)
+        let windowCalculation = WindowCalculationFactory.calculation(for: action)
 
         // Package up all the info the calculation needs
         let calculationParams = WindowCalculationParameters(window: currentWindow, usableScreens: usableScreens, action: action, lastAction: lasttiny_window_managerAction, ignoreTodo: ignoreTodo)
