@@ -403,6 +403,7 @@ class AccessibilityElement {
     }
 
     // MARK: - Window and Process Identification
+    //
 
     /// The unique window ID assigned by the macOS window server.
     /// This ID is used to track windows across the system.
