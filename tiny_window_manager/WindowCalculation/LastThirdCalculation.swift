@@ -16,6 +16,7 @@ class LastThirdCalculation: WindowCalculation, OrientationAware {
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // If cycling is disabled, just return the last third position
@@ -50,6 +51,7 @@ class LastThirdCalculation: WindowCalculation, OrientationAware {
     /// Determines which third calculation to use next based on the previous action.
     /// This creates the reverse cycling behavior: last → center → first → back to last
     private func findNextThirdCalculation(lastAction: WindowAction, lastSubAction: SubWindowAction) -> WindowCalculation? {
+        print(#function, "called")
 
         // If user was on lastThird, cycle backward through the thirds
         if lastAction == .lastThird {
@@ -66,6 +68,7 @@ class LastThirdCalculation: WindowCalculation, OrientationAware {
 
     /// When cycling backward from lastThird action
     private func nextThirdWhenComingFromLast(lastSubAction: SubWindowAction) -> WindowCalculation? {
+        print(#function, "called")
         switch lastSubAction {
         case .bottomThird, .rightThird:
             // Was at last third → move to center third
@@ -80,6 +83,7 @@ class LastThirdCalculation: WindowCalculation, OrientationAware {
 
     /// When coming from firstThird action (allows wrap-around behavior)
     private func nextThirdWhenComingFromFirst(lastSubAction: SubWindowAction) -> WindowCalculation? {
+        print(#function, "called")
         switch lastSubAction {
         case .bottomThird, .rightThird:
             // Was at first third → move to center third
@@ -93,6 +97,7 @@ class LastThirdCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the right 33% of the screen (landscape orientation)
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Calculate width as 1/3 of screen
@@ -106,6 +111,7 @@ class LastThirdCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the bottom 33% of the screen (portrait orientation)
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Calculate height as 1/3 of screen

@@ -16,6 +16,7 @@ class LowerRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcul
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let isFirstExecution = params.lastAction == nil
         let resizingEnabled = Defaults.subsequentExecutionMode.resizes
 
@@ -33,6 +34,7 @@ class LowerRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcul
     /// Creates a lower-right rectangle with a given width fraction (e.g., 0.5 for half-width).
     /// Height is always half the screen.
     func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         // Calculate the fractional width

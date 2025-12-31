@@ -51,6 +51,7 @@ struct ThirdsCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         let screenFrame = screen.frame
         let thirdWidth = floor(screenFrame.width / 3)
@@ -84,6 +85,7 @@ struct ThirdsCompoundCalculation: CompoundSnapAreaCalculation {
     // MARK: - Helpers
 
     private func createSnapArea(screen: NSScreen, directional: Directional, action: WindowAction) -> SnapArea {
+        print(#function, "called")
         return SnapArea(screen: screen, directional: directional, action: action)
     }
 }
@@ -133,6 +135,7 @@ struct PortraitSideThirdsCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         let screenFrame = screen.frame
         let thirdHeight = floor(screenFrame.height / 3)
@@ -186,6 +189,7 @@ struct PortraitSideThirdsCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         cornerZoneSize: CGFloat
     ) -> SnapArea? {
+        print(#function, "called")
 
         // Check BOTTOM corner zone
         let bottomCornerThreshold = screenFrame.minY + marginBottom + cornerZoneSize
@@ -230,6 +234,7 @@ struct PortraitSideThirdsCompoundCalculation: CompoundSnapAreaCalculation {
         screenFrame: CGRect,
         thirdHeight: CGFloat
     ) -> ThirdRegion {
+        print(#function, "called")
 
         let bottomThirdEnd = screenFrame.minY + thirdHeight
         let topThirdStart = screenFrame.maxY - thirdHeight
@@ -255,6 +260,7 @@ struct PortraitSideThirdsCompoundCalculation: CompoundSnapAreaCalculation {
     // MARK: - Helpers
 
     private func createSnapArea(screen: NSScreen, directional: Directional, action: WindowAction) -> SnapArea {
+        print(#function, "called")
         return SnapArea(screen: screen, directional: directional, action: action)
     }
 }
@@ -276,6 +282,7 @@ private func determineHorizontalThird(
     screenFrame: CGRect,
     thirdWidth: CGFloat
 ) -> ThirdRegion {
+    print(#function, "called")
 
     let leftThirdEnd = screenFrame.minX + thirdWidth
     let rightThirdStart = screenFrame.maxX - thirdWidth
@@ -297,6 +304,7 @@ private func determineHorizontalThird(
 /// - Parameter priorAction: The window action from the previous snap position
 /// - Returns: The appropriate center action (.centerThird, .firstTwoThirds, or .lastTwoThirds)
 private func determineCenterAction(priorAction: WindowAction?) -> WindowAction {
+    print(#function, "called")
     guard let priorAction = priorAction else {
         // No prior action - just use center third
         return .centerThird

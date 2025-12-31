@@ -60,6 +60,7 @@ class TodoManager {
     ///   - enabled: Whether to enable todo mode
     ///   - bringToFront: Whether to bring the todo window to the front (default: true)
     static func setTodoMode(_ enabled: Bool, _ bringToFront: Bool = true) {
+        print(#function, "called")
         Defaults.todoMode.enabled = enabled
         registerUnregisterReflowShortcut()
         moveAllIfNeeded(bringToFront)
@@ -70,6 +71,7 @@ class TodoManager {
     /// Initializes the toggle shortcut with the default key combo (Ctrl+Option+B).
     /// Only sets the default if no shortcut is already saved.
     static func initToggleShortcut() {
+        print(#function, "called")
         // Don't overwrite existing shortcut
         guard UserDefaults.standard.dictionary(forKey: toggleDefaultsKey) == nil else {
             return
@@ -91,6 +93,7 @@ class TodoManager {
     /// Initializes the reflow shortcut with the default key combo (Ctrl+Option+N).
     /// Only sets the default if no shortcut is already saved.
     static func initReflowShortcut() {
+        print(#function, "called")
         // Don't overwrite existing shortcut
         guard UserDefaults.standard.dictionary(forKey: reflowDefaultsKey) == nil else {
             return
@@ -113,6 +116,7 @@ class TodoManager {
 
     /// Registers the toggle shortcut with the system
     private static func registerToggleShortcut() {
+        print(#function, "called")
         MASShortcutBinder.shared()?.bindShortcut(withDefaultsKey: toggleDefaultsKey, toAction: {
             let enabled = !Defaults.todoMode.enabled
             setTodoMode(enabled)
@@ -121,6 +125,7 @@ class TodoManager {
 
     /// Registers the reflow shortcut with the system
     private static func registerReflowShortcut() {
+        print(#function, "called")
         MASShortcutBinder.shared()?.bindShortcut(withDefaultsKey: reflowDefaultsKey, toAction: {
             moveAll()
         })
@@ -128,16 +133,19 @@ class TodoManager {
 
     /// Unregisters the toggle shortcut from the system
     private static func unregisterToggleShortcut() {
+        print(#function, "called")
         MASShortcutBinder.shared()?.breakBinding(withDefaultsKey: toggleDefaultsKey)
     }
 
     /// Unregisters the reflow shortcut from the system
     private static func unregisterReflowShortcut() {
+        print(#function, "called")
         MASShortcutBinder.shared()?.breakBinding(withDefaultsKey: reflowDefaultsKey)
     }
 
     /// Registers or unregisters the toggle shortcut based on whether Todo feature is enabled
     static func registerUnregisterToggleShortcut() {
+        print(#function, "called")
         if Defaults.todo.userEnabled {
             registerToggleShortcut()
         } else {
@@ -147,6 +155,7 @@ class TodoManager {
 
     /// Registers or unregisters the reflow shortcut based on whether Todo Mode is active
     static func registerUnregisterReflowShortcut() {
+        print(#function, "called")
         let shouldRegister = Defaults.todo.userEnabled && Defaults.todoMode.enabled
 
         if shouldRegister {
@@ -161,17 +170,20 @@ class TodoManager {
     /// Returns the key character and modifier flags for the toggle shortcut.
     /// Used for displaying the shortcut in the menu.
     static func getToggleKeyDisplay() -> (String?, NSEvent.ModifierFlags)? {
+        print(#function, "called")
         return getShortcutDisplay(forKey: toggleDefaultsKey)
     }
 
     /// Returns the key character and modifier flags for the reflow shortcut.
     /// Used for displaying the shortcut in the menu.
     static func getReflowKeyDisplay() -> (String?, NSEvent.ModifierFlags)? {
+        print(#function, "called")
         return getShortcutDisplay(forKey: reflowDefaultsKey)
     }
 
     /// Helper to extract shortcut display info from UserDefaults
     private static func getShortcutDisplay(forKey key: String) -> (String?, NSEvent.ModifierFlags)? {
+        print(#function, "called")
         guard let shortcutDict = UserDefaults.standard.dictionary(forKey: key),
               let dictTransformer = ValueTransformer(forName: NSValueTransformerName(rawValue: MASDictionaryTransformerName)),
               let shortcut = dictTransformer.transformedValue(shortcutDict) as? MASShortcut
@@ -186,6 +198,7 @@ class TodoManager {
     /// Gets the accessibility element for the todo window.
     /// Caches the window ID to avoid repeated lookups.
     private static func getTodoWindowElement() -> AccessibilityElement? {
+        print(#function, "called")
         // Get the bundle ID of the configured todo app
         guard let bundleId = Defaults.todoApplication.value,
               let windowElements = AccessibilityElement(bundleId)?.windowElements
@@ -219,11 +232,13 @@ class TodoManager {
 
     /// Returns true if a todo window exists (the todo app is running with a window open)
     static func hasTodoWindow() -> Bool {
+        print(#function, "called")
         return getTodoWindowElement() != nil
     }
 
     /// Returns true if the frontmost window is the todo window
     static func isTodoWindowFront() -> Bool {
+        print(#function, "called")
         guard let windowElement = AccessibilityElement.getFrontWindowElement() else {
             return false
         }
@@ -232,6 +247,7 @@ class TodoManager {
 
     /// Checks if the given accessibility element is the todo window
     static func isTodoWindow(_ windowElement: AccessibilityElement) -> Bool {
+        print(#function, "called")
         guard let windowId = windowElement.windowId else {
             return false
         }
@@ -240,12 +256,14 @@ class TodoManager {
 
     /// Checks if the given window ID is the todo window
     static func isTodoWindow(_ windowId: CGWindowID) -> Bool {
+        print(#function, "called")
         return getTodoWindowElement()?.windowId == windowId
     }
 
     /// Resets the cached todo window ID.
     /// Call this when the todo app changes or when windows may have changed.
     static func resetTodoWindow() {
+        print(#function, "called")
         todoWindowId = nil
         _ = getTodoWindowElement()  // Re-detect
     }
@@ -257,6 +275,7 @@ class TodoManager {
     ///
     /// - Parameter bringToFront: Whether to bring the todo window to the front (default: true)
     static func moveAll(_ bringToFront: Bool = true) {
+        print(#function, "called")
         // Update which screen the todo window is on
         TodoManager.refreshTodoScreen()
 
@@ -296,6 +315,7 @@ class TodoManager {
 
     /// Positions the todo window in its sidebar location
     private static func positionTodoWindow(_ todoWindow: AccessibilityElement, on screen: NSScreen) {
+        print(#function, "called")
         let adjustedVisibleFrame = screen.adjustedVisibleFrame(true)
         let sidebarWidth = getSidebarWidth(visibleFrameWidth: adjustedVisibleFrame.width)
         let isRightSide = Defaults.todoSidebarSide.value == .right
@@ -328,6 +348,7 @@ class TodoManager {
     /// - Parameter visibleFrameWidth: The width of the visible screen area
     /// - Returns: The sidebar width in pixels
     static func getSidebarWidth(visibleFrameWidth: CGFloat) -> CGFloat {
+        print(#function, "called")
         var sidebarWidth = Defaults.todoSidebarWidth.cgFloat
 
         // Handle percentage values stored as decimals (0.0 - 1.0)
@@ -350,6 +371,7 @@ class TodoManager {
     ///   - visibleFrameWidth: The width of the visible screen area
     /// - Returns: The converted width value
     static func convert(width: CGFloat, toUnit unit: TodoSidebarWidthUnit, visibleFrameWidth: CGFloat) -> CGFloat {
+        print(#function, "called")
         switch unit {
         case .pixels:
             // Convert percentage to pixels: (25% of 1000px = 250px)
@@ -363,6 +385,7 @@ class TodoManager {
     /// Moves all windows if todo mode is enabled.
     /// This is a conditional wrapper around moveAll().
     static func moveAllIfNeeded(_ bringToFront: Bool = true) {
+        print(#function, "called")
         guard Defaults.todo.userEnabled && Defaults.todoMode.enabled else {
             return
         }
@@ -371,6 +394,7 @@ class TodoManager {
 
     /// Updates the todoScreen property based on where the todo window currently is
     static func refreshTodoScreen() {
+        print(#function, "called")
         let todoWindow = getTodoWindowElement()
         let screens = ScreenDetection().detectScreens(using: todoWindow)
         TodoManager.todoScreen = screens?.currentScreen
@@ -381,6 +405,7 @@ class TodoManager {
     /// Shifts a window to avoid overlapping the todo sidebar.
     /// If the window is too wide, it will be resized to fit.
     private static func shiftWindowOffSidebar(_ window: AccessibilityElement, screenVisibleFrame: CGRect) {
+        print(#function, "called")
         var rect = window.frame
         let halfGapWidth = CGFloat(Defaults.gapSize.value) / 2
 
@@ -404,6 +429,7 @@ class TodoManager {
 
     /// Shifts a window to the right to avoid the left sidebar
     private static func shiftWindowRight(_ rect: inout CGRect, safeMinX: CGFloat, screenMaxX: CGFloat) {
+        print(#function, "called")
         let overlap = safeMinX - rect.minX
 
         // Try to shift the window right
@@ -419,6 +445,7 @@ class TodoManager {
 
     /// Shifts a window to the left to avoid the right sidebar
     private static func shiftWindowLeft(_ rect: inout CGRect, safeMaxX: CGFloat, screenMinX: CGFloat) {
+        print(#function, "called")
         let overlap = rect.maxX - safeMaxX
 
         // Try to shift the window left
@@ -438,6 +465,7 @@ class TodoManager {
     /// - Parameter parameters: The execution parameters containing the action
     /// - Returns: true if a todo action was executed, false otherwise
     static func execute(parameters: ExecutionParameters) -> Bool {
+        print(#function, "called")
         let todoActions: [WindowAction] = [.leftTodo, .rightTodo]
 
         if todoActions.contains(parameters.action) {

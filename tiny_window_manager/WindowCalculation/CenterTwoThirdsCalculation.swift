@@ -22,6 +22,7 @@ import Foundation
 class CenterTwoThirdsCalculation: WindowCalculation, OrientationAware {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
         return orientationBasedRect(screenFrame)
     }
@@ -30,6 +31,7 @@ class CenterTwoThirdsCalculation: WindowCalculation, OrientationAware {
 
     /// For landscape: window takes 2/3 of width, centered horizontally, full height
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         // Window takes 2/3 of the screen width
         let windowWidth = screenFrame.width * 2.0 / 3.0
 
@@ -52,6 +54,7 @@ class CenterTwoThirdsCalculation: WindowCalculation, OrientationAware {
 
     /// For portrait: window takes 2/3 of height, centered vertically, full width
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         // Window takes 2/3 of the screen height
         let windowHeight = screenFrame.height * 2.0 / 3.0
 

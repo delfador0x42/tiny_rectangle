@@ -13,6 +13,7 @@ import Foundation
 class MaximizeCalculation: WindowCalculation {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         // The visible frame already excludes the menu bar and dock
         let fullScreenRect = params.visibleFrameOfScreen
 

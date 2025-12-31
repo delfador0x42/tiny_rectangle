@@ -19,6 +19,7 @@ class MessagePopover {
     var popover: NSPopover
 
     init() {
+        print(#function, "called")
         // Create the popover container
         popover = NSPopover()
 
@@ -38,6 +39,7 @@ class MessagePopover {
     ///   - message: The text to display in the popover
     ///   - sender: The view that the popover should be anchored to
     public func show(message: String, sender: NSView) {
+        print(#function, "called")
         // Store the message so the view can display it
         messageView.message = message
 
@@ -64,6 +66,7 @@ class MessageView: NSViewController {
     /// Called just before the view appears on screen.
     /// We use this to update the text field with our message.
     override func viewWillAppear() {
+        print(#function, "called")
         super.viewWillAppear()
 
         // Update the text field if we have a message

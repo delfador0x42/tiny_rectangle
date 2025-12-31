@@ -30,7 +30,9 @@ class Debounce<T: Equatable> {
 
     // Private initializer prevents creating instances.
     // All functionality is through the static method.
-    private init() {}
+    private init() {
+        print(#function, "called")
+    }
 
     /// Schedules an action to be performed after a delay, but ONLY if the input hasn't changed.
     ///
@@ -62,6 +64,7 @@ class Debounce<T: Equatable> {
         comparedAgainst current: @escaping @autoclosure () -> (T),
         perform: @escaping (T) -> ()
     ) {
+        print(#function, "called")
         // Define when the delayed check should happen (0.5 seconds from now)
         let delay = DispatchTime.now() + 0.5
 

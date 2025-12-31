@@ -28,6 +28,7 @@ class BottomCenterSixthCalculation: WindowCalculation, OrientationAware {
     private let topRightTwoSixths = TopRightTwoSixthsCalculation()
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         // If cycling is disabled or this is the first action, use default position
@@ -41,6 +42,7 @@ class BottomCenterSixthCalculation: WindowCalculation, OrientationAware {
     /// Determines the next calculator in the cycle based on the last action.
     /// Returns nil if cycling should not occur.
     private func nextCalculationInCycle(for params: RectCalculationParameters) -> SimpleCalc? {
+        print(#function, "called")
         let isCyclingEnabled = Defaults.subsequentExecutionMode.value != .none
         let isRepeatedAction = params.action == .bottomCenterSixth
 
@@ -64,6 +66,7 @@ class BottomCenterSixthCalculation: WindowCalculation, OrientationAware {
 
     /// Landscape: Bottom row, center column (1/3 width, 1/2 height).
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let width = floor(screenFrame.width * ScreenFraction.oneThird)
         let height = floor(screenFrame.height * ScreenFraction.oneHalf)
 
@@ -77,6 +80,7 @@ class BottomCenterSixthCalculation: WindowCalculation, OrientationAware {
 
     /// Portrait: Right column, center row (1/2 width, 1/3 height).
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let width = floor(screenFrame.width * ScreenFraction.oneHalf)
         let height = floor(screenFrame.height * ScreenFraction.oneThird)
 
@@ -96,6 +100,7 @@ class BottomRightTwoSixthsCalculation: WindowCalculation, OrientationAware {
 
     /// Landscape: Bottom row, right two columns (2/3 width, 1/2 height).
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let width = floor(screenFrame.width * ScreenFraction.twoThirds)
         let height = floor(screenFrame.height * ScreenFraction.oneHalf)
 
@@ -109,6 +114,7 @@ class BottomRightTwoSixthsCalculation: WindowCalculation, OrientationAware {
 
     /// Portrait: Right column, bottom two rows (1/2 width, 2/3 height).
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let width = floor(screenFrame.width * ScreenFraction.oneHalf)
         let height = floor(screenFrame.height * ScreenFraction.twoThirds)
 
@@ -128,6 +134,7 @@ class BottomLeftTwoSixthsCalculation: WindowCalculation, OrientationAware {
 
     /// Landscape: Bottom row, left two columns (2/3 width, 1/2 height).
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let width = floor(screenFrame.width * ScreenFraction.twoThirds)
         let height = floor(screenFrame.height * ScreenFraction.oneHalf)
 
@@ -143,6 +150,7 @@ class BottomLeftTwoSixthsCalculation: WindowCalculation, OrientationAware {
 
     /// Portrait: Left column, bottom two rows (1/2 width, 2/3 height).
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let width = floor(screenFrame.width * ScreenFraction.oneHalf)
         let height = floor(screenFrame.height * ScreenFraction.twoThirds)
 

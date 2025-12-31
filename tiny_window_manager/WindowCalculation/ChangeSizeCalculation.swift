@@ -37,6 +37,7 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
     }
 
     override init() {
+        print(#function, "called")
         // Use gap size setting, or default to 5 pixels
         let windowGapSize = Defaults.gapSize.value
         screenEdgeGapSize = windowGapSize > 0 ? CGFloat(windowGapSize) : 5.0
@@ -51,6 +52,7 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
         let originalWindowRect = params.window.rect
 
@@ -107,6 +109,7 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
 
     /// Determines the pixel offset based on the action (positive = grow, negative = shrink)
     private func calculateSizeOffset(for action: WindowAction) -> CGFloat {
+        print(#function, "called")
         switch action {
         case .larger, .largerHeight:
             return sizeOffsetAbs
@@ -130,6 +133,7 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
         screenFrame: CGRect,
         offset: CGFloat
     ) -> CGRect {
+        print(#function, "called")
         var result = rect
 
         // Change width and shift X to keep centered (half the offset on each side)
@@ -163,6 +167,7 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
         offset: CGFloat,
         action: WindowAction
     ) -> CGRect {
+        print(#function, "called")
         var result = rect
 
         // Change height and shift Y to keep centered (half the offset on each side)
@@ -189,6 +194,7 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
 
     /// Shrinks a window equally from all sides (used when window fills screen)
     private func shrinkFromCenter(_ rect: CGRect, by offset: CGFloat) -> CGRect {
+        print(#function, "called")
         var result = rect
         result.size.width = rect.width + offset
         result.origin.x = rect.origin.x - floor(offset / 2.0)
@@ -201,27 +207,33 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
 
     /// Checks if a gap is small enough to count as "against" the screen edge
     private func againstScreenEdge(_ gap: CGFloat) -> Bool {
+        print(#function, "called")
         return abs(gap) <= screenEdgeGapSize
     }
 
     private func againstLeftScreenEdge(_ windowRect: CGRect, _ screenFrame: CGRect) -> Bool {
+        print(#function, "called")
         return againstScreenEdge(windowRect.minX - screenFrame.minX)
     }
 
     private func againstRightScreenEdge(_ windowRect: CGRect, _ screenFrame: CGRect) -> Bool {
+        print(#function, "called")
         return againstScreenEdge(windowRect.maxX - screenFrame.maxX)
     }
 
     private func againstTopScreenEdge(_ windowRect: CGRect, _ screenFrame: CGRect) -> Bool {
+        print(#function, "called")
         return againstScreenEdge(windowRect.maxY - screenFrame.maxY)
     }
 
     private func againstBottomScreenEdge(_ windowRect: CGRect, _ screenFrame: CGRect) -> Bool {
+        print(#function, "called")
         return againstScreenEdge(windowRect.minY - screenFrame.minY)
     }
 
     /// Checks if window is touching all four screen edges (i.e., maximized)
     private func againstAllScreenEdges(windowRect: CGRect, visibleFrameOfScreen: CGRect) -> Bool {
+        print(#function, "called")
         return againstLeftScreenEdge(windowRect, visibleFrameOfScreen)
             && againstRightScreenEdge(windowRect, visibleFrameOfScreen)
             && againstTopScreenEdge(windowRect, visibleFrameOfScreen)
@@ -237,6 +249,7 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
         resizedWindowRect: CGRect,
         visibleFrameOfScreen screenFrame: CGRect
     ) -> CGRect {
+        print(#function, "called")
         var result = resizedWindowRect
         let gapSize = CGFloat(Defaults.gapSize.value)
 
@@ -265,6 +278,7 @@ class ChangeSizeCalculation: WindowCalculation, ChangeWindowDimensionCalculation
         resizedWindowRect: CGRect,
         visibleFrameOfScreen screenFrame: CGRect
     ) -> CGRect {
+        print(#function, "called")
         var result = resizedWindowRect
         let gapSize = CGFloat(Defaults.gapSize.value)
 

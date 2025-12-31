@@ -88,6 +88,7 @@ class ApplicationToggle: NSObject {
     ///
     /// - Parameter shortcutManager: The ShortcutManager to enable/disable shortcuts on.
     init(shortcutManager: ShortcutManager) {
+        print(#function, "called")
         self.shortcutManager = shortcutManager
         super.init()
 
@@ -107,6 +108,7 @@ class ApplicationToggle: NSObject {
     /// Call this after the user changes settings in the preferences UI
     /// to pick up any changes.
     public func reloadFromDefaults() {
+        print(#function, "called")
         if let disabledApps = getDisabledApps() {
             self.disabledApps = disabledApps
         } else {
@@ -122,6 +124,7 @@ class ApplicationToggle: NSObject {
     /// - The app is added to the disabled list
     /// - If it's the current app, shortcuts are immediately disabled
     public func disableApp(appBundleId: String? = frontAppId) {
+        print(#function, "called")
         if let appBundleId {
             disabledApps.insert(appBundleId)
             saveDisabledApps()
@@ -137,6 +140,7 @@ class ApplicationToggle: NSObject {
     /// - The app is removed from the disabled list
     /// - If it's the current app, shortcuts are immediately enabled
     public func enableApp(appBundleId: String? = frontAppId) {
+        print(#function, "called")
         if let appBundleId {
             disabledApps.remove(appBundleId)
             saveDisabledApps()
@@ -149,6 +153,7 @@ class ApplicationToggle: NSObject {
     /// - Parameter bundleId: The bundle identifier to check (e.g., "com.apple.Safari").
     /// - Returns: true if the app has window management disabled.
     public func isDisabled(bundleId: String) -> Bool {
+        print(#function, "called")
         return disabledApps.contains(bundleId)
     }
 
@@ -156,6 +161,7 @@ class ApplicationToggle: NSObject {
 
     /// Saves the disabled apps set to UserDefaults as a JSON string.
     private func saveDisabledApps() {
+        print(#function, "called")
         let encoder = JSONEncoder()
 
         // Convert Set<String> to JSON string and save
@@ -169,6 +175,7 @@ class ApplicationToggle: NSObject {
     ///
     /// - Returns: The set of disabled bundle IDs, or nil if none are stored.
     private func getDisabledApps() -> Set<String>? {
+        print(#function, "called")
         // Get the JSON string from UserDefaults
         guard let jsonString = Defaults.disabledApps.value else { return nil }
 
@@ -184,6 +191,7 @@ class ApplicationToggle: NSObject {
 
     /// Disables all keyboard shortcuts (called when switching to a disabled app).
     private func disableShortcuts() {
+        print(#function, "called")
         // Only disable if not already disabled (avoid redundant work)
         if !Self.shortcutsDisabled {
             Self.shortcutsDisabled = true
@@ -198,6 +206,7 @@ class ApplicationToggle: NSObject {
 
     /// Enables all keyboard shortcuts (called when switching to an enabled app).
     private func enableShortcuts() {
+        print(#function, "called")
         // Only enable if currently disabled (avoid redundant work)
         if Self.shortcutsDisabled {
             Self.shortcutsDisabled = false
@@ -214,6 +223,7 @@ class ApplicationToggle: NSObject {
 
     /// Registers to receive notifications when the frontmost app changes.
     private func registerFrontAppChangeNote() {
+        print(#function, "called")
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
             selector: #selector(receiveFrontAppChangeNote(_:)),
@@ -231,6 +241,7 @@ class ApplicationToggle: NSObject {
     ///
     /// - Parameter notification: Contains the NSRunningApplication that was activated.
     @objc func receiveFrontAppChangeNote(_ notification: Notification) {
+        print(#function, "called")
         // Extract the application that just became active
         guard let application = notification.userInfo?["NSWorkspaceApplicationKey"] as? NSRunningApplication else {
             return
@@ -277,6 +288,7 @@ extension ApplicationToggle {
     /// Todo Mode is a feature where one app (like Reminders or Things) is treated
     /// as a sidebar that stays visible alongside other windows.
     public func setTodoApp() {
+        print(#function, "called")
         Defaults.todoApplication.value = Self.frontAppId
     }
 
@@ -284,6 +296,7 @@ extension ApplicationToggle {
     ///
     /// - Returns: true if the frontmost app is the user's selected todo app.
     public func todoAppIsActive() -> Bool {
+        print(#function, "called")
         return Defaults.todoApplication.value == Self.frontAppId
     }
 }

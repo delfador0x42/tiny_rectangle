@@ -60,6 +60,7 @@ struct GridCycling {
     ///   - direction: Which direction to cycle (.right = forward, .left = backward)
     /// - Returns: A calculation function for the next position, or nil if current position isn't in the cycle
     static func nextCalculation(for gridType: GridType, currentSubAction: SubWindowAction, direction: Direction) -> SimpleCalc? {
+        print(#function, "called")
 
         // Get the cycling order and calculation lookup function for this grid type
         let (order, getCalculation) = cyclingConfiguration(for: gridType)
@@ -86,6 +87,7 @@ struct GridCycling {
 
     /// Returns the cycling order and calculation lookup function for a grid type.
     private static func cyclingConfiguration(for gridType: GridType) -> (order: [SubWindowAction], getCalculation: (SubWindowAction) -> SimpleCalc?) {
+        print(#function, "called")
         switch gridType {
         case .ninths:
             return (ninthsOrder, getNinthCalculation)
@@ -104,6 +106,7 @@ struct GridCycling {
     ///   - direction: Which way to move (.right = +1, .left = -1)
     /// - Returns: The next index, wrapping around if necessary
     private static func calculateNextIndex(currentIndex: Int, totalCount: Int, direction: Direction) -> Int {
+        print(#function, "called")
         switch direction {
         case .right:
             // Move forward, wrap from last to first
@@ -122,6 +125,7 @@ struct GridCycling {
 
     /// Looks up the calculation function for a ninths position
     private static func getNinthCalculation(for subAction: SubWindowAction) -> SimpleCalc? {
+        print(#function, "called")
         switch subAction {
         case .topLeftNinth:
             return WindowCalculationFactory.topLeftNinthCalculation.orientationBasedRect
@@ -148,6 +152,7 @@ struct GridCycling {
 
     /// Looks up the calculation function for an eighths position
     private static func getEighthCalculation(for subAction: SubWindowAction) -> SimpleCalc? {
+        print(#function, "called")
         switch subAction {
         case .topLeftEighth:
             return WindowCalculationFactory.topLeftEighthCalculation.orientationBasedRect
@@ -172,6 +177,7 @@ struct GridCycling {
 
     /// Looks up the calculation function for a corner thirds position
     private static func getCornerThirdCalculation(for subAction: SubWindowAction) -> SimpleCalc? {
+        print(#function, "called")
         switch subAction {
         case .topLeftThird:
             return WindowCalculationFactory.topLeftThirdCalculation.orientationBasedRect

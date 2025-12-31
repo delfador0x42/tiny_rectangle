@@ -56,6 +56,7 @@ extension Sequence {
     /// their elements to be Hashable (able to produce a hash value for fast lookup).
     ///
     func uniqueMap<T>(_ transform: (Element) -> T) -> [T] where T: Hashable {
+        print(#function, "called")
 
         // We use TWO data structures for different purposes:
         //

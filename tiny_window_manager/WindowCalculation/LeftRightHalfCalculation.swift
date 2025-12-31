@@ -18,6 +18,7 @@ class LeftRightHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
     // MARK: - Main Entry Point
 
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        print(#function, "called")
         let usableScreens = params.usableScreens
         let executionMode = Defaults.subsequentExecutionMode.value
 
@@ -52,6 +53,7 @@ class LeftRightHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Calculates a rectangle with a given fraction of screen width (e.g., 0.5 for half, 0.66 for two-thirds).
     func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         var windowRect = screenFrame
@@ -70,6 +72,7 @@ class LeftRightHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Handles the resize cycling behavior (1/2 → 2/3 → 1/3 → 1/2...).
     func calculateResize(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        print(#function, "called")
         let screen = params.usableScreens.currentScreen
         let rectResult: RectResult = calculateRepeatedRect(params.asRectParams())
         return WindowCalculationResult(rect: rectResult.rect, screen: screen, resultingAction: params.action)
@@ -79,6 +82,7 @@ class LeftRightHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Routes to left or right display calculation based on the current action.
     func calculateAcrossDisplays(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        print(#function, "called")
         let screen = params.usableScreens.currentScreen
         let isRightHalfAction = params.action == .rightHalf
 
@@ -91,6 +95,7 @@ class LeftRightHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Handles left-half positioning, moving to the previous monitor on repeated presses.
     func calculateLeftAcrossDisplays(_ params: WindowCalculationParameters, screen: NSScreen) -> WindowCalculationResult? {
+        print(#function, "called")
         let isRepeated = isRepeatedCommand(params)
         let previousScreen = params.usableScreens.adjacentScreens?.prev
 
@@ -116,6 +121,7 @@ class LeftRightHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Handles right-half positioning, moving to the next monitor on repeated presses.
     func calculateRightAcrossDisplays(_ params: WindowCalculationParameters, screen: NSScreen) -> WindowCalculationResult? {
+        print(#function, "called")
         let isRepeated = isRepeatedCommand(params)
         let nextScreen = params.usableScreens.adjacentScreens?.next
 
@@ -143,6 +149,7 @@ class LeftRightHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Calculates the rectangle for snapping preview (drag-to-edge visual feedback).
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
         let halfWidth = floor(screenFrame.width / 2.0)
 

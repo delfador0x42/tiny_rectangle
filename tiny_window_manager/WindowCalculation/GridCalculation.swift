@@ -60,6 +60,7 @@ class GridCalculation: WindowCalculation, OrientationAware {
          portraitColumn: Int, portraitRow: Int,
          action: WindowAction,
          subAction: SubWindowAction) {
+        print(#function, "called")
         self.gridType = gridType
         self.landscapeColumn = landscapeColumn
         self.landscapeRow = landscapeRow
@@ -77,6 +78,7 @@ class GridCalculation: WindowCalculation, OrientationAware {
                      column: Int, row: Int,
                      action: WindowAction,
                      subAction: SubWindowAction) {
+        print(#function, "called")
         self.init(gridType: gridType,
                   landscapeColumn: column, landscapeRow: row,
                   portraitColumn: column, portraitRow: row,
@@ -87,6 +89,7 @@ class GridCalculation: WindowCalculation, OrientationAware {
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // If cycling is disabled, just return the grid position
@@ -120,12 +123,14 @@ class GridCalculation: WindowCalculation, OrientationAware {
 
     /// Returns the grid cell rectangle for landscape orientation
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
-        calculateGridRect(visibleFrameOfScreen, column: landscapeColumn, row: landscapeRow, isLandscape: true)
+        print(#function, "called")
+        return calculateGridRect(visibleFrameOfScreen, column: landscapeColumn, row: landscapeRow, isLandscape: true)
     }
 
     /// Returns the grid cell rectangle for portrait orientation
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
-        calculateGridRect(visibleFrameOfScreen, column: portraitColumn, row: portraitRow, isLandscape: false)
+        print(#function, "called")
+        return calculateGridRect(visibleFrameOfScreen, column: portraitColumn, row: portraitRow, isLandscape: false)
     }
 
     // MARK: - Private Helpers
@@ -139,6 +144,7 @@ class GridCalculation: WindowCalculation, OrientationAware {
     ///   - isLandscape: Whether the screen is in landscape orientation
     /// - Returns: The rectangle for the specified grid cell
     private func calculateGridRect(_ frame: CGRect, column: Int, row: Int, isLandscape: Bool) -> RectResult {
+        print(#function, "called")
         // Calculate the size of each cell in the grid
         let cellWidth = gridType.cellWidth(screenWidth: frame.width, isLandscape: isLandscape)
         let cellHeight = gridType.cellHeight(screenHeight: frame.height, isLandscape: isLandscape)

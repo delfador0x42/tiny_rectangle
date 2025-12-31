@@ -41,6 +41,7 @@ enum GridType {
     /// - Parameter isLandscape: Whether the screen is in landscape orientation
     /// - Returns: Number of columns (horizontal divisions)
     func columns(isLandscape: Bool) -> Int {
+        print(#function, "called")
         switch self {
         case .ninths:
             return 3  // Always 3 columns
@@ -59,6 +60,7 @@ enum GridType {
     /// - Parameter isLandscape: Whether the screen is in landscape orientation
     /// - Returns: Number of rows (vertical divisions)
     func rows(isLandscape: Bool) -> Int {
+        print(#function, "called")
         switch self {
         case .ninths:
             return 3  // Always 3 rows
@@ -89,6 +91,7 @@ enum GridType {
     ///   - isLandscape: Whether the screen is in landscape orientation
     /// - Returns: The width of one cell in points
     func cellWidth(screenWidth: CGFloat, isLandscape: Bool) -> CGFloat {
+        print(#function, "called")
         switch self {
         case .ninths:
             // Each cell is 1/3 of screen width
@@ -113,6 +116,7 @@ enum GridType {
     ///   - isLandscape: Whether the screen is in landscape orientation
     /// - Returns: The height of one cell in points
     func cellHeight(screenHeight: CGFloat, isLandscape: Bool) -> CGFloat {
+        print(#function, "called")
         switch self {
         case .ninths:
             // Each cell is 1/3 of screen height

@@ -52,6 +52,7 @@ struct TopSixthsCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         // If there's no prior snap area, default to maximize
         guard let priorAction = priorSnapArea?.action else {
@@ -97,6 +98,7 @@ struct TopSixthsCompoundCalculation: CompoundSnapAreaCalculation {
 
     /// Checks if the prior action qualifies for showing the top-left sixth
     private func shouldShowTopLeftSixth(priorAction: WindowAction) -> Bool {
+        print(#function, "called")
         let qualifyingActions: [WindowAction] = [
             .topLeft,           // Coming from top-left corner
             .topLeftSixth,      // Already in top-left sixth
@@ -107,6 +109,7 @@ struct TopSixthsCompoundCalculation: CompoundSnapAreaCalculation {
 
     /// Checks if the prior action qualifies for showing the top-right sixth
     private func shouldShowTopRightSixth(priorAction: WindowAction) -> Bool {
+        print(#function, "called")
         let qualifyingActions: [WindowAction] = [
             .topRight,          // Coming from top-right corner
             .topRightSixth,     // Already in top-right sixth
@@ -117,6 +120,7 @@ struct TopSixthsCompoundCalculation: CompoundSnapAreaCalculation {
 
     /// Checks if the user is coming from any top sixth position
     private func isComingFromTopSixth(priorAction: WindowAction) -> Bool {
+        print(#function, "called")
         let topSixthActions: [WindowAction] = [
             .topLeftSixth,
             .topRightSixth,
@@ -126,6 +130,7 @@ struct TopSixthsCompoundCalculation: CompoundSnapAreaCalculation {
     }
 
     private func createSnapArea(screen: NSScreen, directional: Directional, action: WindowAction) -> SnapArea {
+        print(#function, "called")
         return SnapArea(screen: screen, directional: directional, action: action)
     }
 }
@@ -159,6 +164,7 @@ struct BottomSixthsCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         // If there's no prior snap area, fall back to thirds behavior
         guard let priorAction = priorSnapArea?.action else {
@@ -201,6 +207,7 @@ struct BottomSixthsCompoundCalculation: CompoundSnapAreaCalculation {
 
     /// Checks if the prior action qualifies for showing the bottom-left sixth
     private func shouldShowBottomLeftSixth(priorAction: WindowAction) -> Bool {
+        print(#function, "called")
         let qualifyingActions: [WindowAction] = [
             .bottomLeft,         // Coming from bottom-left corner
             .bottomLeftSixth,    // Already in bottom-left sixth
@@ -211,6 +218,7 @@ struct BottomSixthsCompoundCalculation: CompoundSnapAreaCalculation {
 
     /// Checks if the prior action qualifies for showing the bottom-center sixth
     private func shouldShowBottomCenterSixth(priorAction: WindowAction) -> Bool {
+        print(#function, "called")
         let qualifyingActions: [WindowAction] = [
             .bottomRightSixth,   // Coming from adjacent sixth
             .bottomLeftSixth,    // Coming from adjacent sixth
@@ -221,6 +229,7 @@ struct BottomSixthsCompoundCalculation: CompoundSnapAreaCalculation {
 
     /// Checks if the prior action qualifies for showing the bottom-right sixth
     private func shouldShowBottomRightSixth(priorAction: WindowAction) -> Bool {
+        print(#function, "called")
         let qualifyingActions: [WindowAction] = [
             .bottomRight,        // Coming from bottom-right corner
             .bottomRightSixth,   // Already in bottom-right sixth
@@ -236,6 +245,7 @@ struct BottomSixthsCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
         return CompoundSnapArea.thirdsCompoundCalculation.snapArea(
             cursorLocation: loc,
             screen: screen,
@@ -245,6 +255,7 @@ struct BottomSixthsCompoundCalculation: CompoundSnapAreaCalculation {
     }
 
     private func createSnapArea(screen: NSScreen, directional: Directional, action: WindowAction) -> SnapArea {
+        print(#function, "called")
         return SnapArea(screen: screen, directional: directional, action: action)
     }
 }
@@ -265,6 +276,7 @@ private func determineHorizontalRegion(
     screenFrame: CGRect,
     thirdWidth: CGFloat
 ) -> HorizontalRegion {
+    print(#function, "called")
 
     let leftThirdEnd = screenFrame.minX + thirdWidth
     let rightThirdStart = screenFrame.maxX - thirdWidth

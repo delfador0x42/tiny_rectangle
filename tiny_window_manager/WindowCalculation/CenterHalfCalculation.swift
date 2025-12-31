@@ -18,6 +18,7 @@ class CenterHalfCalculation: WindowCalculation, OrientationAware, RepeatedExecut
     // MARK: - Main Calculation Entry Points
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         // Check if we should cycle through different sizes (half → two-thirds → one-third)
         let hasRepeatedAction = params.lastAction != nil && Defaults.subsequentExecutionMode.resizes
         let cyclingEnabled = Defaults.centerHalfCycles.userEnabled
@@ -32,6 +33,7 @@ class CenterHalfCalculation: WindowCalculation, OrientationAware, RepeatedExecut
 
     /// Called by RepeatedExecutionsInThirdsCalculation protocol to get rect at a specific fraction
     func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         if screenFrame.isLandscape {
@@ -45,6 +47,7 @@ class CenterHalfCalculation: WindowCalculation, OrientationAware, RepeatedExecut
 
     /// For landscape screens: window takes a fraction of screen WIDTH, full height, centered
     func landscapeRect(_ screenFrame: CGRect, fraction: Float) -> RectResult {
+        print(#function, "called")
         // Calculate the new window size
         let windowWidth = round(screenFrame.width * CGFloat(fraction))
         let windowHeight = screenFrame.height
@@ -63,6 +66,7 @@ class CenterHalfCalculation: WindowCalculation, OrientationAware, RepeatedExecut
 
     /// Convenience: landscape rect at default 50% width
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         return landscapeRect(screenFrame, fraction: 0.5)
     }
 
@@ -70,6 +74,7 @@ class CenterHalfCalculation: WindowCalculation, OrientationAware, RepeatedExecut
 
     /// For portrait screens: window takes a fraction of screen HEIGHT, full width, centered
     func portraitRect(_ screenFrame: CGRect, fraction: Float) -> RectResult {
+        print(#function, "called")
         // Calculate the new window size
         let windowWidth = screenFrame.width
         let windowHeight = round(screenFrame.height * CGFloat(fraction))
@@ -88,6 +93,7 @@ class CenterHalfCalculation: WindowCalculation, OrientationAware, RepeatedExecut
 
     /// Convenience: portrait rect at default 50% height
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         return portraitRect(screenFrame, fraction: 0.5)
     }
 

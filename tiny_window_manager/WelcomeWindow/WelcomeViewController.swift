@@ -32,6 +32,7 @@ class WelcomeViewController: NSViewController {
     /// Closes the modal window and returns a response code indicating
     /// the user wants the recommended keyboard shortcut layout.
     @IBAction func selectRecommended(_ sender: Any) {
+        print(#function, "called")
         NSApp.stopModal(withCode: .alertFirstButtonReturn)
     }
 
@@ -41,6 +42,7 @@ class WelcomeViewController: NSViewController {
     /// the user wants the Spectacle-compatible keyboard shortcut layout.
     /// (Spectacle was a popular window manager with its own shortcuts.)
     @IBAction func selectSpectacle(_ sender: Any) {
+        print(#function, "called")
         NSApp.stopModal(withCode: .alertSecondButtonReturn)
     }
 }
@@ -61,6 +63,7 @@ class WelcomeWindowController: NSWindowController {
     /// By default, clicking close would just hide the window without
     /// returning a response. We change it to return "Recommended" instead.
     override func windowDidLoad() {
+        print(#function, "called")
         super.windowDidLoad()
 
         // Get the standard close button (the red circle in the title bar)
@@ -78,6 +81,7 @@ class WelcomeWindowController: NSWindowController {
     /// Treats closing the window as if the user selected "Recommended".
     /// This ensures the app always gets a valid response from the modal.
     @objc func windowClosed() {
+        print(#function, "called")
         NSApp.stopModal(withCode: .alertFirstButtonReturn)
     }
 }

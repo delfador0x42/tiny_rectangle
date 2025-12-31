@@ -11,6 +11,7 @@ import Foundation
 class BottomRightSixthCalculation: WindowCalculation, OrientationAware, SixthsRepeated {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         // If cycling through positions is disabled, just return the default position
@@ -44,6 +45,7 @@ class BottomRightSixthCalculation: WindowCalculation, OrientationAware, SixthsRe
 
     /// Calculates the bottom-right cell in a 3-column x 2-row grid (landscape mode).
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let cellWidth = floor(screenFrame.width / 3.0)
         let cellHeight = floor(screenFrame.height / 2.0)
 
@@ -57,6 +59,7 @@ class BottomRightSixthCalculation: WindowCalculation, OrientationAware, SixthsRe
 
     /// Calculates the bottom-right cell in a 2-column x 3-row grid (portrait mode).
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let cellWidth = floor(screenFrame.width / 2.0)
         let cellHeight = floor(screenFrame.height / 3.0)
 

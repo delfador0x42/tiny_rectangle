@@ -40,6 +40,7 @@ class TitleBarManager {
     // MARK: - Initialization
 
     init() {
+        print(#function, "called")
         // Set up a passive monitor for left mouse button releases
         // (Double-clicks are detected by checking clickCount == 2 on mouse up)
         eventMonitor = PassiveEventMonitor(mask: .leftMouseUp, handler: handle)
@@ -61,6 +62,7 @@ class TitleBarManager {
     /// Starts or stops event monitoring based on user settings.
     /// If no action is configured for double-click, we don't need to listen.
     private func toggleListening() {
+        print(#function, "called")
         let hasConfiguredAction = WindowAction(rawValue: Defaults.doubleClickTitleBar.value - 1) != nil
 
         if hasConfiguredAction {
@@ -72,6 +74,7 @@ class TitleBarManager {
 
     /// Called for every left mouse button release. Filters to find title bar double-clicks.
     private func handle(_ event: NSEvent) {
+        print(#function, "called")
         // STEP 1: Basic event validation
         // ─────────────────────────────────────────────────────────────────────
         guard

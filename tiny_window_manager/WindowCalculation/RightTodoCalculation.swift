@@ -28,6 +28,7 @@ final class RightTodoCalculation: WindowCalculation {
 
     /// Calculates a rectangle for a right-side todo sidebar.
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // Start with the full screen dimensions (we'll adjust width and x-position)

@@ -158,6 +158,7 @@ class PrefsViewController: NSViewController {
     /// Sets up the mapping between actions and views, binds shortcuts to UserDefaults,
     /// and configures initial UI state.
     override func awakeFromNib() {
+        print(#function, "called")
         // STEP 1: Build the action-to-view mapping
         // This lets us iterate over all shortcuts programmatically
         actionsToViews = [
@@ -240,6 +241,7 @@ class PrefsViewController: NSViewController {
     ///
     /// - Parameter sender: The "Show More" button that was clicked
     @IBAction func toggleShowMore(_ sender: NSButton) {
+        print(#function, "called")
         // Toggle visibility
         additionalShortcutsStackView.isHidden = !additionalShortcutsStackView.isHidden
 
@@ -257,6 +259,7 @@ class PrefsViewController: NSViewController {
     /// - Enabled: Uses `PassthroughShortcutValidator` (accepts any shortcut)
     /// - Disabled: Uses default `MASShortcutValidator` (blocks system shortcuts)
     private func subscribeToAllowAnyShortcutToggle() {
+        print(#function, "called")
         Notification.Name.allowAnyShortcut.onPost { notification in
             guard let enabled = notification.object as? Bool else { return }
 
@@ -287,16 +290,19 @@ class PassthroughShortcutValidator: MASShortcutValidator {
 
     /// Always returns true - any shortcut is considered valid.
     override func isShortcutValid(_ shortcut: MASShortcut!) -> Bool {
+        print(#function, "called")
         return true
     }
 
     /// Always returns false - pretends no shortcut is taken by the system.
     override func isShortcutAlreadyTaken(bySystem shortcut: MASShortcut!, explanation: AutoreleasingUnsafeMutablePointer<NSString?>!) -> Bool {
+        print(#function, "called")
         return false
     }
 
     /// Always returns false - pretends no shortcut conflicts with app menus.
     override func isShortcut(_ shortcut: MASShortcut!, alreadyTakenIn menu: NSMenu!, explanation: AutoreleasingUnsafeMutablePointer<NSString?>!) -> Bool {
+        print(#function, "called")
         return false
     }
 }

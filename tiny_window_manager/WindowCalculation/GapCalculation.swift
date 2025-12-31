@@ -28,6 +28,7 @@ class GapCalculation {
     ///   - gapSize: The gap size in points
     /// - Returns: A new rectangle with gaps applied (smaller than the original)
     static func applyGaps(_ rect: CGRect, dimension: Dimension = .both, sharedEdges: Edge = .none, gapSize: Float) -> CGRect {
+        print(#function, "called")
 
         let fullGap = CGFloat(gapSize)
         let halfGap = fullGap / 2
@@ -51,6 +52,7 @@ class GapCalculation {
 
     /// Adjusts horizontal edges (left/right) for shared window boundaries
     private static func adjustForSharedHorizontalEdges(_ rect: CGRect, sharedEdges: Edge, dimension: Dimension, halfGap: CGFloat) -> CGRect {
+        print(#function, "called")
         guard dimension.contains(.horizontal) else { return rect }
 
         var result = rect
@@ -71,6 +73,7 @@ class GapCalculation {
 
     /// Adjusts vertical edges (top/bottom) for shared window boundaries
     private static func adjustForSharedVerticalEdges(_ rect: CGRect, sharedEdges: Edge, dimension: Dimension, halfGap: CGFloat) -> CGRect {
+        print(#function, "called")
         guard dimension.contains(.vertical) else { return rect }
 
         var result = rect

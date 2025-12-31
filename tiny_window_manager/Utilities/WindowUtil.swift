@@ -69,6 +69,7 @@ class WindowUtil {
     /// let allWindows = WindowUtil.getWindowList(all: true)
     /// ```
     static func getWindowList(ids: [CGWindowID]? = nil, all: Bool = false) -> [WindowInfo] {
+        print(#function, "called")
         // Check cache first to avoid expensive window server calls
         if let cachedInfos = windowListCache[ids] {
             return cachedInfos
@@ -95,6 +96,7 @@ class WindowUtil {
     ///   - includeOffScreen: Whether to include windows that aren't currently visible
     /// - Returns: A CFArray of CFDictionary entries, one per window
     private static func fetchRawWindowInfos(ids: [CGWindowID]?, includeOffScreen: Bool) -> CFArray? {
+        print(#function, "called")
         if let ids = ids {
             // Fetch specific windows by their IDs
             return fetchWindowInfosByIds(ids)
@@ -109,6 +111,7 @@ class WindowUtil {
     /// This requires converting Swift's [CGWindowID] array into a CFArray
     /// of raw pointers, which is what the CoreGraphics API expects.
     private static func fetchWindowInfosByIds(_ ids: [CGWindowID]) -> CFArray? {
+        print(#function, "called")
         // Allocate memory for an array of raw pointers
         let pointerArray = UnsafeMutablePointer<UnsafeRawPointer?>.allocate(capacity: ids.count)
 
@@ -127,6 +130,7 @@ class WindowUtil {
 
     /// Fetches window info for all windows on screen.
     private static func fetchAllWindowInfos(includeOffScreen: Bool) -> CFArray? {
+        print(#function, "called")
         // Choose which windows to include
         let listOption: CGWindowListOption = includeOffScreen ? .optionAll : .optionOnScreenOnly
 
@@ -138,6 +142,7 @@ class WindowUtil {
 
     /// Converts raw CoreFoundation window data into Swift WindowInfo structs.
     private static func parseWindowInfos(from rawInfos: CFArray?) -> [WindowInfo] {
+        print(#function, "called")
         guard let rawInfos = rawInfos else {
             return []
         }
@@ -159,6 +164,7 @@ class WindowUtil {
     /// Each window is represented as a CFDictionary with keys like
     /// kCGWindowNumber, kCGWindowBounds, kCGWindowOwnerPID, etc.
     private static func parseWindowInfo(from rawInfos: CFArray, at index: Int) -> WindowInfo? {
+        print(#function, "called")
         let rawDict = rawInfos.getValue(index) as CFDictionary
 
         // Extract required fields from the dictionary

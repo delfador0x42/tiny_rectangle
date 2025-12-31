@@ -26,6 +26,7 @@ class TopCenterSixthCalculation: WindowCalculation, OrientationAware {
     private let bottomLeftTwoSixths = BottomLeftTwoSixthsCalculation()
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screen = params.visibleFrameOfScreen
 
         // Check if we should cycle to the next position
@@ -40,6 +41,7 @@ class TopCenterSixthCalculation: WindowCalculation, OrientationAware {
     // MARK: - Orientation-Based Positioning
 
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let screen = visibleFrameOfScreen
 
         // One-sixth size: 1/3 of width, 1/2 of height
@@ -55,6 +57,7 @@ class TopCenterSixthCalculation: WindowCalculation, OrientationAware {
     }
 
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let screen = visibleFrameOfScreen
 
         // One-sixth size: 1/2 of width, 1/3 of height
@@ -72,6 +75,7 @@ class TopCenterSixthCalculation: WindowCalculation, OrientationAware {
     // MARK: - Cycle Through Positions
 
     private func getNextCalculationInCycle(_ params: RectCalculationParameters) -> SimpleCalc? {
+        print(#function, "called")
         let cyclingEnabled = Defaults.subsequentExecutionMode.value != .none
 
         guard cyclingEnabled,
@@ -109,6 +113,7 @@ class TopCenterSixthCalculation: WindowCalculation, OrientationAware {
 class TopRightTwoSixthsCalculation: WindowCalculation, OrientationAware {
 
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let screen = visibleFrameOfScreen
 
         // Two-sixths size: 2/3 of width, 1/2 of height
@@ -124,6 +129,7 @@ class TopRightTwoSixthsCalculation: WindowCalculation, OrientationAware {
     }
 
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let screen = visibleFrameOfScreen
 
         // Two-sixths size: 1/2 of width, 2/3 of height
@@ -146,6 +152,7 @@ class TopRightTwoSixthsCalculation: WindowCalculation, OrientationAware {
 class TopLeftTwoSixthsCalculation: WindowCalculation, OrientationAware {
 
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let screen = visibleFrameOfScreen
 
         // Two-sixths size: 2/3 of width, 1/2 of height
@@ -161,6 +168,7 @@ class TopLeftTwoSixthsCalculation: WindowCalculation, OrientationAware {
     }
 
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let screen = visibleFrameOfScreen
 
         // Two-sixths size: 1/2 of width, 2/3 of height

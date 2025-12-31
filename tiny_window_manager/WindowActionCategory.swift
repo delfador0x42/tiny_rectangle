@@ -9,6 +9,7 @@
 import Foundation
 
 // MARK: - WindowActionCategory Enum
+//
 
 /// Categories for grouping related window actions together.
 ///

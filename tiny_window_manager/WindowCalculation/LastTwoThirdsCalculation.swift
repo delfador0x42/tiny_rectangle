@@ -16,6 +16,7 @@ class LastTwoThirdsCalculation: WindowCalculation, OrientationAware {
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         // Check if we should handle repeated keyboard shortcut presses
@@ -43,6 +44,7 @@ class LastTwoThirdsCalculation: WindowCalculation, OrientationAware {
 
     /// Positions the window in the RIGHT two-thirds of a landscape screen.
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         // Calculate two-thirds of the screen width
         let twoThirdsWidth = floor(screenFrame.width * 2 / 3.0)
 
@@ -61,6 +63,7 @@ class LastTwoThirdsCalculation: WindowCalculation, OrientationAware {
 
     /// Positions the window in the BOTTOM two-thirds of a portrait screen.
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         // Calculate two-thirds of the screen height
         let twoThirdsHeight = floor(screenFrame.height * 2 / 3.0)
 

@@ -121,6 +121,7 @@ class SnappingManager {
     // MARK: - Initialization
 
     init() {
+        print(#function, "called")
         // Enable snapping if not explicitly disabled
         if Defaults.windowSnapping.enabled != false {
             enableSnapping()
@@ -132,6 +133,7 @@ class SnappingManager {
 
     /// Registers for app-level notifications
     private func registerForNotifications() {
+        print(#function, "called")
         // Listen for snapping toggle changes
         Notification.Name.windowSnapping.onPost { notification in
             if let enabled = notification.object as? Bool {
@@ -155,6 +157,7 @@ class SnappingManager {
     /// Called when the frontmost application changes.
     /// Checks if snapping should be disabled for this app.
     func frontAppChanged(notification: Notification) {
+        print(#function, "called")
         if ApplicationToggle.shortcutsDisabled {
             DispatchQueue.main.async {
                 if !Defaults.ignoreDragSnapToo.userDisabled {
@@ -184,6 +187,7 @@ class SnappingManager {
     /// Enables or disables snapping based on current state.
     /// Snapping is disabled if: not allowed, in fullscreen, or user disabled it.
     func toggleListening() {
+        print(#function, "called")
         let shouldEnable = allowListening && !isFullScreen && !Defaults.windowSnapping.userDisabled
 
         if shouldEnable {
@@ -197,6 +201,7 @@ class SnappingManager {
 
     /// Registers for workspace change notifications (space changes, fullscreen changes)
     private func registerWorkspaceChangeNote() {
+        print(#function, "called")
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
             selector: #selector(receiveWorkspaceNote(_:)),
@@ -208,12 +213,14 @@ class SnappingManager {
 
     /// Checks if the current front window is in fullscreen mode
     func checkFullScreen() {
+        print(#function, "called")
         isFullScreen = AccessibilityElement.getFrontWindowElement()?.isFullScreen == true
         toggleListening()
     }
 
     /// Called when the active space changes (e.g., switching desktops)
     @objc func receiveWorkspaceNote(_ notification: Notification) {
+        print(#function, "called")
         checkFullScreen()
     }
 
@@ -222,6 +229,7 @@ class SnappingManager {
     /// Reloads snapping configuration from user defaults.
     /// Called when settings change in the preferences window.
     public func reloadFromDefaults() {
+        print(#function, "called")
         if Defaults.windowSnapping.userDisabled {
             // User disabled snapping - stop if running
             if eventMonitor?.running == true {
@@ -246,6 +254,7 @@ class SnappingManager {
 
     /// Enables window snapping by creating the footprint window and starting the event monitor
     private func enableSnapping() {
+        print(#function, "called")
         if box == nil {
             box = FootprintWindow()
         }
@@ -256,6 +265,7 @@ class SnappingManager {
 
     /// Disables window snapping by removing the footprint and stopping the event monitor
     private func disableSnapping() {
+        print(#function, "called")
         box = nil
         stopEventMonitor()
     }
@@ -266,6 +276,7 @@ class SnappingManager {
     /// Uses ActiveEventMonitor (can modify events) if Mission Control dragging is disabled,
     /// otherwise uses PassiveEventMonitor (read-only).
     private func startEventMonitor() {
+        print(#function, "called")
         let mask: NSEvent.EventTypeMask = [.leftMouseDown, .leftMouseUp, .leftMouseDragged]
 
         if Defaults.missionControlDragging.userDisabled {
@@ -281,6 +292,7 @@ class SnappingManager {
 
     /// Stops the event monitor
     private func stopEventMonitor() {
+        print(#function, "called")
         eventMonitor?.stop()
         eventMonitor = nil
     }
@@ -294,6 +306,7 @@ class SnappingManager {
     /// trigger Mission Control. This filter modifies the event to keep the
     /// cursor slightly away from the very top edge.
     func filter(event: NSEvent) -> Bool {
+        print(#function, "called")
         switch event.type {
         case .leftMouseUp:
             dragPrevY = nil
@@ -335,6 +348,7 @@ class SnappingManager {
     /// Checks if snapping is allowed for the current event.
     /// Returns false if modifier keys don't match or if window is in Stage Manager strip.
     func canSnap(_ event: NSEvent) -> Bool {
+        print(#function, "called")
         // Check if required modifier keys are held (if configured)
         if Defaults.snapModifiers.value > 0 {
             let currentModifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask).rawValue
@@ -361,6 +375,7 @@ class SnappingManager {
     /// The main event handler for mouse events.
     /// Coordinates the entire snapping flow: detection, preview, and execution.
     func handle(event: NSEvent) {
+        print(#function, "called")
         switch event.type {
         case .leftMouseDown:
             handleMouseDown(event)
@@ -378,6 +393,7 @@ class SnappingManager {
 
     /// Handles mouse down - remembers which window is under the cursor
     private func handleMouseDown(_ event: NSEvent) {
+        print(#function, "called")
         guard !Defaults.obtainWindowOnClick.userDisabled else { return }
 
         windowElement = AccessibilityElement.getWindowElementUnderCursor()
@@ -387,6 +403,7 @@ class SnappingManager {
 
     /// Handles mouse up - executes the snap action if cursor is in a snap area
     private func handleMouseUp(_ event: NSEvent) {
+        print(#function, "called")
         defer {
             // Always reset state on mouse up
             windowElement = nil
@@ -416,6 +433,7 @@ class SnappingManager {
     /// Handles the edge case where a window was dragged quickly and footprint didn't show,
     /// but we still want to snap if the window ended up in a snap area.
     private func handleQuickDragSnapOnMouseUp(_ event: NSEvent) {
+        print(#function, "called")
         guard let currentRect = windowElement?.frame,
               let windowId = windowId,
               currentRect.size == initialWindowRect?.size,
@@ -439,6 +457,7 @@ class SnappingManager {
 
     /// Handles mouse dragged - detects snap areas and shows the footprint preview
     private func handleMouseDragged(_ event: NSEvent) {
+        print(#function, "called")
         // Try to get the window ID if we don't have it yet
         tryToGetWindowId(event)
 
@@ -457,6 +476,7 @@ class SnappingManager {
 
     /// Tries to get the window ID, with throttling and retry limits
     private func tryToGetWindowId(_ event: NSEvent) {
+        print(#function, "called")
         guard windowId == nil, windowIdAttempt < 20 else { return }
 
         // Throttle attempts to every 0.1 seconds
@@ -477,6 +497,7 @@ class SnappingManager {
 
     /// Detects when the user starts actually moving the window (not just clicking)
     private func detectWindowMovementStart(currentRect: CGRect, windowId: CGWindowID, event: NSEvent) {
+        print(#function, "called")
         guard !windowMoving else { return }
 
         if let initialWindowRect = initialWindowRect {
@@ -497,6 +518,7 @@ class SnappingManager {
 
     /// Updates the current snap area and footprint preview during dragging
     private func updateSnapAreaAndFootprint(event: NSEvent, currentRect: CGRect, windowId: CGWindowID) {
+        print(#function, "called")
         // Check if snapping is allowed with current modifiers
         if !canSnap(event) {
             if currentSnapArea != nil {
@@ -533,6 +555,7 @@ class SnappingManager {
 
     /// Shows the footprint preview for a snap area
     private func showFootprint(for snapArea: SnapArea, currentWindow: Window) {
+        print(#function, "called")
         guard let newBoxRect = getBoxRect(hotSpot: snapArea, currentWindow: currentWindow) else {
             return
         }
@@ -571,6 +594,7 @@ class SnappingManager {
     /// Restores a window to its original size when it's "unsnapped" (dragged away from a snap position).
     /// This gives users a way to get back to the window's original dimensions.
     func unsnapRestore(windowId: CGWindowID, currentRect: CGRect, cursorLoc: CGPoint?) {
+        print(#function, "called")
         guard Defaults.unsnapRestore.enabled != false else { return }
 
         let windowHistory = AppDelegate.windowHistory
@@ -619,6 +643,7 @@ class SnappingManager {
 
     /// Calculates the animation duration for the footprint based on distance and user preference
     func getFootprintAnimationDuration(_ box: FootprintWindow, _ boxRect: CGRect) -> Double {
+        print(#function, "called")
         let baseDuration = box.animationResizeTime(boxRect)
         let multiplier = Double(Defaults.footprintAnimationDurationMultiplier.value)
         return baseDuration * multiplier
@@ -627,6 +652,7 @@ class SnappingManager {
     /// Returns the origin point for the footprint animation.
     /// The footprint "grows" from the edge/corner where the snap area is located.
     func getFootprintAnimationOrigin(_ snapArea: SnapArea, _ boxRect: CGRect) -> CGPoint? {
+        print(#function, "called")
         switch snapArea.directional {
         case .tl:
             return CGPoint(x: boxRect.minX, y: boxRect.maxY)  // Top-left corner
@@ -654,6 +680,7 @@ class SnappingManager {
     /// Calculates the rectangle for the footprint preview.
     /// Uses the same calculation as the actual snap action, including gaps.
     func getBoxRect(hotSpot: SnapArea, currentWindow: Window) -> CGRect? {
+        print(#function, "called")
         guard let calculation = WindowCalculationFactory.calculationsByAction[hotSpot.action] else {
             return nil
         }
@@ -690,6 +717,7 @@ class SnappingManager {
     /// Finds the snap area containing the cursor, if any.
     /// Checks all screens and returns the appropriate snap area configuration.
     func snapAreaContainingCursor(priorSnapArea: SnapArea?) -> SnapArea? {
+        print(#function, "called")
         let cursorLocation = NSEvent.mouseLocation
 
         for screen in NSScreen.screens {
@@ -728,6 +756,7 @@ class SnappingManager {
 
     /// Checks if the current window is a Todo window and should snap to a Todo sidebar position
     private func checkForTodoSnapArea(directional: Directional, screen: NSScreen) -> SnapArea? {
+        print(#function, "called")
         guard let windowId = windowId,
               Defaults.todo.userEnabled,
               Defaults.todoMode.enabled,
@@ -765,6 +794,7 @@ class SnappingManager {
     /// └────┴─────────────────┴────┘
     /// ```
     func directionalLocationOfCursor(loc: NSPoint, screen: NSScreen) -> Directional? {
+        print(#function, "called")
         let frame = screen.frame
         let cornerSize = Defaults.cornerSnapAreaSize.cgFloat
 

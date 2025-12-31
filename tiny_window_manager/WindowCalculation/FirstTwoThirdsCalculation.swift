@@ -15,6 +15,7 @@ class FirstTwoThirdsCalculation: WindowCalculation, OrientationAware {
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // If cycling is disabled, just return the first two-thirds position
@@ -43,6 +44,7 @@ class FirstTwoThirdsCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the left 66% of the screen (landscape orientation)
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
         rect.size.width = floor(visibleFrameOfScreen.width * 2 / 3.0)
         return RectResult(rect, subAction: .leftTwoThirds)
@@ -50,6 +52,7 @@ class FirstTwoThirdsCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the top 66% of the screen (portrait orientation)
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Calculate height as 2/3 of screen

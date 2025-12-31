@@ -10,6 +10,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        print(#function, "called")
         if #available(macOS 13, *) {
             terminate()
             return
@@ -48,6 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func terminate() {
+        print(#function, "called")
         NSApp.terminate(nil)
     }
 

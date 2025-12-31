@@ -41,6 +41,7 @@ class CUtil {
     /// WARNING: The object must stay alive while the pointer is in use!
     ///
     static func bridge<T: AnyObject>(obj: T) -> UnsafeMutableRawPointer {
+        print(#function, "called")
         // Step 1: Wrap the object in an "Unmanaged" container
         // passUnretained means we DON'T increase the reference count
         // (the caller is responsible for keeping the object alive)
@@ -71,6 +72,7 @@ class CUtil {
     /// ```
     ///
     static func bridge<T: AnyObject>(ptr: UnsafeMutableRawPointer) -> T {
+        print(#function, "called")
         // Step 1: Create an Unmanaged wrapper from the opaque pointer
         // We specify the type T so Swift knows what we're converting to
         let unmanagedObject = Unmanaged<T>.fromOpaque(ptr)

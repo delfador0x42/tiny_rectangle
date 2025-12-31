@@ -19,6 +19,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
     /// Calculates the new position for a window moving to the next or previous display.
     /// Returns nil if there's only one display (nothing to move to).
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        print(#function, "called")
         let usableScreens = params.usableScreens
 
         // Can't move to another display if there's only one
@@ -51,6 +52,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
     /// Calculates the default rectangle when moving to a new display.
     /// If the window was maximized, keeps it maximized; otherwise centers it.
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let wasMaximized = params.lastAction?.action == .maximize
         let autoMaximizeEnabled = !Defaults.autoMaximize.userDisabled
 
@@ -68,6 +70,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
 
     /// Determines which screen to move the window to based on the action.
     private func getTargetScreen(for action: WindowAction, from usableScreens: UsableScreens) -> NSScreen? {
+        print(#function, "called")
         switch action {
         case .nextDisplay:
             return usableScreens.adjacentScreens?.next
@@ -87,6 +90,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
         rectParams: RectCalculationParameters,
         targetScreen: NSScreen
     ) -> WindowCalculationResult? {
+        print(#function, "called")
 
         // Check if the "match last action" feature is enabled
         guard Defaults.attemptMatchOnNextPrevDisplay.userEnabled else {

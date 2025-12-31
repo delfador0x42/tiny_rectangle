@@ -11,6 +11,7 @@ import Foundation
 class CenterCalculation: WindowCalculation {
 
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        print(#function, "called")
         let currentScreen = params.usableScreens.currentScreen
 
         // Determine the screen frame to use for centering
@@ -36,6 +37,7 @@ class CenterCalculation: WindowCalculation {
     }
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
         let windowRect = params.window.rect
 

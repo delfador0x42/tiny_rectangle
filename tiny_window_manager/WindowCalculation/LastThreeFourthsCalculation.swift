@@ -15,6 +15,7 @@ class LastThreeFourthsCalculation: WindowCalculation, OrientationAware {
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // If cycling is disabled, just return the last three-fourths position
@@ -43,6 +44,7 @@ class LastThreeFourthsCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the right 75% of the screen (landscape orientation)
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Calculate width as 3/4 of screen
@@ -56,6 +58,7 @@ class LastThreeFourthsCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the bottom 75% of the screen (portrait orientation)
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Calculate height as 3/4 of screen

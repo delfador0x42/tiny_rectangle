@@ -16,6 +16,7 @@ import Foundation
 class UpperLeftCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalculation {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let isFirstExecution = params.lastAction == nil
         let cyclingDisabled = !Defaults.subsequentExecutionMode.resizes
 
@@ -32,6 +33,7 @@ class UpperLeftCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcula
     ///
     /// - Parameter fraction: The portion of screen width to use (e.g., 0.5 for half, 0.67 for two-thirds)
     func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
+        print(#function, "called")
         let screen = params.visibleFrameOfScreen
 
         // Width is variable based on the fraction; height is always half the screen

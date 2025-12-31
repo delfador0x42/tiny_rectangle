@@ -48,6 +48,7 @@ extension RepeatedExecutionsInThirdsCalculation {
     /// Default first rect: half of the screen (1/2).
     /// This is called when the user first triggers the action.
     func calculateFirstRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let halfScreen: Float = 1.0 / 2.0
         return calculateFractionalRect(params, fraction: halfScreen)
     }
@@ -55,6 +56,7 @@ extension RepeatedExecutionsInThirdsCalculation {
     /// Converts a cycle size (like `.oneThird` or `.twoThirds`) to a fraction
     /// and calculates the corresponding rectangle.
     func calculateRect(for cycleDivision: CycleSize, params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let fraction = cycleDivision.fraction
         return calculateFractionalRect(params, fraction: fraction)
     }

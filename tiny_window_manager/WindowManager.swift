@@ -48,6 +48,7 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     init() {
+        print(#function, "called")
         // Set up the chain of window movers for normal windows
         standardWindowMoverChain = [
             StandardWindowMover(),      // Primary: uses standard Accessibility APIs
@@ -72,6 +73,7 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     private func recordAction(windowId: CGWindowID, resultingRect: CGRect, action: WindowAction, subAction: SubWindowAction?) {
+        print(#function, "called")
         // Check if this is the same action being repeated
         let newCount: Int
         if let lasttiny_window_managerAction = AppDelegate.windowHistory.lasttiny_window_managerActions[windowId], lasttiny_window_managerAction.action == action {
@@ -105,6 +107,7 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     func execute(_ parameters: ExecutionParameters) {
+        print(#function, "called")
 
         // ====================================================================
         // STEP 1: Get the window we're going to manipulate
@@ -326,6 +329,7 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     func apply(result: ResultParameters) -> CGRect {
+        print(#function, "called")
         // Choose the appropriate mover chain based on whether window is fixed-size
         let windowMoverChain = result.isFixedSize
         ? fixedSizeWindowMoverChain
@@ -355,6 +359,7 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     func windowMovedAcrossDisplays(windowElement: AccessibilityElement, resultingRect: CGRect) {
+        print(#function, "called")
         // Bring the window to the front on the new display
         windowElement.bringToFront(force: true)
 
@@ -372,6 +377,7 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     func postProcess(result: ResultParameters, resultingRect: CGRect) {
+        print(#function, "called")
         let calcResult = result.calcResult
 
         // Optionally move cursor to center of window (only for keyboard shortcuts)
@@ -449,6 +455,7 @@ struct ExecutionParameters {
     let source: ExecutionSource        // How was this triggered?
 
     init(_ action: WindowAction, updateRestoreRect: Bool = true, screen: NSScreen? = nil, windowElement: AccessibilityElement? = nil, windowId: CGWindowID? = nil, source: ExecutionSource = .keyboardShortcut) {
+        print(#function, "called")
         self.action = action
         self.updateRestoreRect = updateRestoreRect
         self.screen = screen

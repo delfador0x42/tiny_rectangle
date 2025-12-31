@@ -22,6 +22,7 @@ extension CFArray {
     ///   let windowID: CGWindowID = myArray.getValue(0)
     ///
     func getValue<T>(_ index: CFIndex) -> T {
+        print(#function, "called")
         // Step 1: Get the raw pointer to the value at this index
         // CFArrayGetValueAtIndex returns an UnsafeRawPointer (like a void* in C)
         let rawPointer = CFArrayGetValueAtIndex(self, index)
@@ -38,6 +39,7 @@ extension CFArray {
     /// - Returns: The count as a CFIndex (which is just an Int on most platforms).
     ///
     func getCount() -> CFIndex {
+        print(#function, "called")
         return CFArrayGetCount(self)
     }
 }
@@ -55,6 +57,7 @@ extension CFDictionary {
     ///   let bounds: CFDictionary = myDict.getValue(kCGWindowBounds)
     ///
     func getValue<T>(_ key: CFString) -> T {
+        print(#function, "called")
         // Step 1: Convert the CFString key to a raw pointer
         // CFDictionary's C API expects keys as UnsafeRawPointer (void*)
         let keyAsPointer = unsafeBitCast(key, to: UnsafeRawPointer.self)

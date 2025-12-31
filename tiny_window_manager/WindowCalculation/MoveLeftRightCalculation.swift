@@ -18,6 +18,7 @@ class MoveLeftRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
     /// Calculates the new position and size for a window being moved left or right.
     /// This is the main entry point called when the user triggers a move action.
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        print(#function, "called")
         var screen = params.usableScreens.currentScreen
         var action = params.action
 
@@ -46,7 +47,8 @@ class MoveLeftRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Calculates the window rectangle (convenience overload that defaults to current display).
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
-        calculateRect(params, newDisplay: false)
+        print(#function, "called")
+        return calculateRect(params, newDisplay: false)
     }
 
     /// Calculates the window rectangle, optionally accounting for a new display.
@@ -55,6 +57,7 @@ class MoveLeftRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
     ///   - params: The calculation parameters including screen frame and window info
     ///   - newDisplay: If true, window is moving to a new monitor (uses first rect in cycle)
     func calculateRect(_ params: RectCalculationParameters, newDisplay: Bool) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // Step 1: Calculate the base window rectangle
@@ -77,6 +80,7 @@ class MoveLeftRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Calculates a rect at a specific fraction of screen width (e.g., 0.5 for half).
     func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
+        print(#function, "called")
         return calculateGenericRect(params, fraction: fraction)
     }
 
@@ -86,6 +90,7 @@ class MoveLeftRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
     ///   - params: The calculation parameters
     ///   - fraction: Optional width as fraction of screen (e.g., 0.5 = half width). If nil, keeps current width.
     func calculateGenericRect(_ params: RectCalculationParameters, fraction: Float? = nil) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
         var rect = params.window.rect
 
@@ -113,6 +118,7 @@ class MoveLeftRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
         params: WindowCalculationParameters,
         currentAction: WindowAction
     ) -> (screen: NSScreen, action: WindowAction) {
+        print(#function, "called")
 
         var screen = params.usableScreens.currentScreen
         var action = currentAction
@@ -136,6 +142,7 @@ class MoveLeftRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Calculates the base rectangle before vertical centering and height constraints.
     private func calculateBaseRect(params: RectCalculationParameters, isNewDisplay: Bool) -> CGRect {
+        print(#function, "called")
         let shouldResize = Defaults.resizeOnDirectionalMove.enabled
 
         if isNewDisplay && shouldResize {
@@ -152,6 +159,7 @@ class MoveLeftRightCalculation: WindowCalculation, RepeatedExecutionsInThirdsCal
 
     /// Centers a rectangle vertically within a screen frame.
     private func centerVertically(rect: CGRect, within screenFrame: CGRect) -> CGRect {
+        print(#function, "called")
         var centeredRect = rect
         let verticalPadding = screenFrame.height - rect.height
         let centerY = round(verticalPadding / 2.0) + screenFrame.minY

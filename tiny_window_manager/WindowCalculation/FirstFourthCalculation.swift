@@ -15,6 +15,7 @@ class FirstFourthCalculation: WindowCalculation, OrientationAware {
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // If cycling is disabled, just return the first fourth position
@@ -51,6 +52,7 @@ class FirstFourthCalculation: WindowCalculation, OrientationAware {
     /// Determines which fourth calculation to use next based on the previous action.
     /// This creates the cycling behavior: 1st → 2nd → 3rd → 4th → back to 1st
     private func findNextFourthCalculation(lastAction: WindowAction, lastSubAction: SubWindowAction) -> WindowCalculation? {
+        print(#function, "called")
 
         // If user was on firstFourth, cycle forward through the fourths
         if lastAction == .firstFourth {
@@ -67,6 +69,7 @@ class FirstFourthCalculation: WindowCalculation, OrientationAware {
 
     /// When cycling forward from firstFourth action
     private func nextFourthWhenComingFromFirst(lastSubAction: SubWindowAction) -> WindowCalculation? {
+        print(#function, "called")
         switch lastSubAction {
         case .topFourth, .leftFourth:
             // Was at 1st fourth → move to 2nd fourth
@@ -84,6 +87,7 @@ class FirstFourthCalculation: WindowCalculation, OrientationAware {
 
     /// When coming from lastFourth action (allows wrap-around behavior)
     private func nextFourthWhenComingFromLast(lastSubAction: SubWindowAction) -> WindowCalculation? {
+        print(#function, "called")
         switch lastSubAction {
         case .leftFourth, .topFourth:
             // Was at 4th fourth → move to 2nd fourth
@@ -97,6 +101,7 @@ class FirstFourthCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the left 25% of the screen (landscape orientation)
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
         rect.size.width = floor(visibleFrameOfScreen.width / 4.0)
         return RectResult(rect, subAction: .leftFourth)
@@ -104,6 +109,7 @@ class FirstFourthCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the top 25% of the screen (portrait orientation)
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Calculate height as 1/4 of screen

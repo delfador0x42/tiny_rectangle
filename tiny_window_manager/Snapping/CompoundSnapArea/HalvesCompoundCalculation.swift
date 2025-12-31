@@ -60,6 +60,7 @@ struct LeftTopBottomHalfCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         let screenFrame = screen.frame
         let cornerZoneSize = CGFloat(Defaults.shortEdgeSnapAreaSize.value)
@@ -134,6 +135,7 @@ struct RightTopBottomHalfCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         let screenFrame = screen.frame
         let cornerZoneSize = CGFloat(Defaults.shortEdgeSnapAreaSize.value)
@@ -189,6 +191,7 @@ struct LeftRightHalvesCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         let screenFrame = screen.frame
         let screenMidpointX = screenFrame.minX + (screenFrame.width / 2)
@@ -239,6 +242,7 @@ struct TopBottomHalvesCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         let screenFrame = screen.frame
         let halfHeight = floor(screenFrame.height / 2)
@@ -283,6 +287,7 @@ struct TopBottomHalvesCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         cornerZoneSize: CGFloat
     ) -> SnapArea? {
+        print(#function, "called")
 
         // Check BOTTOM corner zone
         let bottomCornerThreshold = screenFrame.minY + marginBottom + cornerZoneSize

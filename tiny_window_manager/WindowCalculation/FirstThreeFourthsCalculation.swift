@@ -15,6 +15,7 @@ class FirstThreeFourthsCalculation: WindowCalculation, OrientationAware {
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // If cycling is disabled, just return the first three-fourths position
@@ -43,6 +44,7 @@ class FirstThreeFourthsCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the left 75% of the screen (landscape orientation)
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
         rect.size.width = floor(visibleFrameOfScreen.width * 3 / 4.0)
         return RectResult(rect, subAction: .leftThreeFourths)
@@ -50,6 +52,7 @@ class FirstThreeFourthsCalculation: WindowCalculation, OrientationAware {
 
     /// Returns a rectangle for the top 75% of the screen (portrait orientation)
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Calculate height as 3/4 of screen

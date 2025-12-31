@@ -20,6 +20,7 @@ private enum ScreenFraction {
 class BottomLeftSixthCalculation: WindowCalculation, OrientationAware, SixthsRepeated {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         // Try to get the next position in the cycle; fall back to default if cycling doesn't apply
@@ -33,6 +34,7 @@ class BottomLeftSixthCalculation: WindowCalculation, OrientationAware, SixthsRep
     /// Determines the next calculator in the cycle based on the last action.
     /// Returns nil if cycling should not occur.
     private func nextCalculationInCycle(for params: RectCalculationParameters) -> SimpleCalc? {
+        print(#function, "called")
         let isCyclingEnabled = Defaults.subsequentExecutionMode.value != .none
 
         guard isCyclingEnabled,
@@ -56,6 +58,7 @@ class BottomLeftSixthCalculation: WindowCalculation, OrientationAware, SixthsRep
 
     /// Landscape: Bottom row, left column (1/3 width, 1/2 height).
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let width = floor(screenFrame.width * ScreenFraction.oneThird)
         let height = floor(screenFrame.height * ScreenFraction.oneHalf)
 
@@ -72,6 +75,7 @@ class BottomLeftSixthCalculation: WindowCalculation, OrientationAware, SixthsRep
 
     /// Portrait: Left column, bottom row (1/2 width, 1/3 height).
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         let width = floor(screenFrame.width * ScreenFraction.oneHalf)
         let height = floor(screenFrame.height * ScreenFraction.oneThird)
 

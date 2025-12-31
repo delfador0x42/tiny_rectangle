@@ -56,6 +56,7 @@ extension OrientationAware {
     /// Default implementation that checks the screen orientation and delegates
     /// to the appropriate method.
     func orientationBasedRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let isLandscape = visibleFrameOfScreen.isLandscape
 
         if isLandscape {

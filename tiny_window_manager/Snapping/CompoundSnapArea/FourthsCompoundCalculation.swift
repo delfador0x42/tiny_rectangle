@@ -31,6 +31,7 @@ struct FourthsColumnCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
+        print(#function, "called")
 
         let screenFrame = screen.frame
         let columnWidth = floor(screenFrame.width / 4)
@@ -92,6 +93,7 @@ struct FourthsColumnCompoundCalculation: CompoundSnapAreaCalculation {
 
     /// Determines which column (quarter) the cursor is currently in
     private func determineColumn(cursorX: CGFloat, screenFrame: CGRect, columnWidth: CGFloat) -> Column {
+        print(#function, "called")
         let column1End = screenFrame.minX + columnWidth
         let column2End = screenFrame.minX + columnWidth * 2
         let column3End = screenFrame.minX + columnWidth * 3
@@ -113,6 +115,7 @@ struct FourthsColumnCompoundCalculation: CompoundSnapAreaCalculation {
 
     /// Simple helper to create a snap area with the given action
     private func createSnapArea(screen: NSScreen, directional: Directional, action: WindowAction) -> SnapArea {
+        print(#function, "called")
         return SnapArea(screen: screen, directional: directional, action: action)
     }
 
@@ -145,6 +148,7 @@ struct FourthsColumnCompoundCalculation: CompoundSnapAreaCalculation {
         expandRightActions: [WindowAction],
         expandRightResult: WindowAction
     ) -> SnapArea {
+        print(#function, "called")
 
         // Check if we should expand based on where the user is dragging from
         if let priorAction = priorSnapArea?.action {

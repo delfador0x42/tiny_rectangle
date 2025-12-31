@@ -107,6 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// 4. Set up the menu bar icon and menus
     /// 5. Register for notifications we care about
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        print(#function, "called")
         // Load any config file that was dropped in the support directory
         Defaults.loadFromSupportDir()
 
@@ -175,6 +176,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// When the app is updated, sometimes we need to migrate data from old formats.
     /// This method checks which version the user was on before and runs appropriate migrations.
     func checkVersion() {
+        print(#function, "called")
         let currentVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
 
         if let lastVersion = Defaults.lastVersion.value,
@@ -209,11 +211,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Called just before the app becomes active (comes to foreground).
     func applicationWillBecomeActive(_ notification: Notification) {
+        print(#function, "called")
         Notification.Name.appWillBecomeActive.post()
     }
 
     /// Syncs the auto-update setting with the Sparkle updater framework.
     func checkAutoCheckForUpdates() {
+        print(#function, "called")
         Self.updaterController.updater.automaticallyChecksForUpdates = Defaults.SUEnableAutomaticChecks.enabled
     }
 
@@ -224,6 +228,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Accessibility permissions are required because we need to read and modify
     /// windows belonging to OTHER applications. macOS requires explicit user consent for this.
     func accessibilityTrusted() {
+        print(#function, "called")
         // Create all the core managers now that we have permissions
         self.windowCalculationFactory = WindowCalculationFactory()
         self.windowManager = WindowManager()
@@ -248,6 +253,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// Apps like Spectacle, Magnet, etc. do similar things and can interfere with us.
     func checkForConflictingApps() {
+        print(#function, "called")
         // Map of bundle IDs to friendly app names
         let conflictingAppsIds: [String: String] = [
             "com.divisiblebyzero.Spectacle": "Spectacle",
@@ -277,6 +283,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// play well with the click/drag listening we do for window snapping. If we detect
     /// these apps, we warn the user so they can either ignore those apps or disable snapping.
     func checkForProblematicApps() {
+        print(#function, "called")
         // Skip if snapping is disabled or we've already notified the user
         guard !Defaults.windowSnapping.userDisabled,
               !Defaults.notifiedOfProblemApps.enabled else {
@@ -357,6 +364,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// This window helps users choose between recommended shortcuts or custom setup.
     private func showWelcomeWindow() {
+        print(#function, "called")
         let welcomeWindowController = NSStoryboard(name: "Main", bundle: nil)
             .instantiateController(withIdentifier: "WelcomeWindowController") as? NSWindowController
 
@@ -381,6 +389,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// Based on user preference, this either opens the menu or the preferences window.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        print(#function, "called")
         if Defaults.relaunchOpensMenu.enabled {
             statusItem.openMenu()
         } else {
@@ -393,6 +402,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Opens the preferences/settings window.
     @IBAction func openPreferences(_ sender: Any) {
+        print(#function, "called")
         // Lazily create the preferences window controller
         if prefsWindowController == nil {
             prefsWindowController = NSStoryboard(name: "Main", bundle: nil)
@@ -406,12 +416,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Shows the standard macOS "About" panel.
     @IBAction func showAbout(_ sender: Any) {
+        print(#function, "called")
         NSApp.activate(ignoringOtherApps: true)
         NSApp.orderFrontStandardAboutPanel(sender)
     }
 
     /// Opens the debug logging window.
     @IBAction func viewLogging(_ sender: Any) {
+        print(#function, "called")
         Logger.showLogging(sender: sender)
     }
 
@@ -420,6 +432,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// When "on", the app is currently being ignored, so we re-enable it.
     /// When "off", the app is active, so we disable/ignore it.
     @IBAction func ignoreFrontMostApp(_ sender: NSMenuItem) {
+        print(#function, "called")
         if sender.state == .on {
             applicationToggle.enableApp()
         } else {
@@ -429,11 +442,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Triggers a manual check for app updates via Sparkle.
     @IBAction func checkForUpdates(_ sender: Any) {
+        print(#function, "called")
         Self.updaterController.checkForUpdates(sender)
     }
 
     /// Shows the accessibility authorization window/dialog.
     @IBAction func authorizeAccessibility(_ sender: Any) {
+        print(#function, "called")
         accessibilityAuthorization.showAuthorizationWindow()
     }
 
@@ -444,6 +459,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// macOS 13+ uses the new ServiceManagement API, while older versions use
     /// a helper app that gets launched at login and then launches the main app.
     private func checkLaunchOnLogin() {
+        print(#function, "called")
         if #available(macOS 13.0, *) {
             // Modern API: Use the LaunchOnLogin wrapper
             if Defaults.launchOnLogin.enabled, !LaunchOnLogin.isEnabled {
@@ -491,6 +507,7 @@ extension AppDelegate: NSMenuDelegate {
 
     /// Called just before a menu opens. We use this to update menu item states.
     func menuWillOpen(_ menu: NSMenu) {
+        print(#function, "called")
         // For submenus, just update the items
         if menu != mainStatusMenu {
             updateWindowActionMenuItems(menu: menu)
@@ -524,6 +541,7 @@ extension AppDelegate: NSMenuDelegate {
 
     /// Updates the window action menu items with current state (enabled, shortcuts, icons).
     private func updateWindowActionMenuItems(menu: NSMenu) {
+        print(#function, "called")
         let frontmostWindow = AccessibilityElement.getFrontWindowElement()
         let screenCount = NSScreen.screens.count
         let isPortrait = NSScreen.main?.frame.isLandscape == false
@@ -564,6 +582,7 @@ extension AppDelegate: NSMenuDelegate {
 
     /// Called when a menu closes. Resets menu items to their default state.
     func menuDidClose(_ menu: NSMenu) {
+        print(#function, "called")
         for menuItem in menu.items {
             // Clear keyboard shortcuts (they're only for display while menu is open)
             menuItem.keyEquivalent = ""
@@ -576,6 +595,7 @@ extension AppDelegate: NSMenuDelegate {
 
     /// Handler for when a window action menu item is clicked.
     @objc func executeMenuWindowAction(sender: NSMenuItem) {
+        print(#function, "called")
         guard let windowAction = sender.representedObject as? WindowAction else { return }
         windowAction.postMenu()
     }
@@ -587,6 +607,7 @@ extension AppDelegate: NSMenuDelegate {
     /// This creates menu items for each window action (left half, right half, maximize, etc.)
     /// and optionally groups them into submenus by category.
     func addWindowActionMenuItems() {
+        print(#function, "called")
         var menuIndex = 0
         var categoryMenus: [CategoryMenu] = []
 
@@ -666,6 +687,7 @@ extension AppDelegate {
     ///
     /// - Parameter bringToFront: Whether to bring the todo window to front
     func initializeTodo(_ bringToFront: Bool = true) {
+        print(#function, "called")
         self.showHideTodoMenuItems()
         TodoManager.registerUnregisterToggleShortcut()
         TodoManager.registerUnregisterReflowShortcut()
@@ -693,6 +715,7 @@ extension AppDelegate {
 
     /// Adds todo mode menu items to the status menu.
     private func addTodoModeMenuItems(startingIndex: Int) {
+        print(#function, "called")
         var menuIndex = startingIndex
 
         // "Enable Todo Mode" toggle
@@ -750,6 +773,7 @@ extension AppDelegate {
 
     /// Shows or hides todo menu items based on whether the feature is enabled.
     private func showHideTodoMenuItems() {
+        print(#function, "called")
         for item in mainStatusMenu.items {
             if TodoItem.tags.contains(item.tag) {
                 item.isHidden = !Defaults.todo.userEnabled
@@ -759,29 +783,34 @@ extension AppDelegate {
 
     /// Toggles todo mode on or off.
     @objc func toggleTodoMode(_ sender: NSMenuItem) {
+        print(#function, "called")
         let enabled = sender.state == .off
         TodoManager.setTodoMode(enabled)
     }
 
     /// Sets the frontmost app as the todo app.
     @objc func setTodoApp(_ sender: NSMenuItem) {
+        print(#function, "called")
         applicationToggle.setTodoApp()
         TodoManager.moveAllIfNeeded()
     }
 
     /// Reflows/repositions the todo window.
     @objc func todoReflow(_ sender: NSMenuItem) {
+        print(#function, "called")
         TodoManager.moveAll()
     }
 
     /// Sets the frontmost window as the todo window.
     @objc func setTodoWindow(_ sender: NSMenuItem) {
+        print(#function, "called")
         TodoManager.resetTodoWindow()
         TodoManager.moveAllIfNeeded()
     }
 
     /// Updates todo menu items with current state (enabled, shortcuts, etc.).
     private func updateTodoModeMenuItems(menu: NSMenu) {
+        print(#function, "called")
         // Only update if todo feature is enabled and we can find the menu items
         guard Defaults.todo.userEnabled,
               let todoAppMenuItem = menu.item(withTag: TodoItem.app.tag),
@@ -833,6 +862,7 @@ extension AppDelegate: NSWindowDelegate {
 
     /// Called when a window is about to close. Used to end modal dialogs.
     func windowWillClose(_ notification: Notification) {
+        print(#function, "called")
         NSApp.abortModal()
     }
 }
@@ -849,6 +879,7 @@ extension AppDelegate {
 
     /// Handles URLs opened via our custom URL scheme.
     func application(_ application: NSApplication, open urls: [URL]) {
+        print(#function, "called")
         // If we're now the frontmost app, switch back to the previous app
         // (URL handling shouldn't steal focus)
         if NSWorkspace.shared.frontmostApplication == NSRunningApplication.current {
@@ -863,6 +894,7 @@ extension AppDelegate {
 
     /// Processes an array of URLs from the URL scheme handler.
     private func processURLs(_ urls: [URL]) {
+        print(#function, "called")
         for url in urls {
             guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
                   components.path.isEmpty else {
@@ -903,22 +935,26 @@ extension AppDelegate {
 
     /// Converts a window action name to URL format (camelCase to kebab-case).
     private func actionNameToURLName(_ name: String) -> String {
+        print(#function, "called")
         return name.map { $0.isUppercase ? "-" + $0.lowercased() : String($0) }.joined()
     }
 
     /// Finds a window action by its URL-formatted name.
     private func findWindowAction(byURLName urlName: String?) -> WindowAction? {
+        print(#function, "called")
         return WindowAction.active.first { actionNameToURLName($0.name) == urlName }
     }
 
     /// Extracts the bundle ID parameter from URL components.
     private func extractBundleIdParameter(from components: URLComponents) -> String? {
+        print(#function, "called")
         let queryValue = components.queryItems?.first { $0.name == "app-bundle-id" }?.value
         return queryValue ?? ApplicationToggle.frontAppId
     }
 
     /// Validates that a bundle ID is not empty.
     private func isValidBundleId(_ bundleId: String?) -> Bool {
+        print(#function, "called")
         let isValid = bundleId?.isEmpty != true
         if !isValid {
             Logger.log("Received an empty app-bundle-id parameter. Either pass a valid app bundle id or remove the parameter.")

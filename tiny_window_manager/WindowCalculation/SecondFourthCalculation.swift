@@ -45,6 +45,7 @@ class SecondFourthCalculation: WindowCalculation, OrientationAware {
 
     /// Calculates the window rectangle, handling both first execution and cycling.
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // Check if this is a repeated execution that should cycle to a different layout
@@ -60,6 +61,7 @@ class SecondFourthCalculation: WindowCalculation, OrientationAware {
 
     /// Landscape layout: Second column from the left (25%-50% of screen width).
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Width is 1/4 of the screen
@@ -74,6 +76,7 @@ class SecondFourthCalculation: WindowCalculation, OrientationAware {
 
     /// Portrait layout: Second row from the top (50%-75% of screen height, measured from bottom).
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         var rect = visibleFrameOfScreen
 
         // Height is 1/4 of the screen
@@ -92,6 +95,7 @@ class SecondFourthCalculation: WindowCalculation, OrientationAware {
     /// Determines the next calculation in the cycle based on the last action.
     /// Returns nil if this is the first execution or cycling is disabled.
     private func getNextCalculationInCycle(params: RectCalculationParameters) -> SimpleCalc? {
+        print(#function, "called")
         // Check if cycling is enabled
         let cyclingEnabled = Defaults.subsequentExecutionMode.value != .none
         guard cyclingEnabled else {
@@ -118,6 +122,7 @@ class SecondFourthCalculation: WindowCalculation, OrientationAware {
     /// - rightThreeFourths → centerHalf (landscape)
     /// - bottomThreeFourths → centerHalf (portrait)
     private func getNextCalculation(after lastSubAction: SubWindowAction) -> SimpleCalc {
+        print(#function, "called")
         switch lastSubAction {
         case .centerLeftFourth:
             // From second-fourth landscape → expand to last three-fourths

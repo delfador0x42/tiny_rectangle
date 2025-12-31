@@ -18,6 +18,7 @@ class AccessibilityWindowController: NSWindowController {
     // MARK: - Lifecycle
 
     override func windowDidLoad() {
+        print(#function, "called")
         super.windowDidLoad()
         configureCloseButton()
     }
@@ -30,6 +31,7 @@ class AccessibilityWindowController: NSWindowController {
     /// We override this behavior because the app can't work without
     /// accessibility permissions, so closing this window should quit the app.
     private func configureCloseButton() {
+        print(#function, "called")
         let closeButton = self.window?.standardWindowButton(.closeButton)
         closeButton?.target = self
         closeButton?.action = #selector(quit)
@@ -40,6 +42,7 @@ class AccessibilityWindowController: NSWindowController {
     /// Exit code 1 indicates the app exited due to an error condition
     /// (in this case, lacking required permissions).
     @objc func quit() {
+        print(#function, "called")
         exit(1)
     }
 }
@@ -79,6 +82,7 @@ class AccessibilityViewController: NSViewController {
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
+        print(#function, "called")
         super.viewDidLoad()
         updateUIForMacOSVersion()
     }
@@ -88,6 +92,7 @@ class AccessibilityViewController: NSViewController {
     /// Opens the Accessibility section of System Preferences/Settings.
     /// Connected to the "Open System Settings" button in the storyboard.
     @IBAction func openSystemPrefs(_ sender: Any) {
+        print(#function, "called")
         NSWorkspace.shared.open(accessibilitySettingsURL)
     }
 
@@ -99,6 +104,7 @@ class AccessibilityViewController: NSViewController {
     /// and removed the padlock icon for unlocking settings. This method
     /// updates the UI to show the correct terminology.
     private func updateUIForMacOSVersion() {
+        print(#function, "called")
         // Check if we're running macOS 13 (Ventura) or later
         if #available(OSX 13, *) {
             // Update the path text for the new "System Settings" naming

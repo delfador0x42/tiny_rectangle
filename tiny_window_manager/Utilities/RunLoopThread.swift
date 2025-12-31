@@ -102,6 +102,7 @@ class RunLoopThread: Thread {
     ///     call start() yourself later.
     ///
     init(mode: RunLoop.Mode, qualityOfService: QualityOfService? = nil, start shouldStart: Bool = false) {
+        print(#function, "called")
         self.mode = mode
         super.init()
 
@@ -125,6 +126,7 @@ class RunLoopThread: Thread {
     /// returns, you can safely access the `runLoop` property.
     ///
     override func start() {
+        print(#function, "called")
         // Start the thread (this calls main() on the new thread)
         super.start()
 
@@ -144,6 +146,7 @@ class RunLoopThread: Thread {
     /// You should never call this directly.
     ///
     override func main() {
+        print(#function, "called")
         // STEP 1: Create/capture the RunLoop for this thread
         //
         // Each thread has exactly one RunLoop, created lazily.

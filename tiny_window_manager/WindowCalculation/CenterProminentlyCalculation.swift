@@ -15,6 +15,7 @@ import Foundation
 class CenterProminentlyCalculation: WindowCalculation {
 
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        print(#function, "called")
         let currentScreen = params.usableScreens.currentScreen
 
         // Determine the screen frame to use for positioning
@@ -40,6 +41,7 @@ class CenterProminentlyCalculation: WindowCalculation {
     }
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         // Start with a normal centered window position
         let centeredResult = WindowCalculationFactory.centerCalculation.calculateRect(params)
         var rect = centeredResult.rect

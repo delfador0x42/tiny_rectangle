@@ -18,6 +18,7 @@ class MoveUpDownCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcul
     /// Calculates the window rectangle for moving up or down.
     /// This is the main entry point called when the user triggers a move action.
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
 
         // Step 1: Calculate the base window rectangle
@@ -40,6 +41,7 @@ class MoveUpDownCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcul
 
     /// Calculates a rect at a specific fraction of screen height (e.g., 0.5 for half).
     func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
+        print(#function, "called")
         return calculateGenericRect(params, fraction: fraction)
     }
 
@@ -49,6 +51,7 @@ class MoveUpDownCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcul
     ///   - params: The calculation parameters
     ///   - fraction: Optional height as fraction of screen (e.g., 0.5 = half height). If nil, keeps current height.
     func calculateGenericRect(_ params: RectCalculationParameters, fraction: Float? = nil) -> RectResult {
+        print(#function, "called")
         let visibleFrameOfScreen = params.visibleFrameOfScreen
         var rect = params.window.rect
 
@@ -72,6 +75,7 @@ class MoveUpDownCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcul
 
     /// Calculates the base rectangle before horizontal centering and width constraints.
     private func calculateBaseRect(params: RectCalculationParameters) -> CGRect {
+        print(#function, "called")
         let shouldResize = Defaults.resizeOnDirectionalMove.enabled
 
         if shouldResize {
@@ -85,6 +89,7 @@ class MoveUpDownCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcul
 
     /// Centers a rectangle horizontally within a screen frame.
     private func centerHorizontally(rect: CGRect, within screenFrame: CGRect) -> CGRect {
+        print(#function, "called")
         var centeredRect = rect
         let horizontalPadding = screenFrame.width - rect.width
         let centerX = round(horizontalPadding / 2.0) + screenFrame.minX

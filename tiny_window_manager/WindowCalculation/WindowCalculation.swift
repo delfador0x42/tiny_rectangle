@@ -33,6 +33,7 @@ class WindowCalculation: Calculation {
     /// Calls `calculateRect` (which subclasses override) and packages the result
     /// with screen and action information.
     func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
+        print(#function, "called")
         let rectResult = calculateRect(params.asRectParams())
 
         // A null rect means the calculation couldn't produce a valid result
@@ -52,7 +53,8 @@ class WindowCalculation: Calculation {
     ///
     /// The default implementation returns a null rect (no positioning).
     func calculateRect(_ params: RectCalculationParameters) -> RectResult {
-        RectResult(.null)
+        print(#function, "called")
+        return RectResult(.null)
     }
 
     // MARK: - Helper Methods
@@ -63,6 +65,7 @@ class WindowCalculation: Calculation {
     /// - `rect1` fully contains `rect2`
     /// - The center points are within 1 pixel of each other (allows for rounding)
     func rectCenteredWithinRect(_ rect1: CGRect, _ rect2: CGRect) -> Bool {
+        print(#function, "called")
         let centeredMidX = abs(rect2.midX - rect1.midX) <= 1.0
         let centeredMidY = abs(rect2.midY - rect1.midY) <= 1.0
         return rect1.contains(rect2) && centeredMidX && centeredMidY
@@ -70,6 +73,7 @@ class WindowCalculation: Calculation {
 
     /// Checks if `rect1` would fit inside `rect2` (comparing dimensions only, not position).
     func rectFitsWithinRect(rect1: CGRect, rect2: CGRect) -> Bool {
+        print(#function, "called")
         let widthFits = rect1.width <= rect2.width
         let heightFits = rect1.height <= rect2.height
         return widthFits && heightFits
@@ -80,6 +84,7 @@ class WindowCalculation: Calculation {
     /// This is used to implement cycling behavior (e.g., pressing "left half" multiple times
     /// cycles through 1/2 → 2/3 → 1/3 widths).
     func isRepeatedCommand(_ params: WindowCalculationParameters) -> Bool {
+        print(#function, "called")
         guard let lastAction = params.lastAction,
               lastAction.action == params.action else {
             return false
@@ -115,7 +120,8 @@ struct WindowCalculationParameters {
 
     /// Converts to the simpler RectCalculationParameters used by calculateRect.
     func asRectParams(visibleFrame: CGRect? = nil, differentAction: WindowAction? = nil) -> RectCalculationParameters {
-        RectCalculationParameters(
+        print(#function, "called")
+        return RectCalculationParameters(
             window: window,
             visibleFrameOfScreen: visibleFrame ?? usableScreens.currentScreen.adjustedVisibleFrame(ignoreTodo),
             action: differentAction ?? action,
@@ -125,7 +131,8 @@ struct WindowCalculationParameters {
 
     /// Creates a copy with a different action (useful for delegation between calculations).
     func withDifferentAction(_ differentAction: WindowAction) -> WindowCalculationParameters {
-        .init(
+        print(#function, "called")
+        return .init(
             window: window,
             usableScreens: usableScreens,
             action: differentAction,
@@ -168,6 +175,7 @@ struct RectResult {
     let subAction: SubWindowAction?
 
     init(_ rect: CGRect, resultingAction: WindowAction? = nil, subAction: SubWindowAction? = nil) {
+        print(#function, "called")
         self.rect = rect
         self.resultingAction = resultingAction
         self.subAction = subAction
@@ -198,6 +206,7 @@ struct WindowCalculationResult {
          resultingAction: WindowAction,
          resultingSubAction: SubWindowAction? = nil,
          resultingScreenFrame: CGRect? = nil) {
+        print(#function, "called")
         self.rect = rect
         self.screen = screen
         self.resultingAction = resultingAction

@@ -14,6 +14,7 @@ import Foundation
 class MaximizeHeightCalculation: WindowCalculation {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         // Start with the window's current position and size

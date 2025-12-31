@@ -35,6 +35,7 @@ class StandardWindowMover: WindowMover {
         frontmostWindowElement: AccessibilityElement?,
         action: WindowAction?
     ) {
+        print(#function, "called")
         // First, check if we can get the window's current frame
         // A "null" rect means the window doesn't exist or isn't accessible
         let currentWindowRect = frontmostWindowElement?.frame

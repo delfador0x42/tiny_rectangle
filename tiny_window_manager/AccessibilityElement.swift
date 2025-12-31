@@ -64,6 +64,7 @@ class AccessibilityElement {
     ///
     /// - Parameter element: The raw macOS accessibility element to wrap.
     init(_ element: AXUIElement) {
+        print(#function, "called")
         wrappedElement = element
     }
 
@@ -77,6 +78,7 @@ class AccessibilityElement {
     /// let finderApp = AccessibilityElement(finderPid)
     /// ```
     convenience init(_ pid: pid_t) {
+        print(#function, "called")
         // AXUIElementCreateApplication is the macOS API to get an app's accessibility element
         self.init(AXUIElementCreateApplication(pid))
     }
@@ -93,6 +95,7 @@ class AccessibilityElement {
     /// }
     /// ```
     convenience init?(_ bundleIdentifier: String) {
+        print(#function, "called")
         // Find the running app with this bundle ID
         let runningApps = NSWorkspace.shared.runningApplications
         guard let app = runningApps.first(where: { $0.bundleIdentifier == bundleIdentifier }) else {
@@ -108,6 +111,7 @@ class AccessibilityElement {
     ///
     /// This is useful for "what's under the mouse cursor?" queries.
     convenience init?(_ position: CGPoint) {
+        print(#function, "called")
         guard let element = AXUIElement.systemWide.getElementAtPosition(position) else {
             return nil
         }
@@ -121,6 +125,7 @@ class AccessibilityElement {
     /// - Parameter attribute: The accessibility attribute to read.
     /// - Returns: The wrapped element, or nil if the attribute doesn't exist or isn't an element.
     private func getElementValue(_ attribute: NSAccessibility.Attribute) -> AccessibilityElement? {
+        print(#function, "called")
         // Get the raw value from the wrapped element
         guard let value = wrappedElement.getValue(attribute) else { return nil }
 
@@ -136,6 +141,7 @@ class AccessibilityElement {
     /// - Parameter attribute: The accessibility attribute to read.
     /// - Returns: Array of wrapped elements, or nil if the attribute doesn't exist.
     private func getElementsValue(_ attribute: NSAccessibility.Attribute) -> [AccessibilityElement]? {
+        print(#function, "called")
         guard let value = wrappedElement.getValue(attribute) else { return nil }
         guard let array = value as? [AXUIElement] else { return nil }
 
@@ -247,6 +253,7 @@ class AccessibilityElement {
     ///
     /// - Returns: true if resizable, false if fixed size. Defaults to true if we can't determine.
     func isResizable() -> Bool {
+        print(#function, "called")
         if let isResizable = wrappedElement.isValueSettable(.size) {
             return isResizable
         }
@@ -270,6 +277,7 @@ class AccessibilityElement {
     ///   - adjustSizeFirst: If true, sets size before position. Set to false for smoother
     ///                      restore animations (slightly less accurate but less visual stutter).
     func setFrame(_ frame: CGRect, adjustSizeFirst: Bool = true) {
+        print(#function, "called")
         // Get the application element (needed for Enhanced UI handling)
         let appElement = applicationElement
         var enhancedUIWasEnabled: Bool? = nil
@@ -318,6 +326,7 @@ class AccessibilityElement {
     /// - Parameter role: The role to search for (e.g., .closeButton, .toolbar).
     /// - Returns: The first matching child, or nil if none found.
     func getChildElement(_ role: NSAccessibility.Role) -> AccessibilityElement? {
+        print(#function, "called")
         return childElements?.first { $0.role == role }
     }
 
@@ -326,6 +335,7 @@ class AccessibilityElement {
     /// - Parameter role: The role to search for.
     /// - Returns: Array of matching children, or nil if none found.
     func getChildElements(_ role: NSAccessibility.Role) -> [AccessibilityElement]? {
+        print(#function, "called")
         let matchingElements = childElements?.filter { $0.role == role }
         guard let elements = matchingElements, !elements.isEmpty else {
             return nil
@@ -338,6 +348,7 @@ class AccessibilityElement {
     /// - Parameter subrole: The subrole to search for.
     /// - Returns: The first matching child, or nil if none found.
     func getChildElement(_ subrole: NSAccessibility.Subrole) -> AccessibilityElement? {
+        print(#function, "called")
         return childElements?.first { $0.subrole == subrole }
     }
 
@@ -346,6 +357,7 @@ class AccessibilityElement {
     /// - Parameter subrole: The subrole to search for.
     /// - Returns: Array of matching children, or nil if none found.
     func getChildElements(_ subrole: NSAccessibility.Subrole) -> [AccessibilityElement]? {
+        print(#function, "called")
         let matchingElements = childElements?.filter { $0.subrole == subrole }
         guard let elements = matchingElements, !elements.isEmpty else {
             return nil
@@ -361,6 +373,7 @@ class AccessibilityElement {
     /// - Parameter position: The screen position to search at.
     /// - Returns: The smallest element containing the position, or self if no children match.
     func getSelfOrChildElementRecursively(_ position: CGPoint) -> AccessibilityElement? {
+        print(#function, "called")
         // Start with self as the current element
         var currentElement = self
 
@@ -404,6 +417,7 @@ class AccessibilityElement {
     ///
     /// - Returns: The window ID, or nil if it can't be determined.
     func getWindowId() -> CGWindowID? {
+        print(#function, "called")
         // Try the direct approach first
         if let windowId = windowId {
             return windowId
@@ -543,6 +557,7 @@ class AccessibilityElement {
     ///
     /// - Parameter force: If true, activates even if already active.
     func bringToFront(force: Bool = false) {
+        print(#function, "called")
         // First, make this the main window of its app
         if isMainWindow != true {
             isMainWindow = true
@@ -565,6 +580,7 @@ extension AccessibilityElement {
     ///
     /// - Returns: The application element, or nil if there's no frontmost app.
     static func getFrontApplicationElement() -> AccessibilityElement? {
+        print(#function, "called")
         guard let app = NSWorkspace.shared.frontmostApplication else { return nil }
         return AccessibilityElement(app.processIdentifier)
     }
@@ -575,6 +591,7 @@ extension AccessibilityElement {
     ///
     /// - Returns: The window element, or nil if no window is found.
     static func getFrontWindowElement() -> AccessibilityElement? {
+        print(#function, "called")
         // First, get the frontmost application
         guard let appElement = getFrontApplicationElement() else {
             Logger.log("Failed to find the application that currently has focus.")
@@ -602,7 +619,8 @@ extension AccessibilityElement {
     /// - Parameter location: The screen position to check.
     /// - Returns: Window info if found, nil otherwise.
     private static func getWindowInfo(_ location: CGPoint) -> WindowInfo? {
-        WindowUtil.getWindowList().first { windowInfo in
+        print(#function, "called")
+        return WindowUtil.getWindowList().first { windowInfo in
             // Level 23 is Notification Center - skip windows at that level or higher
             let isNotSystemLevel = windowInfo.level < 23
 
@@ -625,6 +643,7 @@ extension AccessibilityElement {
     ///
     /// - Returns: The window element under cursor, or nil if none found.
     static func getWindowElementUnderCursor() -> AccessibilityElement? {
+        print(#function, "called")
         // Get mouse position in screen coordinates (flipped for accessibility API)
         let cursorPosition = NSEvent.mouseLocation.screenFlipped
 
@@ -693,6 +712,7 @@ extension AccessibilityElement {
     /// - Parameter windowId: The CGWindowID to look up.
     /// - Returns: The window element, or nil if not found.
     static func getWindowElement(_ windowId: CGWindowID) -> AccessibilityElement? {
+        print(#function, "called")
         // First find the PID from the window list
         guard let pid = WindowUtil.getWindowList(ids: [windowId]).first?.pid else {
             return nil
@@ -706,6 +726,7 @@ extension AccessibilityElement {
     ///
     /// - Returns: Array of all window elements across all running apps.
     static func getAllWindowElements() -> [AccessibilityElement] {
+        print(#function, "called")
         // Get unique PIDs from window list, then get all windows for each PID
         return WindowUtil.getWindowList()
             .uniqueMap { $0.pid }
@@ -718,12 +739,14 @@ extension AccessibilityElement {
 
 extension AccessibilityElement: Equatable {
     static func == (lhs: AccessibilityElement, rhs: AccessibilityElement) -> Bool {
+        print(#function, "called")
         return lhs.wrappedElement == rhs.wrappedElement
     }
 }
 
 extension AccessibilityElement: Hashable {
     func hash(into hasher: inout Hasher) {
+        print(#function, "called")
         hasher.combine(wrappedElement)
     }
 }
@@ -745,6 +768,7 @@ class StageWindowAccessibilityElement: AccessibilityElement {
     /// - Parameter windowId: The window ID to wrap.
     /// - Returns: nil if the window can't be found.
     init?(_ windowId: CGWindowID) {
+        print(#function, "called")
         guard let element = AccessibilityElement.getWindowElement(windowId) else {
             return nil
         }

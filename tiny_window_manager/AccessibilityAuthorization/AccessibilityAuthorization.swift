@@ -49,6 +49,7 @@ class AccessibilityAuthorization {
     ///                         Not called if permission was already granted (returns true).
     /// - Returns: `true` if already authorized, `false` if waiting for user to grant permission.
     public func checkAccessibility(completion: @escaping () -> Void) -> Bool {
+        print(#function, "called")
         // AXIsProcessTrusted() is a system function that checks if this app
         // has been granted accessibility permissions in System Preferences
         let isAlreadyAuthorized = AXIsProcessTrusted()
@@ -70,6 +71,7 @@ class AccessibilityAuthorization {
     /// Brings the authorization window to the front if it's currently showing.
     /// Useful if the user minimized the window and needs to see it again.
     func showAuthorizationWindow() {
+        print(#function, "called")
         // If the window was minimized to the dock, restore it
         if accessibilityWindowController?.window?.isMiniaturized == true {
             accessibilityWindowController?.window?.deminiaturize(self)
@@ -83,6 +85,7 @@ class AccessibilityAuthorization {
 
     /// Creates and displays the authorization prompt window from the storyboard.
     private func showAuthorizationPrompt() {
+        print(#function, "called")
         // Load the window controller from our Main storyboard
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         accessibilityWindowController = storyboard.instantiateController(
@@ -101,6 +104,7 @@ class AccessibilityAuthorization {
     ///
     /// - Parameter completion: Called once when permission is finally granted.
     private func pollAccessibility(completion: @escaping () -> Void) {
+        print(#function, "called")
         // Schedule a check after a short delay
         DispatchQueue.main.asyncAfter(deadline: .now() + pollingInterval) { [weak self] in
             guard let self = self else { return }

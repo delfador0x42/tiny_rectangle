@@ -23,6 +23,7 @@ extension ChangeWindowDimensionCalculation {
     /// Returns the minimum allowed window width as a fraction of screen width (0.0 to 1.0).
     /// Falls back to 25% if the user's setting is invalid.
     private func minimumWindowWidth() -> CGFloat {
+        print(#function, "called")
         let userSetting = Defaults.minimumWindowWidth.value
 
         let isValidFraction = userSetting > 0 && userSetting <= 1
@@ -36,6 +37,7 @@ extension ChangeWindowDimensionCalculation {
     /// Returns the minimum allowed window height as a fraction of screen height (0.0 to 1.0).
     /// Falls back to 25% if the user's setting is invalid.
     private func minimumWindowHeight() -> CGFloat {
+        print(#function, "called")
         let userSetting = Defaults.minimumWindowHeight.value
 
         let isValidFraction = userSetting > 0 && userSetting <= 1
@@ -55,6 +57,7 @@ extension ChangeWindowDimensionCalculation {
     ///   - visibleFrameOfScreen: The usable area of the screen (excludes menu bar, dock, etc.)
     /// - Returns: `true` if the window would be too small, `false` if it's acceptable
     func resizedWindowRectIsTooSmall(windowRect: CGRect, visibleFrameOfScreen: CGRect) -> Bool {
+        print(#function, "called")
         // Calculate the minimum allowed dimensions in points
         let minimumWidth = floor(visibleFrameOfScreen.width * minimumWindowWidth())
         let minimumHeight = floor(visibleFrameOfScreen.height * minimumWindowHeight())

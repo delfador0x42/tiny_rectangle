@@ -188,16 +188,19 @@ enum WindowAction: Int, Codable {
 
     /// Triggers this action via a notification (default source: keyboard shortcut)
     func post() {
+        print(#function, "called")
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self))
     }
 
     /// Triggers this action as if it came from the menu bar
     func postMenu() {
+        print(#function, "called")
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self, source: .menuItem))
     }
 
     /// Triggers this action from a drag-to-snap gesture
     func postSnap(windowElement: AccessibilityElement?, windowId: CGWindowID?, screen: NSScreen) {
+        print(#function, "called")
         NotificationCenter.default.post(
             name: notificationName,
             object: ExecutionParameters(
@@ -213,11 +216,13 @@ enum WindowAction: Int, Codable {
 
     /// Triggers this action from a URL scheme
     func postUrl() {
+        print(#function, "called")
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self, source: .url))
     }
 
     /// Triggers this action from a title bar interaction
     func postTitleBar(windowElement: AccessibilityElement?) {
+        print(#function, "called")
         NotificationCenter.default.post(
             name: notificationName,
             object: ExecutionParameters(self, windowElement: windowElement, source: .titleBar)
@@ -998,6 +1003,7 @@ struct Shortcut: Codable {
     ///   - modifierFlags: Bitmask of modifiers (e.g., ctrl|alt)
     ///   - keyCode: The virtual key code (e.g., kVK_LeftArrow)
     init(_ modifierFlags: UInt, _ keyCode: Int) {
+        print(#function, "called")
         self.keyCode = keyCode
         self.modifierFlags = modifierFlags
     }
@@ -1005,6 +1011,7 @@ struct Shortcut: Codable {
     /// Creates a shortcut from a MASShortcut object.
     /// Used when reading shortcuts from the MASShortcut framework.
     init(masShortcut: MASShortcut) {
+        print(#function, "called")
         self.keyCode = masShortcut.keyCode
         self.modifierFlags = masShortcut.modifierFlags.rawValue
     }
@@ -1013,11 +1020,13 @@ struct Shortcut: Codable {
 
     /// Converts this shortcut to a MASShortcut for use with the MASShortcut framework.
     func toMASSHortcut() -> MASShortcut {
-        MASShortcut(keyCode: keyCode, modifierFlags: NSEvent.ModifierFlags(rawValue: modifierFlags))
+        print(#function, "called")
+        return MASShortcut(keyCode: keyCode, modifierFlags: NSEvent.ModifierFlags(rawValue: modifierFlags))
     }
 
     /// Returns a human-readable string like "⌃⌥←" for display in the UI.
     func displayString() -> String {
+        print(#function, "called")
         let masShortcut = toMASSHortcut()
         return masShortcut.modifierFlagsString + (masShortcut.keyCodeString ?? "")
     }

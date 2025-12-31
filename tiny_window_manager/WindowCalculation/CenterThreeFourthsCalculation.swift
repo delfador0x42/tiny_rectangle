@@ -22,6 +22,7 @@ import Foundation
 class CenterThreeFourthsCalculation: WindowCalculation, OrientationAware {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
         return orientationBasedRect(screenFrame)
     }
@@ -30,6 +31,7 @@ class CenterThreeFourthsCalculation: WindowCalculation, OrientationAware {
 
     /// For landscape: window takes 3/4 of width, centered horizontally, full height
     func landscapeRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         // Window takes 3/4 of the screen width
         let windowWidth = screenFrame.width * 3.0 / 4.0
 
@@ -52,6 +54,7 @@ class CenterThreeFourthsCalculation: WindowCalculation, OrientationAware {
 
     /// For portrait: window takes 3/4 of height, centered vertically, full width
     func portraitRect(_ screenFrame: CGRect) -> RectResult {
+        print(#function, "called")
         // Window takes 3/4 of the screen height
         let windowHeight = screenFrame.height * 3.0 / 4.0
 

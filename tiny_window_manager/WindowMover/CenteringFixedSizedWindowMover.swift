@@ -38,6 +38,7 @@ class CenteringFixedSizedWindowMover: WindowMover {
         frontmostWindowElement: AccessibilityElement?,
         action: WindowAction?
     ) {
+        print(#function, "called")
         // Get the window's current actual size and position
         guard let currentWindowRect = frontmostWindowElement?.frame else {
             return
@@ -95,6 +96,7 @@ class CenteringFixedSizedWindowMover: WindowMover {
         targetSize: CGFloat,
         targetOrigin: CGFloat
     ) -> CGFloat {
+        print(#function, "called")
         // Calculate how much extra space we have
         let extraSpace = targetSize - windowSize
 

@@ -52,6 +52,7 @@ class QuantizedWindowMover: WindowMover {
         frontmostWindowElement: AccessibilityElement?,
         action: WindowAction?
     ) {
+        print(#function, "called")
         // Get the window's current size after the initial resize attempt
         guard var actualWindowRect = frontmostWindowElement?.frame else {
             return
@@ -97,6 +98,7 @@ class QuantizedWindowMover: WindowMover {
         currentRect: CGRect,
         targetRect: CGRect
     ) -> CGRect {
+        print(#function, "called")
         var actualWindowRect = currentRect
         var requestedRect = targetRect
 
@@ -131,11 +133,13 @@ class QuantizedWindowMover: WindowMover {
 
     /// Checks if the actual window size exceeds the target in either dimension.
     private func windowExceedsTarget(actual: CGRect, target: CGRect) -> Bool {
+        print(#function, "called")
         return actual.width > target.width || actual.height > target.height
     }
 
     /// Checks if we've shrunk the requested size too much (below 85% of target).
     private func requestedSizeTooSmall(requested: CGRect, target: CGRect) -> Bool {
+        print(#function, "called")
         let widthTooSmall = requested.width < target.width * minimumSizeRatio
         let heightTooSmall = requested.height < target.height * minimumSizeRatio
         return widthTooSmall || heightTooSmall
@@ -150,6 +154,7 @@ class QuantizedWindowMover: WindowMover {
         actualWindowSize: CGSize,
         withinTarget targetRect: CGRect
     ) -> CGRect {
+        print(#function, "called")
         var centeredRect = requestedRect
 
         // Calculate how much smaller the window is than the target

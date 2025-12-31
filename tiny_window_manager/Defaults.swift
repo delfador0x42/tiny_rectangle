@@ -455,6 +455,7 @@ struct CodableDefault: Codable {
     let string: String?
 
     init(bool: Bool? = nil, int: Int? = nil, float: Float? = nil, string: String? = nil) {
+        print(#function, "called")
         self.bool = bool
         self.int = int
         self.float = float
@@ -515,18 +516,21 @@ class BoolDefault: Default {
 
     /// Creates a BoolDefault, loading any existing value from UserDefaults.
     init(key: String) {
+        print(#function, "called")
         self.key = key
         enabled = UserDefaults.standard.bool(forKey: key)
         initialized = true
     }
 
     func load(from codable: CodableDefault) {
+        print(#function, "called")
         if let value = codable.bool {
             self.enabled = value
         }
     }
 
     func toCodable() -> CodableDefault {
+        print(#function, "called")
         return CodableDefault(bool: enabled)
     }
 }
@@ -576,6 +580,7 @@ class OptionalBoolDefault: Default {
     var notSet: Bool { enabled == nil }
 
     init(key: String) {
+        print(#function, "called")
         self.key = key
         let intValue = UserDefaults.standard.integer(forKey: key)
         set(using: intValue)
@@ -584,6 +589,7 @@ class OptionalBoolDefault: Default {
 
     /// Convert stored Int back to Bool?.
     private func set(using intValue: Int) {
+        print(#function, "called")
         switch intValue {
         case 0: enabled = nil
         case 1: enabled = true
@@ -593,12 +599,14 @@ class OptionalBoolDefault: Default {
     }
 
     func load(from codable: CodableDefault) {
+        print(#function, "called")
         if let value = codable.int {
             set(using: value)
         }
     }
 
     func toCodable() -> CodableDefault {
+        print(#function, "called")
         guard let enabled = enabled else { return CodableDefault(int: 0) }
         let intValue = enabled ? 1 : 2
         return CodableDefault(int: intValue)
@@ -623,16 +631,19 @@ class StringDefault: Default {
     }
 
     init(key: String) {
+        print(#function, "called")
         self.key = key
         value = UserDefaults.standard.string(forKey: key)
         initialized = true
     }
 
     func load(from codable: CodableDefault) {
+        print(#function, "called")
         value = codable.string
     }
 
     func toCodable() -> CodableDefault {
+        print(#function, "called")
         return CodableDefault(string: value)
     }
 }
@@ -660,6 +671,7 @@ class FloatDefault: Default {
     /// Creates a FloatDefault with an optional default value.
     /// The defaultValue is used if UserDefaults returns 0 (meaning not set).
     init(key: String, defaultValue: Float = 0) {
+        print(#function, "called")
         self.key = key
         value = UserDefaults.standard.float(forKey: key)
 
@@ -672,12 +684,14 @@ class FloatDefault: Default {
     }
 
     func load(from codable: CodableDefault) {
+        print(#function, "called")
         if let float = codable.float {
             value = float
         }
     }
 
     func toCodable() -> CodableDefault {
+        print(#function, "called")
         return CodableDefault(float: value)
     }
 }
@@ -701,6 +715,7 @@ class IntDefault: Default {
 
     /// Creates an IntDefault with an optional default value.
     init(key: String, defaultValue: Int = 0) {
+        print(#function, "called")
         self.key = key
         value = UserDefaults.standard.integer(forKey: key)
 
@@ -712,12 +727,14 @@ class IntDefault: Default {
     }
 
     func load(from codable: CodableDefault) {
+        print(#function, "called")
         if let int = codable.int {
             value = int
         }
     }
 
     func toCodable() -> CodableDefault {
+        print(#function, "called")
         return CodableDefault(int: value)
     }
 }
@@ -755,6 +772,7 @@ class JSONDefault<T: Codable>: StringDefault {
     }
 
     override init(key: String) {
+        print(#function, "called")
         super.init(key: key)
         loadFromJSON()
         typeInitialized = true
@@ -762,6 +780,7 @@ class JSONDefault<T: Codable>: StringDefault {
 
     /// Creates a JSONDefault with a default value if nothing is stored.
     init(key: String, defaultValue: T) {
+        print(#function, "called")
         if typedValue == nil {
             typedValue = defaultValue
         }
@@ -769,6 +788,7 @@ class JSONDefault<T: Codable>: StringDefault {
     }
 
     override func load(from codable: CodableDefault) {
+        print(#function, "called")
         // Only reload if the JSON string actually changed
         if value != codable.string {
             value = codable.string
@@ -780,6 +800,7 @@ class JSONDefault<T: Codable>: StringDefault {
 
     /// Decode the JSON string into the typed value.
     private func loadFromJSON() {
+        print(#function, "called")
         guard let jsonString = value else { return }
         guard let jsonData = jsonString.data(using: .utf8) else { return }
 
@@ -789,6 +810,7 @@ class JSONDefault<T: Codable>: StringDefault {
 
     /// Encode the typed value to a JSON string and save it.
     private func saveToJSON(_ obj: T?) {
+        print(#function, "called")
         let encoder = JSONEncoder()
 
         if let jsonData = try? encoder.encode(obj) {
@@ -842,6 +864,7 @@ class IntEnumDefault<E: RawRepresentable>: Default where E.RawValue == Int {
     }
 
     init(key: String, defaultValue: E) {
+        print(#function, "called")
         self.key = key
         self.defaultValue = defaultValue
 
@@ -851,6 +874,7 @@ class IntEnumDefault<E: RawRepresentable>: Default where E.RawValue == Int {
     }
 
     func load(from codable: CodableDefault) {
+        print(#function, "called")
         if let intValue = codable.int, _value.rawValue != intValue {
             _value = E(rawValue: intValue) ?? defaultValue
             UserDefaults.standard.set(_value.rawValue, forKey: key)
@@ -858,7 +882,8 @@ class IntEnumDefault<E: RawRepresentable>: Default where E.RawValue == Int {
     }
 
     func toCodable() -> CodableDefault {
-        CodableDefault(int: value.rawValue)
+        print(#function, "called")
+        return CodableDefault(int: value.rawValue)
     }
 }
 
@@ -880,6 +905,7 @@ struct CodableColor: Codable {
 
     /// Create from an NSColor.
     init(nsColor: NSColor) {
+        print(#function, "called")
         self.red = nsColor.redComponent
         self.green = nsColor.greenComponent
         self.blue = nsColor.blueComponent

@@ -50,6 +50,7 @@ extension RepeatedExecutionsCalculation {
     /// - If this is the first time (or a different action), returns the first rect
     /// - If this is a repeat, determines which size in the cycle to use
     func calculateRepeatedRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
 
         // Check if this is a repeated execution of the same action
         let isRepeatedAction = params.lastAction?.action == params.action
@@ -73,6 +74,7 @@ extension RepeatedExecutionsCalculation {
     /// Returns the list of cycle sizes to use, in sorted order.
     /// Uses custom sizes if configured, otherwise falls back to defaults.
     private func getAvailableCycleSizes() -> [CycleSize] {
+        print(#function, "called")
         let userHasCustomSizes = Defaults.cycleSizesIsChanged.enabled
         let configuredSizes = userHasCustomSizes ? Defaults.selectedCycleSizes.value : CycleSize.defaultSizes
 

@@ -11,6 +11,7 @@ import Foundation
 class BottomHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalculation {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let isFirstExecution = params.lastAction == nil
         let shouldCycleSizes = Defaults.subsequentExecutionMode.resizes
 
@@ -24,6 +25,7 @@ class BottomHalfCalculation: WindowCalculation, RepeatedExecutionsInThirdsCalcul
     /// Creates a rect that spans the full width and a fraction of the height.
     /// The window is anchored to the bottom-left corner of the screen.
     func calculateFractionalRect(_ params: RectCalculationParameters, fraction: Float) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         let width = screenFrame.width

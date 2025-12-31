@@ -37,6 +37,7 @@ extension DispatchTime {
     /// ```
     ///
     var uptimeMilliseconds: UInt64 {
+        print(#function, "called")
         // Convert nanoseconds to milliseconds by dividing by 1 million
         // Swift allows underscores in numbers for readability: 1_000_000 = 1000000
         return uptimeNanoseconds / 1_000_000

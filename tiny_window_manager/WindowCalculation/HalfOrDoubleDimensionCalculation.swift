@@ -23,6 +23,7 @@ class HalfOrDoubleDimensionCalculation: WindowCalculation, ChangeWindowDimension
     // MARK: - Main Calculation
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let originalRect = params.window.rect
         let action = params.action
 
@@ -52,6 +53,7 @@ class HalfOrDoubleDimensionCalculation: WindowCalculation, ChangeWindowDimension
 
     /// Returns true if the action makes the window smaller.
     private func isSizeReducingAction(_ action: WindowAction) -> Bool {
+        print(#function, "called")
         switch action {
         case .halveHeightUp, .halveHeightDown, .halveWidthLeft, .halveWidthRight:
             return true
@@ -66,6 +68,7 @@ class HalfOrDoubleDimensionCalculation: WindowCalculation, ChangeWindowDimension
     ///
     /// This only changes the size, not the position. Position is handled separately.
     private func applyResize(to windowRect: CGRect, action: WindowAction) -> CGRect {
+        print(#function, "called")
         var resized = windowRect
 
         switch action {
@@ -104,6 +107,7 @@ class HalfOrDoubleDimensionCalculation: WindowCalculation, ChangeWindowDimension
     /// - Y increases upward (higher Y = higher on screen)
     /// - X increases rightward (higher X = further right)
     private func applyRepositioning(original originalRect: CGRect, resized resizedRect: CGRect, action: WindowAction) -> CGRect {
+        print(#function, "called")
         switch action {
 
         // "Halve up" = keep top edge fixed

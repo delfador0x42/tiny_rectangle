@@ -9,6 +9,7 @@ import Foundation
 class ThirdFourthCalculation: WindowCalculation, OrientationAware {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screen = params.visibleFrameOfScreen
 
         // Check if we should cycle to the next position in the sequence
@@ -23,6 +24,7 @@ class ThirdFourthCalculation: WindowCalculation, OrientationAware {
     // MARK: - Orientation-Based Positioning
 
     func landscapeRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let screen = visibleFrameOfScreen
         let quarterWidth = floor(screen.width / 4.0)
 
@@ -40,6 +42,7 @@ class ThirdFourthCalculation: WindowCalculation, OrientationAware {
     }
 
     func portraitRect(_ visibleFrameOfScreen: CGRect) -> RectResult {
+        print(#function, "called")
         let screen = visibleFrameOfScreen
         let quarterHeight = floor(screen.height / 4.0)
 
@@ -60,6 +63,7 @@ class ThirdFourthCalculation: WindowCalculation, OrientationAware {
 
     /// Returns the next calculation in the cycle sequence, or nil if we should use the default.
     private func getNextCalculationInCycle(_ params: RectCalculationParameters) -> SimpleCalc? {
+        print(#function, "called")
         // Cycling is disabled if subsequentExecutionMode is .none
         let cyclingEnabled = Defaults.subsequentExecutionMode.value != .none
 

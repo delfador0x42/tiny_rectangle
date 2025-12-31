@@ -74,6 +74,7 @@ public class PassiveEventMonitor: EventMonitor {
 
     /// Returns true if both monitors are active.
     var running: Bool {
+        print(#function, "called")
         // Both monitors must be active for us to consider it "running"
         return localMonitor != nil && globalMonitor != nil
     }
@@ -87,12 +88,14 @@ public class PassiveEventMonitor: EventMonitor {
     ///   - handler: A closure called whenever a matching event occurs.
     ///
     public init(mask: NSEvent.EventTypeMask, handler: @escaping (NSEvent) -> Void) {
+        print(#function, "called")
         self.mask = mask
         self.handler = handler
     }
 
     /// Automatically stops monitoring when this object is deallocated.
     deinit {
+        print(#function, "called")
         stop()
     }
 
@@ -101,6 +104,7 @@ public class PassiveEventMonitor: EventMonitor {
     /// Begins monitoring for events matching the mask.
     ///
     public func start() {
+        print(#function, "called")
         // Monitor events within our own app
         // Local monitors must return the event (or a modified version) to let it propagate
         localMonitor = NSEvent.addLocalMonitorForEvents(matching: mask) { event in
@@ -116,6 +120,7 @@ public class PassiveEventMonitor: EventMonitor {
     /// Stops monitoring for events.
     ///
     public func stop() {
+        print(#function, "called")
         // Clean up local monitor if it exists
         if localMonitor != nil {
             NSEvent.removeMonitor(localMonitor!)
@@ -175,6 +180,7 @@ public class ActiveEventMonitor: EventMonitor {
 
     /// Returns true if the event tap is active.
     var running: Bool {
+        print(#function, "called")
         return tap != nil
     }
 
@@ -192,6 +198,7 @@ public class ActiveEventMonitor: EventMonitor {
         filterer: @escaping (NSEvent) -> Bool,
         handler: @escaping (NSEvent) -> Void
     ) {
+        print(#function, "called")
         self.mask = mask
         self.filterer = filterer
         self.handler = handler
@@ -199,6 +206,7 @@ public class ActiveEventMonitor: EventMonitor {
 
     /// Automatically stops the tap when deallocated.
     deinit {
+        print(#function, "called")
         stop()
     }
 
@@ -207,6 +215,7 @@ public class ActiveEventMonitor: EventMonitor {
     /// Creates an event tap and starts intercepting events.
     ///
     public func start() {
+        print(#function, "called")
         // Create a CGEvent tap - this is the low-level macOS API for intercepting events
         // Parameters explained:
         //   - tap: .cgSessionEventTap = intercept events for the current user session
@@ -237,6 +246,7 @@ public class ActiveEventMonitor: EventMonitor {
     /// Stops the event tap and cleans up resources.
     ///
     public func stop() {
+        print(#function, "called")
         if let tap = tap {
             // Remove tap from the run loop
             thread!.runLoop!.remove(tap, forMode: .default)
@@ -274,6 +284,7 @@ fileprivate func tapCallback(
     event: CGEvent,
     refcon: UnsafeMutableRawPointer?
 ) -> Unmanaged<CGEvent>? {
+    print(#function, "called")
 
     // Track whether this event should be filtered (blocked)
     var shouldBlockEvent = false

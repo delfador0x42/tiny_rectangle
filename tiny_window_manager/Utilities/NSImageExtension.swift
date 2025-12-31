@@ -41,6 +41,7 @@ extension NSImage {
     /// the rotated corners. The original image is centered in the new canvas.
     ///
     func rotated(by degrees: CGFloat) -> NSImage {
+        print(#function, "called")
 
         // STEP 1: Calculate the new canvas size needed for the rotated image
         //

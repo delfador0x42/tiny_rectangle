@@ -88,6 +88,7 @@ extension CGRect {
     /// Example: Two windows tiled left/right would share 3 edges (top, bottom, and the middle edge).
     ///
     func numSharedEdges(withRect rect: CGRect) -> Int {
+        print(#function, "called")
         var sharedEdgeCount = 0
 
         // Check left edges

@@ -10,11 +10,13 @@ final class SpecifiedCalculation: WindowCalculation {
     private let specifiedWidth: CGFloat
 
     override init() {
+        print(#function, "called")
         specifiedHeight = CGFloat(Defaults.specifiedHeight.value)
         specifiedWidth = CGFloat(Defaults.specifiedWidth.value)
     }
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screen = params.visibleFrameOfScreen
 
         let windowWidth = calculateWidth(for: screen)
@@ -36,6 +38,7 @@ final class SpecifiedCalculation: WindowCalculation {
     // MARK: - Size Calculations
 
     private func calculateWidth(for screen: CGRect) -> CGFloat {
+        print(#function, "called")
         if specifiedWidth <= 1 {
             // Value is a percentage (e.g., 0.5 = 50% of screen width)
             return screen.width * specifiedWidth
@@ -46,6 +49,7 @@ final class SpecifiedCalculation: WindowCalculation {
     }
 
     private func calculateHeight(for screen: CGRect) -> CGFloat {
+        print(#function, "called")
         if specifiedHeight <= 1 {
             // Value is a percentage (e.g., 0.5 = 50% of screen height)
             return screen.height * specifiedHeight
@@ -58,12 +62,14 @@ final class SpecifiedCalculation: WindowCalculation {
     // MARK: - Centering Calculations
 
     private func centerHorizontally(windowWidth: CGFloat, in screen: CGRect) -> CGFloat {
+        print(#function, "called")
         let extraSpace = screen.width - windowWidth
         let offsetFromLeft = round(extraSpace / 2.0)
         return screen.minX + offsetFromLeft
     }
 
     private func centerVertically(windowHeight: CGFloat, in screen: CGRect) -> CGFloat {
+        print(#function, "called")
         let extraSpace = screen.height - windowHeight
         let offsetFromBottom = round(extraSpace / 2.0)
         return screen.minY + offsetFromBottom

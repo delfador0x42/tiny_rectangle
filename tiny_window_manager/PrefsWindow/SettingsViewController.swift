@@ -148,6 +148,7 @@ class SettingsViewController: NSViewController {
     /// Called when user toggles "Launch on Login" checkbox.
     /// Uses different APIs for macOS 13+ vs older versions.
     @IBAction func toggleLaunchOnLogin(_ sender: NSButton) {
+        print(#function, "called")
         let newSetting: Bool = sender.state == .on
 
         // macOS 13+ uses the new LaunchOnLogin API
@@ -168,6 +169,7 @@ class SettingsViewController: NSViewController {
     /// Called when user toggles "Hide Menu Bar Icon" checkbox.
     /// Immediately updates the status item visibility.
     @IBAction func toggleHideMenuBarIcon(_ sender: NSButton) {
+        print(#function, "called")
         let newSetting: Bool = sender.state == .on
         Defaults.hideMenuBarIcon.enabled = newSetting
         tiny_window_managerStatusItem.instance.refreshVisibility()
@@ -176,6 +178,7 @@ class SettingsViewController: NSViewController {
     /// Called when user changes what happens on subsequent shortcut execution.
     /// Shows/hides the cycle sizes view based on selection.
     @IBAction func setSubsequentExecutionBehavior(_ sender: NSPopUpButton) {
+        print(#function, "called")
         let tag = sender.selectedTag()
         guard let mode = SubsequentExecutionMode(rawValue: tag) else {
             Logger.log("Expected a pop up button to have a selected item with a valid tag matching a value of SubsequentExecutionMode. Got: \(String(describing: tag))")
@@ -191,6 +194,7 @@ class SettingsViewController: NSViewController {
     /// Called when user drags the gap slider.
     /// Updates label in real-time, but only saves on mouse up (to avoid excessive writes).
     @IBAction func gapSliderChanged(_ sender: NSSlider) {
+        print(#function, "called")
         // Update label immediately for visual feedback
         gapLabel.stringValue = "\(sender.intValue) px"
 
@@ -208,12 +212,14 @@ class SettingsViewController: NSViewController {
 
     /// Called when user toggles "Move cursor across displays" checkbox.
     @IBAction func toggleCursorMove(_ sender: NSButton) {
+        print(#function, "called")
         let newSetting: Bool = sender.state == .on
         Defaults.moveCursorAcrossDisplays.enabled = newSetting
     }
 
     /// Called when user toggles "Use cursor for screen detection" checkbox.
     @IBAction func toggleUseCursorScreenDetection(_ sender: NSButton) {
+        print(#function, "called")
         let newSetting: Bool = sender.state == .on
         Defaults.useCursorScreenDetection.enabled = newSetting
     }
@@ -223,6 +229,7 @@ class SettingsViewController: NSViewController {
     /// Called when user toggles "Allow Any Shortcut" checkbox.
     /// Posts notification so shortcut views can update their validators.
     @IBAction func toggleAllowAnyShortcut(_ sender: NSButton) {
+        print(#function, "called")
         let newSetting: Bool = sender.state == .on
         Defaults.allowAnyShortcut.enabled = newSetting
 
@@ -235,6 +242,7 @@ class SettingsViewController: NSViewController {
     /// Called when user clicks "Check for Updates" button.
     /// Delegates to the Sparkle update controller.
     @IBAction func checkForUpdates(_ sender: Any) {
+        print(#function, "called")
         AppDelegate.updaterController.checkForUpdates(sender)
     }
 
@@ -243,6 +251,7 @@ class SettingsViewController: NSViewController {
     /// Called when user toggles "Double-click title bar to maximize" checkbox.
     /// Warns user if macOS system setting conflicts with this feature.
     @IBAction func toggleDoubleClickTitleBar(_ sender: NSButton) {
+        print(#function, "called")
         let newSetting: Bool = sender.state == .on
 
         // If enabling and macOS's own title bar action is still set, warn the user
@@ -279,6 +288,7 @@ class SettingsViewController: NSViewController {
     /// Called when user toggles the Todo Mode checkbox.
     /// Shows/hides the todo settings section.
     @IBAction func toggleTodoMode(_ sender: NSButton) {
+        print(#function, "called")
         let newSetting: Bool = sender.state == .on
         Defaults.todo.enabled = newSetting
         showHideTodoModeSettings(animated: true)
@@ -288,6 +298,7 @@ class SettingsViewController: NSViewController {
     /// Called when user clicks the "?" button next to Todo Mode.
     /// Opens a help window explaining what Todo Mode does.
     @IBAction func showTodoModeHelp(_ sender: Any) {
+        print(#function, "called")
         // Lazily create the window controller
         if aboutTodoWindowController == nil {
             aboutTodoWindowController = NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "AboutTodoWindowController") as? NSWindowController
@@ -300,6 +311,7 @@ class SettingsViewController: NSViewController {
     /// Called when user changes the todo sidebar width unit (px or %).
     /// Converts the current width value to the new unit.
     @IBAction func setTodoWidthUnit(_ sender: NSPopUpButton) {
+        print(#function, "called")
         let tag = sender.selectedTag()
         guard let unit = TodoSidebarWidthUnit(rawValue: tag) else {
             Logger.log("Expected a pop up button to have a selected item with a valid tag matching a value of TodoSidebarWidthUnit. Got: \(String(describing: tag))")
@@ -322,6 +334,7 @@ class SettingsViewController: NSViewController {
 
     /// Called when user changes which side of the screen the todo sidebar appears on.
     @IBAction func setTodoAppSide(_ sender: NSPopUpButton) {
+        print(#function, "called")
         let tag = sender.selectedTag()
         guard let side = TodoSidebarSide(rawValue: tag) else {
             Logger.log("Expected a pop up button to have a selected item with a valid tag matching a value of TodoSidebarSide. Got: \(String(describing: tag))")
@@ -337,6 +350,7 @@ class SettingsViewController: NSViewController {
     /// Called when user drags the Stage Manager size slider.
     /// Similar to gap slider - updates label in real-time, saves on mouse up.
     @IBAction func stageSliderChanged(_ sender: NSSlider) {
+        print(#function, "called")
         stageLabel.stringValue = "\(sender.intValue) px"
 
         if let event = NSApp.currentEvent {
@@ -355,6 +369,7 @@ class SettingsViewController: NSViewController {
     /// Called when user clicks "Restore Defaults".
     /// Asks user which default shortcut set to use (tiny_window_manager or Spectacle style).
     @IBAction func restoreDefaults(_ sender: Any) {
+        print(#function, "called")
         // Show alert asking which defaults to restore to
         let currentDefaults = Defaults.alternateDefaultShortcuts.enabled ? "tiny_window_manager" : "Spectacle"
         let defaultShortcutsTitle = NSLocalizedString("Default Shortcuts", tableName: "Main", value: "", comment: "")
@@ -385,6 +400,7 @@ class SettingsViewController: NSViewController {
     /// Called when user clicks "Export" button.
     /// Saves all settings to a JSON file.
     @IBAction func exportConfig(_ sender: NSButton) {
+        print(#function, "called")
         // Temporarily disable window snapping while the save dialog is open
         Notification.Name.windowSnapping.post(object: false)
 
@@ -410,6 +426,7 @@ class SettingsViewController: NSViewController {
     /// Called when user clicks "Import" button.
     /// Loads settings from a previously exported JSON file.
     @IBAction func importConfig(_ sender: NSButton) {
+        print(#function, "called")
         // Temporarily disable window snapping while the open dialog is open
         Notification.Name.windowSnapping.post(object: false)
 
@@ -430,6 +447,7 @@ class SettingsViewController: NSViewController {
     /// Called when user clicks the "Extra Settings" button.
     /// Shows a popover with additional shortcuts (larger/smaller width).
     @IBAction func showExtraSettings(_ sender: NSButton) {
+        print(#function, "called")
         // Create the popover lazily (only once)
         if extraSettingsPopover == nil {
             extraSettingsPopover = createExtraSettingsPopover()
@@ -443,6 +461,7 @@ class SettingsViewController: NSViewController {
     /// Called after the view is loaded from the storyboard.
     /// Initializes all UI controls to match current settings.
     override func awakeFromNib() {
+        print(#function, "called")
         // STEP 1: Initialize all toggle controls to match saved settings
         initializeToggles()
 
@@ -488,6 +507,7 @@ class SettingsViewController: NSViewController {
 
     /// Sets up all Todo Mode related controls.
     func initializeTodoModeSettings() {
+        print(#function, "called")
         todoCheckbox.state = Defaults.todo.userEnabled ? .on : .off
         todoAppWidthField.stringValue = String(Defaults.todoSidebarWidth.value)
         todoAppWidthField.delegate = self
@@ -510,6 +530,7 @@ class SettingsViewController: NSViewController {
 
     /// Shows or hides the Todo Mode settings section based on whether it's enabled.
     private func showHideTodoModeSettings(animated: Bool) {
+        print(#function, "called")
         animateChanges(animated: animated) {
             let isEnabled = Defaults.todo.userEnabled
             todoView.isHidden = !isEnabled
@@ -519,6 +540,7 @@ class SettingsViewController: NSViewController {
 
     /// Sets all toggle controls (checkboxes, sliders, popups) to match current settings.
     func initializeToggles() {
+        print(#function, "called")
         checkForUpdatesAutomaticallyCheckbox.state = Defaults.SUEnableAutomaticChecks.enabled ? .on : .off
         launchOnLoginCheckbox.state = Defaults.launchOnLogin.enabled ? .on : .off
         hideMenuBarIconCheckbox.state = Defaults.hideMenuBarIcon.enabled ? .on : .off
@@ -552,6 +574,7 @@ class SettingsViewController: NSViewController {
 
     /// Shows or hides the cycle sizes view based on subsequent execution mode.
     private func initializeCycleSizesView(animated: Bool = false) {
+        print(#function, "called")
         let showOptionsView = Defaults.subsequentExecutionMode.resizes
 
         if showOptionsView {
@@ -568,6 +591,7 @@ class SettingsViewController: NSViewController {
 
     /// Wraps view changes in an animation block if animated is true.
     private func animateChanges(animated: Bool, block: () -> Void) {
+        print(#function, "called")
         if animated {
             NSAnimationContext.runAnimationGroup({ context in
                 context.duration = 0.3
@@ -585,7 +609,8 @@ class SettingsViewController: NSViewController {
 
     /// Creates checkbox controls for each available cycle size option.
     private func makeCycleSizeCheckboxes() -> [NSButton] {
-        CycleSize.sortedSizes.map { division in
+        print(#function, "called")
+        return CycleSize.sortedSizes.map { division in
             let button = NSButton(checkboxWithTitle: division.title, target: self, action: #selector(didCheckCycleSizeCheckbox(sender:)))
             button.tag = division.rawValue
             button.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -595,6 +620,7 @@ class SettingsViewController: NSViewController {
 
     /// Called when user toggles a cycle size checkbox.
     @objc private func didCheckCycleSizeCheckbox(sender: Any?) {
+        print(#function, "called")
         guard let checkbox = sender as? NSButton else {
             Logger.log("Expected action to be sent from NSButton. Instead, sender is: \(String(describing: sender))")
             return
@@ -624,6 +650,7 @@ class SettingsViewController: NSViewController {
 
     /// Updates all cycle size checkboxes to match current settings.
     private func setToggleStatesForCycleSizeCheckboxes() {
+        print(#function, "called")
         let useDefaultCycleSizes = !Defaults.cycleSizesIsChanged.enabled
         let cycleSizes = useDefaultCycleSizes ? CycleSize.defaultSizes : Defaults.selectedCycleSizes.value
 
@@ -648,6 +675,7 @@ class SettingsViewController: NSViewController {
     /// Builds the popover UI for extra settings (larger/smaller width shortcuts).
     /// This is created programmatically rather than in the storyboard.
     private func createExtraSettingsPopover() -> NSPopover {
+        print(#function, "called")
         let popover = NSPopover()
         popover.behavior = .transient
         let viewController = NSViewController()
@@ -800,6 +828,7 @@ extension SettingsViewController {
     /// This is the proper way to create this controller since it's
     /// defined in the Main storyboard file.
     static func freshController() -> SettingsViewController {
+        print(#function, "called")
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         let identifier = "SettingsViewController"
         guard let viewController = storyboard.instantiateController(withIdentifier: identifier) as? SettingsViewController else {
@@ -816,6 +845,7 @@ extension SettingsViewController: NSTextFieldDelegate {
     /// Called when text changes in an AutoSaveFloatField.
     /// Uses debouncing to avoid saving on every keystroke.
     func controlTextDidChange(_ obj: Notification) {
+        print(#function, "called")
         guard let sender = obj.object as? AutoSaveFloatField,
               let defaults: FloatDefault = sender.defaults else { return }
 
@@ -829,6 +859,7 @@ extension SettingsViewController: NSTextFieldDelegate {
     /// Called when user finishes editing (tabs out, presses Enter, etc.).
     /// Resets to default value if field is empty.
     func controlTextDidEndEditing(_ obj: Notification) {
+        print(#function, "called")
         guard let sender = obj.object as? AutoSaveFloatField,
               let defaults: FloatDefault = sender.defaults else { return }
 

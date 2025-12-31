@@ -63,6 +63,7 @@ protocol SixthsRepeated {
 extension SixthsRepeated {
 
     func nextCalculation(subAction: SubWindowAction, direction: Direction) -> SimpleCalc? {
+        print(#function, "called")
         switch direction {
         case .left:
             return nextPositionGoingLeft(from: subAction)
@@ -76,6 +77,7 @@ extension SixthsRepeated {
     /// Returns the next sixth position when cycling left (counter-clockwise).
     /// This moves backwards through the cycle order.
     private func nextPositionGoingLeft(from subAction: SubWindowAction) -> SimpleCalc? {
+        print(#function, "called")
         switch subAction {
         // Landscape layout: cycle backwards through the 6 positions
         case .topLeftSixthLandscape:
@@ -113,6 +115,7 @@ extension SixthsRepeated {
     /// Returns the next sixth position when cycling right (clockwise).
     /// This moves forward through the cycle order.
     private func nextPositionGoingRight(from subAction: SubWindowAction) -> SimpleCalc? {
+        print(#function, "called")
         switch subAction {
         // Landscape layout: cycle forward through the 6 positions
         case .topLeftSixthLandscape:

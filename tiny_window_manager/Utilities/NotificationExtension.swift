@@ -96,6 +96,7 @@ extension Notification.Name {
         object: Any? = nil,
         userInfo: [AnyHashable: Any]? = nil
     ) {
+        print(#function, "called")
         center.post(name: self, object: object, userInfo: userInfo)
     }
 
@@ -142,6 +143,7 @@ extension Notification.Name {
         queue: OperationQueue? = nil,
         using: @escaping (Notification) -> Void
     ) -> NSObjectProtocol {
+        print(#function, "called")
         // Register the observer with NotificationCenter
         // This returns an opaque observer token that can be used to remove the observer later
         return center.addObserver(

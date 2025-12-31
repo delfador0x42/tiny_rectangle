@@ -35,6 +35,7 @@ class BestEffortWindowMover: WindowMover {
         frontmostWindowElement: AccessibilityElement?,
         action: WindowAction?
     ) {
+        print(#function, "called")
         // Get the window's current actual position and size
         guard let currentWindowRect = frontmostWindowElement?.frame else {
             return
@@ -69,6 +70,7 @@ class BestEffortWindowMover: WindowMover {
 
     /// Adjusts the window's horizontal position to keep it within screen bounds.
     private func adjustHorizontalPosition(_ rect: CGRect, within screenBounds: CGRect) -> CGRect {
+        print(#function, "called")
         var adjusted = rect
 
         let windowLeftEdge = adjusted.minX
@@ -97,6 +99,7 @@ class BestEffortWindowMover: WindowMover {
 
     /// Adjusts the window's vertical position to keep it within screen bounds.
     private func adjustVerticalPosition(_ rect: CGRect, within screenBounds: CGRect) -> CGRect {
+        print(#function, "called")
         // macOS uses two coordinate systems:
         // - Screen coordinates: Origin at BOTTOM-left (Cocoa/AppKit style)
         // - Window coordinates: Origin at TOP-left (accessibility API style)

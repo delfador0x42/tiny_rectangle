@@ -20,6 +20,7 @@ extension Defaults {
     ///
     /// - Returns: A JSON string containing all settings, or nil if encoding fails
     static func encoded() -> String? {
+        print(#function, "called")
         // Get the app version to include in the config file
         guard let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else {
             return nil
@@ -45,6 +46,7 @@ extension Defaults {
 
     /// Gathers all keyboard shortcuts from both window actions and todo manager.
     private static func collectAllShortcuts() -> [String: Shortcut] {
+        print(#function, "called")
         var shortcuts = [String: Shortcut]()
 
         // Collect shortcuts for window actions (resize, move, etc.)
@@ -66,6 +68,7 @@ extension Defaults {
 
     /// Loads a keyboard shortcut from UserDefaults using the MASShortcut transformer.
     private static func loadShortcutFromUserDefaults(key: String) -> MASShortcut? {
+        print(#function, "called")
         // Shortcuts are stored as dictionaries in UserDefaults
         guard let shortcutDict = UserDefaults.standard.dictionary(forKey: key) else {
             return nil
@@ -81,6 +84,7 @@ extension Defaults {
 
     /// Gathers all user preferences into a codable format.
     private static func collectAllDefaults() -> [String: CodableDefault] {
+        print(#function, "called")
         var codableDefaults = [String: CodableDefault]()
 
         for exportableDefault in Defaults.array {
@@ -92,6 +96,7 @@ extension Defaults {
 
     /// Converts a Config object to a formatted JSON string.
     private static func encodeConfigToJSON(_ config: Config) -> String? {
+        print(#function, "called")
         let encoder = JSONEncoder()
 
         // Make the JSON human-readable with indentation
@@ -117,6 +122,7 @@ extension Defaults {
     /// - Parameter jsonString: The JSON string to parse
     /// - Returns: A Config object if parsing succeeds, nil otherwise
     static func convert(jsonString: String) -> Config? {
+        print(#function, "called")
         guard let jsonData = jsonString.data(using: .utf8) else {
             return nil
         }
@@ -130,6 +136,7 @@ extension Defaults {
     ///
     /// - Parameter fileUrl: The URL of the JSON configuration file
     static func load(fileUrl: URL) {
+        print(#function, "called")
         // We need the transformer to save shortcuts back to UserDefaults
         guard let dictTransformer = ValueTransformer(forName: NSValueTransformerName(rawValue: MASDictionaryTransformerName)) else {
             return
@@ -153,6 +160,7 @@ extension Defaults {
 
     /// Restores user preferences from a config object.
     private static func restoreDefaults(from config: Config) {
+        print(#function, "called")
         for availableDefault in Defaults.array {
             if let codedDefault = config.defaults[availableDefault.key] {
                 availableDefault.load(from: codedDefault)
@@ -162,6 +170,7 @@ extension Defaults {
 
     /// Restores keyboard shortcuts from a config object.
     private static func restoreShortcuts(from config: Config, using transformer: ValueTransformer) {
+        print(#function, "called")
         // Restore window action shortcuts
         for action in WindowAction.active {
             if let shortcut = config.shortcuts[action.name]?.toMASSHortcut() {
@@ -185,6 +194,7 @@ extension Defaults {
     /// After loading, the file is renamed with a timestamp (or deleted if rename fails).
     /// This allows external tools to drop a config file for automatic import.
     static func loadFromSupportDir() {
+        print(#function, "called")
         // Build the path to the config file
         guard let supportURL = getSupportDir() else { return }
         let appSupportURL = supportURL.appendingPathComponent("tiny_window_manager", isDirectory: true)
@@ -203,6 +213,7 @@ extension Defaults {
 
     /// Renames or removes the config file after it's been loaded.
     private static func archiveConfigFile(at configURL: URL, in directory: URL) {
+        print(#function, "called")
         // Try to rename the file with a timestamp
         let newFilename = "tiny_window_managerConfig\(timestamp()).json"
         let archivedURL = directory.appendingPathComponent(newFilename)
@@ -227,6 +238,7 @@ extension Defaults {
 
     /// Returns the Application Support directory for the current user.
     private static func getSupportDir() -> URL? {
+        print(#function, "called")
         let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         return paths.first
     }
@@ -234,6 +246,7 @@ extension Defaults {
     /// Generates a timestamp string for creating unique filenames.
     /// Format: "2024-01-15_14-30-45-1234"
     private static func timestamp() -> String {
+        print(#function, "called")
         let formatter = DateFormatter()
         formatter.dateFormat = "y-MM-dd_H-mm-ss-SSSS"
         return formatter.string(from: Date())

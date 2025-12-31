@@ -25,6 +25,7 @@ final class ShortcutManager {
     // MARK: - Lifecycle
 
     init(windowManager: WindowManager) {
+        print(#function, "called")
         self.windowManager = windowManager
 
         configureMASShortcutBinder()
@@ -38,6 +39,7 @@ final class ShortcutManager {
     }
 
     deinit {
+        print(#function, "called")
         // Always clean up NotificationCenter observers when the object is going away.
         unsubscribeFromAllWindowActions()
     }
@@ -51,6 +53,7 @@ final class ShortcutManager {
     /// - bind shortcuts again
     /// - start observing again
     public func reloadFromDefaults() {
+        print(#function, "called")
         tearDown()
         setupShortcutsAndObservers()
     }
@@ -58,17 +61,20 @@ final class ShortcutManager {
     /// Public wrapper so other code can explicitly enable shortcuts.
     /// (Calls the internal helper that binds all actions.)
     public func bindShortcuts() {
+        print(#function, "called")
         bindAllShortcuts()
     }
 
     /// Public wrapper so other code can explicitly disable shortcuts.
     /// (Calls the internal helper that unbinds all actions.)
     public func unbindShortcuts() {
+        print(#function, "called")
         unbindAllShortcuts()
     }
 
     /// Returns the key equivalent (like "⌘⌥M") and modifier flags for an action, if set.
     public func getKeyEquivalent(action: WindowAction) -> (String?, NSEvent.ModifierFlags)? {
+        print(#function, "called")
         guard let shortcut = binder?.value(forKey: action.name) as? MASShortcut else {
             return nil
         }
@@ -78,6 +84,7 @@ final class ShortcutManager {
     // MARK: - Setup / Teardown helpers
 
     private func configureMASShortcutBinder() {
+        print(#function, "called")
         // MASShortcut uses Cocoa bindings; this tells it how to transform dictionaries.
         binder?.bindingOptions = [
             NSBindingOption.valueTransformerName: MASDictionaryTransformerName
@@ -85,12 +92,14 @@ final class ShortcutManager {
     }
 
     private func setupShortcutsAndObservers() {
+        print(#function, "called")
         registerDefaultShortcuts()
         bindAllShortcuts()
         subscribeToAllWindowActions()
     }
 
     private func tearDown() {
+        print(#function, "called")
         unsubscribeFromAllWindowActions()
         unbindAllShortcuts()
     }
@@ -98,12 +107,14 @@ final class ShortcutManager {
     // MARK: - Binding shortcuts (internal helpers)
 
     private func bindAllShortcuts() {
+        print(#function, "called")
         for action in WindowAction.active {
             binder?.bindShortcut(withDefaultsKey: action.name, toAction: action.post)
         }
     }
 
     private func unbindAllShortcuts() {
+        print(#function, "called")
         for action in WindowAction.active {
             binder?.breakBinding(withDefaultsKey: action.name)
         }
@@ -114,6 +125,7 @@ final class ShortcutManager {
     /// Register “factory defaults” shortcuts for each WindowAction.
     /// MASShortcut stores shortcuts in UserDefaults keyed by action.name.
     private func registerDefaultShortcuts() {
+        print(#function, "called")
         var defaults: [String: MASShortcut] = [:]
 
         for action in WindowAction.active {
@@ -135,8 +147,9 @@ final class ShortcutManager {
 
     /// Chooses which default shortcut set to use based on user preference.
     private func defaultShortcutForAction(_ action: WindowAction) -> Shortcut? {
-        // NOTE: I’m assuming `alternateDefault` / `spectacleDefault` are of type `Shortcut?`.
-        // Replace `Shortcut` with your actual type if it’s named differently.
+        print(#function, "called")
+        // NOTE: I'm assuming `alternateDefault` / `spectacleDefault` are of type `Shortcut?`.
+        // Replace `Shortcut` with your actual type if it's named differently.
         if Defaults.alternateDefaultShortcuts.enabled {
             return action.alternateDefault
         } else {
@@ -147,6 +160,7 @@ final class ShortcutManager {
     // MARK: - Notifications wiring
 
     private func subscribeToAllWindowActions() {
+        print(#function, "called")
         for action in WindowAction.active {
             NotificationCenter.default.addObserver(
                 self,
@@ -158,6 +172,7 @@ final class ShortcutManager {
     }
 
     private func unsubscribeFromAllWindowActions() {
+        print(#function, "called")
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -165,6 +180,7 @@ final class ShortcutManager {
 
     /// This is called when a WindowAction posts its notification.
     @objc private func windowActionTriggered(notification: NSNotification) {
+        print(#function, "called")
         guard var parameters = notification.object as? ExecutionParameters else {
             return
         }
@@ -183,6 +199,7 @@ final class ShortcutManager {
     // MARK: - Cycle-monitor logic (pulled out for readability)
 
     private func adjustParametersForCycleMonitorIfNeeded(_ parameters: ExecutionParameters) -> ExecutionParameters {
+        print(#function, "called")
         // Only do cycle-monitor behavior when the preference is enabled…
         guard Defaults.subsequentExecutionMode.value == .cycleMonitor else {
             return parameters
@@ -232,6 +249,7 @@ final class ShortcutManager {
     private func isRepeatAction(parameters: ExecutionParameters,
                                 windowElement: AccessibilityElement,
                                 windowId: CGWindowID) -> Bool {
+        print(#function, "called")
 
         // Special-case: maximize counts as a "repeat" if the window is already maximized.
         if parameters.action == .maximize {

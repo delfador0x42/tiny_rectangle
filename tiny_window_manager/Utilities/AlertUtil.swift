@@ -20,6 +20,7 @@ class AlertUtil {
     ///   - text: Additional details shown below the title
     ///   - confirmText: The text for the button (defaults to "OK")
     static func oneButtonAlert(question: String, text: String, confirmText: String = "OK") {
+        print(#function, "called")
         let alert = createBaseAlert(question: question, text: text)
         alert.addButton(withTitle: confirmText)
         alert.runModal()
@@ -34,6 +35,7 @@ class AlertUtil {
     ///   - cancelText: The text for the cancel button (defaults to "Cancel")
     /// - Returns: The user's response. Compare with .alertFirstButtonReturn for confirm.
     static func twoButtonAlert(question: String, text: String, confirmText: String = "OK", cancelText: String = "Cancel") -> NSApplication.ModalResponse {
+        print(#function, "called")
         let alert = createBaseAlert(question: question, text: text)
         alert.addButton(withTitle: confirmText)
         alert.addButton(withTitle: cancelText)
@@ -49,6 +51,7 @@ class AlertUtil {
     ///   - buttonThreeText: Text for the third button (leftmost)
     /// - Returns: The user's response. Use .alertFirstButtonReturn, .alertSecondButtonReturn, etc.
     static func threeButtonAlert(question: String, text: String, buttonOneText: String, buttonTwoText: String, buttonThreeText: String) -> NSApplication.ModalResponse {
+        print(#function, "called")
         let alert = createBaseAlert(question: question, text: text)
         alert.addButton(withTitle: buttonOneText)
         alert.addButton(withTitle: buttonTwoText)
@@ -65,6 +68,7 @@ class AlertUtil {
     ///   - text: The informative text below the title
     /// - Returns: A configured NSAlert ready to have buttons added
     private static func createBaseAlert(question: String, text: String) -> NSAlert {
+        print(#function, "called")
         let alert = NSAlert()
         alert.messageText = question
         alert.informativeText = text

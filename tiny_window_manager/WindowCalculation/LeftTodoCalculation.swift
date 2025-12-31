@@ -13,6 +13,7 @@ import Foundation
 final class LeftTodoCalculation: WindowCalculation {
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         // Get the appropriate sidebar width for this screen size

@@ -16,6 +16,7 @@ class AlmostMaximizeCalculation: WindowCalculation {
     let almostMaximizeWidth: CGFloat
 
     override init() {
+        print(#function, "called")
         almostMaximizeHeight = Self.validatedScale(from: Defaults.almostMaximizeHeight.value)
         almostMaximizeWidth = Self.validatedScale(from: Defaults.almostMaximizeWidth.value)
     }
@@ -23,11 +24,13 @@ class AlmostMaximizeCalculation: WindowCalculation {
     /// Ensures the scale value is between 0 and 1 (exclusive of 0, inclusive of 1).
     /// Returns the default scale (0.9) if the value is invalid.
     private static func validatedScale(from value: Float) -> CGFloat {
+        print(#function, "called")
         let isValid = value > 0 && value <= 1
         return isValid ? CGFloat(value) : defaultScale
     }
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
+        print(#function, "called")
         let screenFrame = params.visibleFrameOfScreen
 
         let newSize = calculateSize(for: screenFrame)
@@ -39,6 +42,7 @@ class AlmostMaximizeCalculation: WindowCalculation {
 
     /// Calculates the window size as a percentage of the screen size.
     private func calculateSize(for screenFrame: CGRect) -> CGSize {
+        print(#function, "called")
         let width = round(screenFrame.width * almostMaximizeWidth)
         let height = round(screenFrame.height * almostMaximizeHeight)
         return CGSize(width: width, height: height)
@@ -46,6 +50,7 @@ class AlmostMaximizeCalculation: WindowCalculation {
 
     /// Calculates the origin point that centers the window on screen.
     private func calculateCenteredOrigin(for windowSize: CGSize, in screenFrame: CGRect) -> CGPoint {
+        print(#function, "called")
         let horizontalPadding = screenFrame.width - windowSize.width
         let verticalPadding = screenFrame.height - windowSize.height
 

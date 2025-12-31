@@ -29,6 +29,7 @@ extension AXValue {
     /// - Returns: The unwrapped value of type T, or nil if extraction fails.
     /// - Note: T should match the actual type stored in the AXValue (e.g., CGPoint, CGSize).
     func toValue<T>() -> T? {
+        print(#function, "called")
         // Step 1: Allocate memory to store the extracted value
         let pointer = UnsafeMutablePointer<T>.allocate(capacity: 1)
 
@@ -51,6 +52,7 @@ extension AXValue {
     ///   - type: The AXValueType that describes what kind of value this is
     /// - Returns: A new AXValue containing the wrapped value, or nil if creation fails.
     static func from<T>(value: T, type: AXValueType) -> AXValue? {
+        print(#function, "called")
         // We need a mutable copy because withUnsafePointer requires an inout parameter
         var value = value
         return withUnsafePointer(to: &value) { valuePointer in
@@ -80,6 +82,7 @@ extension AXUIElement {
     /// - Parameter attribute: The attribute to check
     /// - Returns: true if settable, false if read-only, nil if the query failed
     func isValueSettable(_ attribute: NSAccessibility.Attribute) -> Bool? {
+        print(#function, "called")
         var isSettable = DarwinBoolean(false)
         let result = AXUIElementIsAttributeSettable(self, attribute.rawValue as CFString, &isSettable)
         guard result == .success else { return nil }
@@ -90,6 +93,7 @@ extension AXUIElement {
     /// - Parameter attribute: The attribute to read (e.g., .position, .size, .title)
     /// - Returns: The attribute value as AnyObject, or nil if the read failed
     func getValue(_ attribute: NSAccessibility.Attribute) -> AnyObject? {
+        print(#function, "called")
         var value: AnyObject?
         let result = AXUIElementCopyAttributeValue(self, attribute.rawValue as CFString, &value)
         guard result == .success else { return nil }
@@ -101,6 +105,7 @@ extension AXUIElement {
     /// - Returns: The unwrapped value of type T, or nil if reading or unwrapping failed
     /// - Note: Use this for attributes like .position (CGPoint) or .size (CGSize)
     func getWrappedValue<T>(_ attribute: NSAccessibility.Attribute) -> T? {
+        print(#function, "called")
         // First, get the raw value
         guard let value = getValue(attribute) else { return nil }
 
@@ -116,6 +121,7 @@ extension AXUIElement {
     /// Sets an attribute to a raw AnyObject value.
     /// This is the base setter that other typed setters build upon.
     private func setValue(_ attribute: NSAccessibility.Attribute, _ value: AnyObject) {
+        print(#function, "called")
         AXUIElementSetAttributeValue(self, attribute.rawValue as CFString, value)
     }
 
@@ -124,6 +130,7 @@ extension AXUIElement {
     ///   - attribute: The attribute to set
     ///   - value: The boolean value to set
     func setValue(_ attribute: NSAccessibility.Attribute, _ value: Bool) {
+        print(#function, "called")
         // Convert Swift Bool to CFBoolean for the C API
         setValue(attribute, value as CFBoolean)
     }
@@ -131,6 +138,7 @@ extension AXUIElement {
     /// Sets an attribute that requires an AXValue wrapper.
     /// This is a helper used by the CGPoint and CGSize setters.
     private func setWrappedValue<T>(_ attribute: NSAccessibility.Attribute, _ value: T, _ type: AXValueType) {
+        print(#function, "called")
         guard let wrappedValue = AXValue.from(value: value, type: type) else { return }
         setValue(attribute, wrappedValue)
     }
@@ -140,6 +148,7 @@ extension AXUIElement {
     ///   - attribute: The attribute to set (typically .position)
     ///   - value: The point value to set
     func setValue(_ attribute: NSAccessibility.Attribute, _ value: CGPoint) {
+        print(#function, "called")
         setWrappedValue(attribute, value, .cgPoint)
     }
 
@@ -148,6 +157,7 @@ extension AXUIElement {
     ///   - attribute: The attribute to set (typically .size)
     ///   - value: The size value to set
     func setValue(_ attribute: NSAccessibility.Attribute, _ value: CGSize) {
+        print(#function, "called")
         setWrappedValue(attribute, value, .cgSize)
     }
 
@@ -157,6 +167,7 @@ extension AXUIElement {
     /// - Parameter position: The screen coordinates to query
     /// - Returns: The AXUIElement at that position, or nil if none found
     func getElementAtPosition(_ position: CGPoint) -> AXUIElement? {
+        print(#function, "called")
         var element: AXUIElement?
         let result = AXUIElementCopyElementAtPosition(self, Float(position.x), Float(position.y), &element)
         guard result == .success else { return nil }
@@ -166,6 +177,7 @@ extension AXUIElement {
     /// Gets the process ID of the application that owns this element.
     /// - Returns: The process ID (pid_t), or nil if the query failed
     func getPid() -> pid_t? {
+        print(#function, "called")
         var pid = pid_t(0)
         let result = AXUIElementGetPid(self, &pid)
         guard result == .success else { return nil }
@@ -176,6 +188,7 @@ extension AXUIElement {
     /// - Returns: The CGWindowID, or nil if the query failed or element isn't a window
     /// - Note: Uses a private API (_AXUIElementGetWindow) that may change in future macOS versions
     func getWindowId() -> CGWindowID? {
+        print(#function, "called")
         var windowId = CGWindowID(0)
         let result = _AXUIElementGetWindow(self, &windowId)
         guard result == .success else { return nil }

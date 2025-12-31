@@ -37,6 +37,7 @@ class MASShortcutMigration {
     /// in the old format.
     ///
     static func migrate() {
+        print(#function, "called")
 
         // STEP 1: Set up the transformers we'll need for format conversion
         //
