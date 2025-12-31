@@ -6,39 +6,7 @@
 //
 
 import SwiftUI
-
-// MARK: - Data Models
-
-enum TilePosition: String, CaseIterable {
-    case leftHalf = "Left Half"
-    case rightHalf = "Right Half"
-    case centerHalf = "Center Half"
-    case topHalf = "Top Half"
-    case bottomHalf = "Bottom Half"
-    case topLeft = "Top Left"
-    case topRight = "Top Right"
-    case bottomLeft = "Bottom Left"
-    case bottomRight = "Bottom Right"
-    case maximize = "Maximize"
-    case almostMaximize = "Almost Maximize"
-    case maximizeHeight = "Maximize Height"
-    case makeSmaller = "Make Smaller"
-    case makeLarger = "Make Larger"
-    case center = "Center"
-    case restore = "Restore"
-    case nextDisplay = "Next Display"
-    case previousDisplay = "Previous Display"
-}
-
-struct ShortcutItem: Identifiable {
-    let id = UUID()
-    let position: TilePosition
-    var shortcut: String?
-
-    var displayName: String {
-        position.rawValue
-    }
-}
+import MASShortcut
 
 // MARK: - Main Preferences View
 
@@ -134,61 +102,79 @@ struct PreferencesTabButton: View {
 // MARK: - Shortcuts View
 
 struct ShortcutsView: View {
-    @State private var shortcuts: [ShortcutItem] = [
-        ShortcutItem(position: .leftHalf, shortcut: "^/"),
-        ShortcutItem(position: .rightHalf, shortcut: "^\\"),
-        ShortcutItem(position: .centerHalf, shortcut: nil),
-        ShortcutItem(position: .topHalf, shortcut: "^⌥↑"),
-        ShortcutItem(position: .bottomHalf, shortcut: "^⌥↓"),
-        ShortcutItem(position: .topLeft, shortcut: "^⌥U"),
-        ShortcutItem(position: .topRight, shortcut: "^⌥I"),
-        ShortcutItem(position: .bottomLeft, shortcut: "^⌥J"),
-        ShortcutItem(position: .bottomRight, shortcut: "^⌥K"),
-        ShortcutItem(position: .maximize, shortcut: "^G"),
-        ShortcutItem(position: .almostMaximize, shortcut: nil),
-        ShortcutItem(position: .maximizeHeight, shortcut: "^⌥⇧↑"),
-        ShortcutItem(position: .makeSmaller, shortcut: "^⌥-"),
-        ShortcutItem(position: .makeLarger, shortcut: "^⌥="),
-        ShortcutItem(position: .center, shortcut: "^⌥C"),
-        ShortcutItem(position: .restore, shortcut: "^⌥⌫"),
-        ShortcutItem(position: .nextDisplay, shortcut: "^⌥⌘→"),
-        ShortcutItem(position: .previousDisplay, shortcut: "^⌥⌘←"),
+    /// Main shortcuts shown by default
+    private let mainActions: [WindowAction] = [
+        .leftHalf, .rightHalf, .centerHalf, .topHalf, .bottomHalf,
+        .topLeft, .topRight, .bottomLeft, .bottomRight,
+        .maximize, .almostMaximize, .maximizeHeight,
+        .larger, .smaller,
+        .center, .restore,
+        .nextDisplay, .previousDisplay
     ]
 
-    var leftColumnItems: [ShortcutItem] {
-        Array(shortcuts.prefix(9))
+    /// Additional shortcuts shown when expanded
+    private let additionalActions: [WindowAction] = [
+        .firstThird, .centerThird, .lastThird,
+        .firstTwoThirds, .centerTwoThirds, .lastTwoThirds,
+        .moveLeft, .moveRight, .moveUp, .moveDown,
+        .firstFourth, .secondFourth, .thirdFourth, .lastFourth,
+        .firstThreeFourths, .centerThreeFourths, .lastThreeFourths,
+        .topLeftSixth, .topCenterSixth, .topRightSixth,
+        .bottomLeftSixth, .bottomCenterSixth, .bottomRightSixth
+    ]
+
+    @State private var showMore = false
+
+    private var displayedActions: [WindowAction] {
+        showMore ? mainActions + additionalActions : mainActions
     }
 
-    var rightColumnItems: [ShortcutItem] {
-        Array(shortcuts.suffix(9))
+    private var leftColumnActions: [WindowAction] {
+        let half = (displayedActions.count + 1) / 2
+        return Array(displayedActions.prefix(half))
+    }
+
+    private var rightColumnActions: [WindowAction] {
+        let half = (displayedActions.count + 1) / 2
+        return Array(displayedActions.suffix(displayedActions.count - half))
     }
 
     var body: some View {
-        HStack(alignment: .top, spacing: 40) {
-            // Left Column
-            VStack(spacing: 12) {
-                ForEach(leftColumnItems) { item in
-                    ShortcutRow(item: item) { newShortcut in
-                        updateShortcut(for: item.id, shortcut: newShortcut)
+        ScrollView {
+            VStack(spacing: 16) {
+                HStack(alignment: .top, spacing: 40) {
+                    // Left Column
+                    VStack(spacing: 10) {
+                        ForEach(leftColumnActions, id: \.self) { action in
+                            ShortcutRow(action: action)
+                        }
+                    }
+
+                    // Right Column
+                    VStack(spacing: 10) {
+                        ForEach(rightColumnActions, id: \.self) { action in
+                            ShortcutRow(action: action, alignRight: true)
+                        }
                     }
                 }
-            }
 
-            // Right Column
-            VStack(spacing: 12) {
-                ForEach(rightColumnItems) { item in
-                    ShortcutRow(item: item, alignRight: true) { newShortcut in
-                        updateShortcut(for: item.id, shortcut: newShortcut)
+                // Show More / Show Less button
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showMore.toggle()
                     }
+                }) {
+                    HStack {
+                        Text(showMore ? "Show Less" : "Show More")
+                        Image(systemName: showMore ? "chevron.up" : "chevron.down")
+                    }
+                    .font(.system(size: 12))
+                    .foregroundColor(.secondary)
                 }
+                .buttonStyle(.plain)
+                .padding(.top, 8)
             }
-        }
-        .padding(30)
-    }
-
-    private func updateShortcut(for id: UUID, shortcut: String?) {
-        if let index = shortcuts.firstIndex(where: { $0.id == id }) {
-            shortcuts[index].shortcut = shortcut
+            .padding(30)
         }
     }
 }
@@ -196,9 +182,8 @@ struct ShortcutsView: View {
 // MARK: - Shortcut Row
 
 struct ShortcutRow: View {
-    let item: ShortcutItem
+    let action: WindowAction
     var alignRight: Bool = false
-    let onShortcutChange: (String?) -> Void
 
     var body: some View {
         HStack(spacing: 8) {
@@ -206,25 +191,15 @@ struct ShortcutRow: View {
                 Spacer()
             }
 
-            Text(item.displayName)
-                .frame(width: 110, alignment: alignRight ? .trailing : .trailing)
-                .font(.system(size: 13))
+            Text(action.displayName ?? action.name.camelCaseToWords)
+                .frame(width: 120, alignment: .trailing)
+                .font(.system(size: 12))
 
-            TilePreview(position: item.position)
+            TilePreview(action: action)
                 .frame(width: 28, height: 22)
 
-            ShortcutButton(shortcut: item.shortcut)
-                .frame(width: 140)
-
-            Button(action: {
-                onShortcutChange(nil)
-            }) {
-                Image(systemName: "xmark")
-                    .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(.secondary)
-            }
-            .buttonStyle(.plain)
-            .opacity(item.shortcut != nil ? 1 : 0.3)
+            MASShortcutRecorder(action: action)
+                .frame(width: 120, height: 19)
 
             if !alignRight {
                 Spacer()
@@ -236,7 +211,7 @@ struct ShortcutRow: View {
 // MARK: - Tile Preview
 
 struct TilePreview: View {
-    let position: TilePosition
+    let action: WindowAction
 
     var body: some View {
         GeometryReader { geometry in
@@ -257,7 +232,8 @@ struct TilePreview: View {
         let h = size.height
 
         let rect: CGRect
-        switch position {
+        switch action {
+        // Halves
         case .leftHalf:
             rect = CGRect(x: 0, y: 0, width: w/2, height: h)
         case .rightHalf:
@@ -268,6 +244,8 @@ struct TilePreview: View {
             rect = CGRect(x: 0, y: 0, width: w, height: h/2)
         case .bottomHalf:
             rect = CGRect(x: 0, y: h/2, width: w, height: h/2)
+
+        // Corners
         case .topLeft:
             rect = CGRect(x: 0, y: 0, width: w/2, height: h/2)
         case .topRight:
@@ -276,56 +254,107 @@ struct TilePreview: View {
             rect = CGRect(x: 0, y: h/2, width: w/2, height: h/2)
         case .bottomRight:
             rect = CGRect(x: w/2, y: h/2, width: w/2, height: h/2)
+
+        // Maximize variants
         case .maximize:
             rect = CGRect(x: 0, y: 0, width: w, height: h)
         case .almostMaximize:
             rect = CGRect(x: w*0.05, y: h*0.05, width: w*0.9, height: h*0.9)
         case .maximizeHeight:
             rect = CGRect(x: w/4, y: 0, width: w/2, height: h)
-        case .makeSmaller:
-            rect = CGRect(x: w*0.25, y: h*0.25, width: w*0.5, height: h*0.5)
-        case .makeLarger:
+
+        // Size changes
+        case .larger:
             rect = CGRect(x: w*0.1, y: h*0.1, width: w*0.8, height: h*0.8)
-        case .center:
+        case .smaller:
+            rect = CGRect(x: w*0.25, y: h*0.25, width: w*0.5, height: h*0.5)
+
+        // Center and restore
+        case .center, .centerProminently:
             rect = CGRect(x: w*0.2, y: h*0.2, width: w*0.6, height: h*0.6)
         case .restore:
             rect = CGRect(x: w*0.15, y: h*0.15, width: w*0.7, height: h*0.7)
+
+        // Display navigation
         case .nextDisplay:
             rect = CGRect(x: w*0.6, y: 0, width: w*0.4, height: h)
         case .previousDisplay:
             rect = CGRect(x: 0, y: 0, width: w*0.4, height: h)
+
+        // Thirds
+        case .firstThird:
+            rect = CGRect(x: 0, y: 0, width: w/3, height: h)
+        case .centerThird:
+            rect = CGRect(x: w/3, y: 0, width: w/3, height: h)
+        case .lastThird:
+            rect = CGRect(x: w*2/3, y: 0, width: w/3, height: h)
+        case .firstTwoThirds:
+            rect = CGRect(x: 0, y: 0, width: w*2/3, height: h)
+        case .centerTwoThirds:
+            rect = CGRect(x: w/6, y: 0, width: w*2/3, height: h)
+        case .lastTwoThirds:
+            rect = CGRect(x: w/3, y: 0, width: w*2/3, height: h)
+
+        // Movement
+        case .moveLeft:
+            rect = CGRect(x: 0, y: h*0.2, width: w*0.4, height: h*0.6)
+        case .moveRight:
+            rect = CGRect(x: w*0.6, y: h*0.2, width: w*0.4, height: h*0.6)
+        case .moveUp:
+            rect = CGRect(x: w*0.2, y: 0, width: w*0.6, height: h*0.4)
+        case .moveDown:
+            rect = CGRect(x: w*0.2, y: h*0.6, width: w*0.6, height: h*0.4)
+
+        // Fourths
+        case .firstFourth:
+            rect = CGRect(x: 0, y: 0, width: w/4, height: h)
+        case .secondFourth:
+            rect = CGRect(x: w/4, y: 0, width: w/4, height: h)
+        case .thirdFourth:
+            rect = CGRect(x: w/2, y: 0, width: w/4, height: h)
+        case .lastFourth:
+            rect = CGRect(x: w*3/4, y: 0, width: w/4, height: h)
+        case .firstThreeFourths:
+            rect = CGRect(x: 0, y: 0, width: w*3/4, height: h)
+        case .centerThreeFourths:
+            rect = CGRect(x: w/8, y: 0, width: w*3/4, height: h)
+        case .lastThreeFourths:
+            rect = CGRect(x: w/4, y: 0, width: w*3/4, height: h)
+
+        // Sixths
+        case .topLeftSixth:
+            rect = CGRect(x: 0, y: 0, width: w/3, height: h/2)
+        case .topCenterSixth:
+            rect = CGRect(x: w/3, y: 0, width: w/3, height: h/2)
+        case .topRightSixth:
+            rect = CGRect(x: w*2/3, y: 0, width: w/3, height: h/2)
+        case .bottomLeftSixth:
+            rect = CGRect(x: 0, y: h/2, width: w/3, height: h/2)
+        case .bottomCenterSixth:
+            rect = CGRect(x: w/3, y: h/2, width: w/3, height: h/2)
+        case .bottomRightSixth:
+            rect = CGRect(x: w*2/3, y: h/2, width: w/3, height: h/2)
+
+        // Default fallback for any other action
+        default:
+            rect = CGRect(x: w*0.2, y: h*0.2, width: w*0.6, height: h*0.6)
         }
 
         return Path(rect)
     }
 }
 
-// MARK: - Shortcut Button
+// MARK: - String Extension for Display Names
 
-struct ShortcutButton: View {
-    let shortcut: String?
-    @State private var isRecording = false
-
-    var body: some View {
-        Button(action: {
-            isRecording.toggle()
-        }) {
-            Text(isRecording ? "Recording..." : (shortcut ?? "Record Shortcut"))
-                .font(.system(size: 12))
-                .foregroundColor(shortcut != nil ? .primary : .secondary)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 6)
-                .padding(.horizontal, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 6)
-                        .fill(Color(.controlBackgroundColor))
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
-        }
-        .buttonStyle(.plain)
+extension String {
+    /// Converts camelCase to "Title Case Words"
+    /// Example: "topLeftSixth" -> "Top Left Sixth"
+    var camelCaseToWords: String {
+        let pattern = "([a-z])([A-Z])"
+        let regex = try? NSRegularExpression(pattern: pattern)
+        let range = NSRange(startIndex..., in: self)
+        let result = regex?.stringByReplacingMatches(in: self, range: range, withTemplate: "$1 $2") ?? self
+        return result.prefix(1).uppercased() + result.dropFirst()
     }
 }
 
@@ -338,22 +367,6 @@ struct SnapAreasView: View {
                 .font(.title2)
                 .foregroundColor(.secondary)
             Text("Configure snap areas for window management")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-// MARK: - General Settings View
-
-struct GeneralSettingsView: View {
-    var body: some View {
-        VStack {
-            Text("General Settings")
-                .font(.title2)
-                .foregroundColor(.secondary)
-            Text("Configure general application settings")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
