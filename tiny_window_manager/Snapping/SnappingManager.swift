@@ -458,6 +458,7 @@ class SnappingManager {
     /// Handles mouse dragged - detects snap areas and shows the footprint preview
     private func handleMouseDragged(_ event: NSEvent) {
         print(#function, "called")
+	print("**************     NSEvent is ",event)
         // Try to get the window ID if we don't have it yet
         tryToGetWindowId(event)
 

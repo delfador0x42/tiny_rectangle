@@ -15,6 +15,7 @@
 //
 
 import Cocoa
+import SwiftUI           // For SwiftUI views hosting
 import Sparkle           // For auto-update functionality
 import ServiceManagement // For "launch at login" feature
 import os.log            // For system logging
@@ -26,7 +27,7 @@ import os.log            // For system logging
 /// In macOS, the AppDelegate is the central coordinator for your app. It receives
 /// notifications about app lifecycle events (launch, quit, become active, etc.)
 /// and is responsible for setting up the app's core functionality.
-@NSApplicationMain
+// @NSApplicationMain removed - now using SwiftUI @main in TinyWindowManagerApp.swift
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Static Properties (Shared Across the App)
@@ -79,22 +80,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Remembers the previously active app (used for URL scheme handling)
     private var prevActiveApp: NSRunningApplication?
 
-    // MARK: - Interface Builder Outlets
+    // MARK: - Menu Properties (Programmatically Created)
 
     /// The main dropdown menu shown when clicking the status bar icon
-    @IBOutlet weak var mainStatusMenu: NSMenu!
+    private var mainStatusMenu: NSMenu!
 
     /// Shown instead of mainStatusMenu when accessibility isn't authorized
-    @IBOutlet weak var unauthorizedMenu: NSMenu!
+    private var unauthorizedMenu: NSMenu!
 
     /// Menu item to ignore/unignore the frontmost application
-    @IBOutlet weak var ignoreMenuItem: NSMenuItem!
+    private var ignoreMenuItem: NSMenuItem!
 
     /// Menu item to open the logging window (hidden by default)
-    @IBOutlet weak var viewLoggingMenuItem: NSMenuItem!
+    private var viewLoggingMenuItem: NSMenuItem!
 
     /// Menu item to quit the application
-    @IBOutlet weak var quitMenuItem: NSMenuItem!
+    private var quitMenuItem: NSMenuItem!
 
     // MARK: - App Lifecycle
 
@@ -108,6 +109,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// 5. Register for notifications we care about
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         print(#function, "called")
+        // Create menus programmatically (replaces storyboard IBOutlets)
+        setupMenus()
+
         // Load any config file that was dropped in the support directory
         Defaults.loadFromSupportDir()
 
@@ -219,6 +223,93 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func checkAutoCheckForUpdates() {
         print(#function, "called")
         Self.updaterController.updater.automaticallyChecksForUpdates = Defaults.SUEnableAutomaticChecks.enabled
+    }
+
+    // MARK: - Menu Setup
+
+    /// Creates menus programmatically (replacing storyboard IBOutlets).
+    private func setupMenus() {
+        print(#function, "called")
+
+        // Create the main status menu
+        mainStatusMenu = NSMenu(title: "tiny_window_manager")
+
+        // Create the unauthorized menu (shown when accessibility isn't granted)
+        unauthorizedMenu = NSMenu(title: "Unauthorized")
+        let authorizeItem = NSMenuItem(
+            title: NSLocalizedString("Authorize Accessibility...", comment: ""),
+            action: #selector(authorizeAccessibility(_:)),
+            keyEquivalent: ""
+        )
+        authorizeItem.target = self
+        unauthorizedMenu.addItem(authorizeItem)
+        unauthorizedMenu.addItem(NSMenuItem.separator())
+        let unauthorizedQuitItem = NSMenuItem(
+            title: NSLocalizedString("Quit", comment: ""),
+            action: #selector(NSApplication.terminate(_:)),
+            keyEquivalent: "q"
+        )
+        unauthorizedMenu.addItem(unauthorizedQuitItem)
+
+        // Create the "Ignore [App]" menu item
+        ignoreMenuItem = NSMenuItem(
+            title: NSLocalizedString("Ignore frontmost.app", comment: ""),
+            action: #selector(ignoreFrontMostApp(_:)),
+            keyEquivalent: ""
+        )
+        ignoreMenuItem.target = self
+
+        // Create the "View Logging" menu item (hidden by default)
+        viewLoggingMenuItem = NSMenuItem(
+            title: NSLocalizedString("View Logging", comment: ""),
+            action: #selector(viewLogging(_:)),
+            keyEquivalent: ""
+        )
+        viewLoggingMenuItem.target = self
+        viewLoggingMenuItem.isHidden = true
+
+        // Create the "Quit" menu item
+        quitMenuItem = NSMenuItem(
+            title: NSLocalizedString("Quit", comment: ""),
+            action: #selector(NSApplication.terminate(_:)),
+            keyEquivalent: "q"
+        )
+
+        // Add standard menu items to main menu
+        mainStatusMenu.addItem(NSMenuItem.separator())
+        mainStatusMenu.addItem(ignoreMenuItem)
+        mainStatusMenu.addItem(NSMenuItem.separator())
+
+        // Preferences menu item
+        let preferencesItem = NSMenuItem(
+            title: NSLocalizedString("Preferences...", comment: ""),
+            action: #selector(openPreferences(_:)),
+            keyEquivalent: ","
+        )
+        preferencesItem.target = self
+        mainStatusMenu.addItem(preferencesItem)
+
+        // Check for Updates menu item
+        let checkUpdatesItem = NSMenuItem(
+            title: NSLocalizedString("Check for Updates...", comment: ""),
+            action: #selector(checkForUpdates(_:)),
+            keyEquivalent: ""
+        )
+        checkUpdatesItem.target = self
+        mainStatusMenu.addItem(checkUpdatesItem)
+
+        // About menu item
+        let aboutItem = NSMenuItem(
+            title: NSLocalizedString("About tiny_window_manager", comment: ""),
+            action: #selector(showAbout(_:)),
+            keyEquivalent: ""
+        )
+        aboutItem.target = self
+        mainStatusMenu.addItem(aboutItem)
+
+        mainStatusMenu.addItem(NSMenuItem.separator())
+        mainStatusMenu.addItem(viewLoggingMenuItem)
+        mainStatusMenu.addItem(quitMenuItem)
     }
 
     // MARK: - Accessibility Permission Granted
@@ -365,24 +456,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// This window helps users choose between recommended shortcuts or custom setup.
     private func showWelcomeWindow() {
         print(#function, "called")
-        let welcomeWindowController = NSStoryboard(name: "Main", bundle: nil)
-            .instantiateController(withIdentifier: "WelcomeWindowController") as? NSWindowController
-
-        guard let welcomeWindow = welcomeWindowController?.window else { return }
-        welcomeWindow.delegate = self
-
-        // Bring our app to the front and show the modal
-        NSApp.activate(ignoringOtherApps: true)
-        let response = NSApp.runModal(for: welcomeWindow)
-
-        // Check if user chose the recommended settings
-        let usingRecommended = response == .alertFirstButtonReturn || response == .abort
+        let welcomeController = SwiftUIWelcomeWindowController()
+        let usingRecommended = welcomeController.showModal()
 
         // Apply the chosen settings
         Defaults.alternateDefaultShortcuts.enabled = usingRecommended
         Defaults.subsequentExecutionMode.value = usingRecommended ? .acrossMonitor : .resize
-
-        welcomeWindowController?.close()
     }
 
     /// Called when the user clicks the dock icon or relaunches the app.
@@ -401,12 +480,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - IBActions (Menu Item Handlers)
 
     /// Opens the preferences/settings window.
-    @IBAction func openPreferences(_ sender: Any) {
+    @objc func openPreferences(_ sender: Any) {
         print(#function, "called")
-        // Lazily create the preferences window controller
+        // Lazily create the preferences window controller with SwiftUI view
         if prefsWindowController == nil {
-            prefsWindowController = NSStoryboard(name: "Main", bundle: nil)
-                .instantiateController(withIdentifier: "PrefsWindowController") as? NSWindowController
+            let hostingController = NSHostingController(rootView: PreferencesView())
+            let window = NSWindow(contentViewController: hostingController)
+            window.title = "Preferences"
+            window.styleMask = NSWindow.StyleMask([.titled, .closable, .miniaturizable, .resizable])
+            window.setContentSize(NSSize(width: 800, height: 580))
+            window.center()
+
+            prefsWindowController = NSWindowController(window: window)
         }
 
         // Bring our app to the front and show the window
@@ -415,14 +500,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /// Shows the standard macOS "About" panel.
-    @IBAction func showAbout(_ sender: Any) {
+    @objc func showAbout(_ sender: Any) {
         print(#function, "called")
         NSApp.activate(ignoringOtherApps: true)
         NSApp.orderFrontStandardAboutPanel(sender)
     }
 
     /// Opens the debug logging window.
-    @IBAction func viewLogging(_ sender: Any) {
+    @objc func viewLogging(_ sender: Any) {
         print(#function, "called")
         Logger.showLogging(sender: sender)
     }
@@ -431,7 +516,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// When "on", the app is currently being ignored, so we re-enable it.
     /// When "off", the app is active, so we disable/ignore it.
-    @IBAction func ignoreFrontMostApp(_ sender: NSMenuItem) {
+    @objc func ignoreFrontMostApp(_ sender: NSMenuItem) {
         print(#function, "called")
         if sender.state == .on {
             applicationToggle.enableApp()
@@ -441,13 +526,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     /// Triggers a manual check for app updates via Sparkle.
-    @IBAction func checkForUpdates(_ sender: Any) {
+    @objc func checkForUpdates(_ sender: Any) {
         print(#function, "called")
         Self.updaterController.checkForUpdates(sender)
     }
 
     /// Shows the accessibility authorization window/dialog.
-    @IBAction func authorizeAccessibility(_ sender: Any) {
+    @objc func authorizeAccessibility(_ sender: Any) {
         print(#function, "called")
         accessibilityAuthorization.showAuthorizationWindow()
     }

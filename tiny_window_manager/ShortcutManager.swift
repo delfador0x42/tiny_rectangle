@@ -113,6 +113,13 @@ final class ShortcutManager {
         }
     }
 
+    
+    
+    
+    
+    
+    
+    
     private func unbindAllShortcuts() {
         print(#function, "called")
         for action in WindowAction.active {
