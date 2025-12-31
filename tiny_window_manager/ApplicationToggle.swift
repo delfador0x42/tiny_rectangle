@@ -69,7 +69,7 @@ class ApplicationToggle: NSObject {
     ///
     /// This is static so other parts of the app can check which app is active
     /// without needing a reference to this class.
-    public private(set) static var frontAppId: String? = "com.knollsoft.tiny_window_manager"
+    public private(set) static var frontAppId: String? = "com.wudan.tiny-window-manager"
 
     /// The display name of the currently active (frontmost) application.
     /// Example: "Safari"

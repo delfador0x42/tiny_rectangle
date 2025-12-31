@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             terminate()
             return
         }
-        let mainAppIdentifier = "com.knollsoft.tiny_window_manager"
+        let mainAppIdentifier = "com.wudan.tiny-window-manager"
         let running = NSWorkspace.shared.runningApplications
         let isRunning = !running.filter({$0.bundleIdentifier == mainAppIdentifier}).isEmpty
         

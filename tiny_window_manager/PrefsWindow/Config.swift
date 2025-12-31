@@ -34,7 +34,7 @@ extension Defaults {
 
         // Bundle everything into a Config object
         let config = Config(
-            bundleId: "com.knollsoft.tiny_window_manager",
+            bundleId: "com.wudan.tiny-window-manager",
             version: version,
             shortcuts: shortcuts,
             defaults: codableDefaults

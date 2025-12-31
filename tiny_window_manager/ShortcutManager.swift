@@ -105,7 +105,6 @@ final class ShortcutManager {
     }
 
     // MARK: - Binding shortcuts (internal helpers)
-
     private func bindAllShortcuts() {
         print(#function, "called")
         for action in WindowAction.active {
@@ -113,13 +112,6 @@ final class ShortcutManager {
         }
     }
 
-    
-    
-    
-    
-    
-    
-    
     private func unbindAllShortcuts() {
         print(#function, "called")
         for action in WindowAction.active {
