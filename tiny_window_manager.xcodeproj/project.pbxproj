@@ -20,10 +20,7 @@
 		94E9B08E2C3B8D97004C7F41 /* MacTilingDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E9B08D2C3B8D97004C7F41 /* MacTilingDefaults.swift */; };
 		94E9B0902C3E4578004C7F41 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E9B08F2C3E4578004C7F41 /* StringExtension.swift */; };
 		9818E00D28B59205004AA524 /* CompoundSnapArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818E00C28B59205004AA524 /* CompoundSnapArea.swift */; };
-		9818E01028B59396004AA524 /* HalvesCompoundCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818E00F28B59396004AA524 /* HalvesCompoundCalculation.swift */; };
-		9818E01228B59B64004AA524 /* ThirdsCompoundCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818E01128B59B64004AA524 /* ThirdsCompoundCalculation.swift */; };
-		9818E01428B5A4FD004AA524 /* SixthsCompoundCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818E01328B5A4FD004AA524 /* SixthsCompoundCalculation.swift */; };
-		9818E01828B63C48004AA524 /* FourthsCompoundCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9818E01728B63C48004AA524 /* FourthsCompoundCalculation.swift */; };
+		30166BD424F27D6A00A3860D /* SimpleCompoundCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30166BD524F27D6A00A3860E /* SimpleCompoundCalculation.swift */; };
 		98192DDA270F606C00015E66 /* Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98192DD9270F606C00015E66 /* Debounce.swift */; };
 		98192DDE2717201100015E66 /* ReverseAllManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98192DDD2717201000015E66 /* ReverseAllManager.swift */; };
 		981F27D12340E3E1006CD263 /* InternetAccessPolicy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 981F27D02340E3E1006CD263 /* InternetAccessPolicy.plist */; };
@@ -134,10 +131,7 @@
 		9808018523D05C0B0077774A /* tiny_window_managerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tiny_window_managerRelease.entitlements; sourceTree = "<group>"; };
 		9808018623D05C1F0077774A /* tiny_window_managerLauncherRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tiny_window_managerLauncherRelease.entitlements; sourceTree = "<group>"; };
 		9818E00C28B59205004AA524 /* CompoundSnapArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundSnapArea.swift; sourceTree = "<group>"; };
-		9818E00F28B59396004AA524 /* HalvesCompoundCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalvesCompoundCalculation.swift; sourceTree = "<group>"; };
-		9818E01128B59B64004AA524 /* ThirdsCompoundCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdsCompoundCalculation.swift; sourceTree = "<group>"; };
-		9818E01328B5A4FD004AA524 /* SixthsCompoundCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixthsCompoundCalculation.swift; sourceTree = "<group>"; };
-		9818E01728B63C48004AA524 /* FourthsCompoundCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthsCompoundCalculation.swift; sourceTree = "<group>"; };
+		30166BD524F27D6A00A3860E /* SimpleCompoundCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCompoundCalculation.swift; sourceTree = "<group>"; };
 		98192DD9270F606C00015E66 /* Debounce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debounce.swift; sourceTree = "<group>"; };
 		98192DDD2717201000015E66 /* ReverseAllManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseAllManager.swift; sourceTree = "<group>"; };
 		981F27D02340E3E1006CD263 /* InternetAccessPolicy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = InternetAccessPolicy.plist; sourceTree = "<group>"; };
@@ -260,10 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				9818E00C28B59205004AA524 /* CompoundSnapArea.swift */,
-				9818E00F28B59396004AA524 /* HalvesCompoundCalculation.swift */,
-				9818E01128B59B64004AA524 /* ThirdsCompoundCalculation.swift */,
-				9818E01728B63C48004AA524 /* FourthsCompoundCalculation.swift */,
-				9818E01328B5A4FD004AA524 /* SixthsCompoundCalculation.swift */,
+				30166BD524F27D6A00A3860E /* SimpleCompoundCalculation.swift */,
 			);
 			path = CompoundSnapArea;
 			sourceTree = "<group>";
@@ -742,7 +733,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9818E01828B63C48004AA524 /* FourthsCompoundCalculation.swift in Sources */,
 				94E9B08E2C3B8D97004C7F41 /* MacTilingDefaults.swift in Sources */,
 				984EDB0F29A42ED200D119D2 /* LaunchOnLogin.swift in Sources */,
 				9824702F22AFA2E50037B409 /* AccessibilityAuthorization.swift in Sources */,
@@ -758,7 +748,6 @@
 				30166BD224F27D6A00A3860B /* CycleSize.swift in Sources */,
 				FDE8FCE027C2950400EACCAA /* MultiWindowManager.swift in Sources */,
 				98192DDA270F606C00015E66 /* Debounce.swift in Sources */,
-				9818E01428B5A4FD004AA524 /* SixthsCompoundCalculation.swift in Sources */,
 				9824704B22B189250037B409 /* StandardWindowMover.swift in Sources */,
 				98B3559823CE025700E410E0 /* CenteringFixedSizedWindowMover.swift in Sources */,
 				9824704E22B189250037B409 /* QuantizedWindowMover.swift in Sources */,
@@ -780,7 +769,6 @@
 				9824704122B186D00037B409 /* WindowManager.swift in Sources */,
 				98C97FFD25893B040061F01F /* Config.swift in Sources */,
 				989DA30E243FC0DF008C7AA4 /* WelcomeViewController.swift in Sources */,
-				9818E01228B59B64004AA524 /* ThirdsCompoundCalculation.swift in Sources */,
 				98C27561231FFA5F009B9292 /* SnappingManager.swift in Sources */,
 				9824703722B0F3200037B409 /* WindowAction.swift in Sources */,
 				3FFE85862F04F1F5005E1E75 /* MASShortcutRecorder.swift in Sources */,
@@ -804,7 +792,7 @@
 				98987AA52391890400BE72C4 /* LogViewer.swift in Sources */,
 				9824704C22B189250037B409 /* WindowMover.swift in Sources */,
 				944F25CD2CE5A144004B2FD2 /* PrefsViewController.swift in Sources */,
-				9818E01028B59396004AA524 /* HalvesCompoundCalculation.swift in Sources */,
+				30166BD424F27D6A00A3860D /* SimpleCompoundCalculation.swift in Sources */,
 				98A6EDEC2528FFC100F74B10 /* WindowActionCategory.swift in Sources */,
 				9818E00D28B59205004AA524 /* CompoundSnapArea.swift in Sources */,
 				AABBCC042F4A00000000004A /* TinyWindowManagerApp.swift in Sources */,

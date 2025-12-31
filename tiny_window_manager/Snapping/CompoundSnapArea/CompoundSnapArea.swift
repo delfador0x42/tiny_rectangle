@@ -49,19 +49,10 @@ enum CompoundSnapArea: Int, Codable {
         .portraitTopBottomHalves
     ]
 
-    // MARK: - Calculation Instances (Singletons)
-    // Each compound snap area type has a corresponding calculation object that
-    // determines which window action to perform based on cursor position.
+    // MARK: - Calculation Instance
+    // All compound snap areas now use a single unified calculation class.
 
-    static let leftCompoundCalculation = LeftTopBottomHalfCalculation()
-    static let rightCompoundCalculation = RightTopBottomHalfCalculation()
-    static let thirdsCompoundCalculation = ThirdsCompoundCalculation()
-    static let portraitSideThirdsCalculation = PortraitSideThirdsCompoundCalculation()
-    static let leftRightHalvesCalculation = LeftRightHalvesCompoundCalculation()
-    static let topSixthsCalculation = TopSixthsCompoundCalculation()
-    static let bottomSixthsCalculation = BottomSixthsCompoundCalculation()
-    static let fourthsColumnCalculation = FourthsColumnCompoundCalculation()
-    static let portraitTopBottomCalculation = TopBottomHalvesCalculation()
+    static let thirdsCompoundCalculation = SimpleCompoundCalculation(compoundType: .thirds)
 
     // MARK: - Display Name
 
@@ -145,28 +136,8 @@ enum CompoundSnapArea: Int, Codable {
     // MARK: - Calculation Logic
 
     /// Returns the calculation object that determines snap behavior based on cursor position.
-    /// These are singleton instances to avoid creating new objects on every drag event.
     var calculation: CompoundSnapAreaCalculation {
-        switch self {
-        case .leftTopBottomHalf:
-            return Self.leftCompoundCalculation
-        case .rightTopBottomHalf:
-            return Self.rightCompoundCalculation
-        case .thirds:
-            return Self.thirdsCompoundCalculation
-        case .portraitThirdsSide:
-            return Self.portraitSideThirdsCalculation
-        case .halves:
-            return Self.leftRightHalvesCalculation
-        case .topSixths:
-            return Self.topSixthsCalculation
-        case .bottomSixths:
-            return Self.bottomSixthsCalculation
-        case .fourths:
-            return Self.fourthsColumnCalculation
-        case .portraitTopBottomHalves:
-            return Self.portraitTopBottomCalculation
-        }
+        SimpleCompoundCalculation(compoundType: self)
     }
 
     // MARK: - Compatibility
