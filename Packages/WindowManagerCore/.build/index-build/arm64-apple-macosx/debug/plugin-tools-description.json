@@ -52,7 +52,23 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/CycleSize.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Edge.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Shortcut.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubWindowAction.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubsequentExecutionMode.swift"
         },
         {
           "kind" : "file",
@@ -69,6 +85,18 @@
         {
           "kind" : "file",
           "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/WindowProtocol.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/CBridge.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/Debounce.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/TimeoutCache.swift"
         },
         {
           "kind" : "file",
@@ -93,11 +121,18 @@
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/SnapAreaCalculator.swift.o",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/CGRectExtensions.swift.o",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/ActionRecord.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/CycleSize.swift.o",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/Edge.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/Shortcut.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/SubWindowAction.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/SubsequentExecutionMode.swift.o",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/WindowActionType.swift.o",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/ScreenProtocol.swift.o",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/SettingsProtocol.swift.o",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/WindowProtocol.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/CBridge.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/Debounce.swift.o",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/TimeoutCache.swift.o",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build/WindowManagerCore.swift.o"
       ],
       "otherArguments" : [
@@ -106,8 +141,6 @@
         "-incremental",
         "-enable-batch-mode",
         "-serialize-diagnostics",
-        "-index-store-path",
-        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/index/store",
         "-Onone",
         "-enable-testing",
         "-j16",
@@ -178,11 +211,18 @@
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Calculations/SnapAreaCalculator.swift",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Geometry/CGRectExtensions.swift",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/ActionRecord.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/CycleSize.swift",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Edge.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Shortcut.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubWindowAction.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubsequentExecutionMode.swift",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/WindowActionType.swift",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/ScreenProtocol.swift",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/SettingsProtocol.swift",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/WindowProtocol.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/CBridge.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/Debounce.swift",
+        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/TimeoutCache.swift",
         "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/WindowManagerCore.swift"
       ],
       "tempsPath" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCore.build",
@@ -222,8 +262,6 @@
         "-incremental",
         "-enable-batch-mode",
         "-serialize-diagnostics",
-        "-index-store-path",
-        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/index/store",
         "-Onone",
         "-enable-testing",
         "-Xfrontend",
@@ -327,8 +365,6 @@
         "-incremental",
         "-enable-batch-mode",
         "-serialize-diagnostics",
-        "-index-store-path",
-        "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/index/store",
         "-Onone",
         "-enable-testing",
         "-Xfrontend",
@@ -415,11 +451,18 @@
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Calculations/SnapAreaCalculator.swift",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Geometry/CGRectExtensions.swift",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/ActionRecord.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/CycleSize.swift",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Edge.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Shortcut.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubWindowAction.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubsequentExecutionMode.swift",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/WindowActionType.swift",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/ScreenProtocol.swift",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/SettingsProtocol.swift",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/WindowProtocol.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/CBridge.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/Debounce.swift",
+      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/TimeoutCache.swift",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/WindowManagerCore.swift",
       "-I",
       "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/Modules",
@@ -428,8 +471,6 @@
       "-incremental",
       "-enable-batch-mode",
       "-serialize-diagnostics",
-      "-index-store-path",
-      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/index/store",
       "-Onone",
       "-enable-testing",
       "-j16",
@@ -502,8 +543,6 @@
       "-incremental",
       "-enable-batch-mode",
       "-serialize-diagnostics",
-      "-index-store-path",
-      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/index/store",
       "-Onone",
       "-enable-testing",
       "-Xfrontend",
@@ -576,8 +615,6 @@
       "-incremental",
       "-enable-batch-mode",
       "-serialize-diagnostics",
-      "-index-store-path",
-      "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/index/store",
       "-Onone",
       "-enable-testing",
       "-Xfrontend",
@@ -692,7 +729,23 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/CycleSize.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Edge.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Shortcut.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubWindowAction.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubsequentExecutionMode.swift"
         },
         {
           "kind" : "file",
@@ -709,6 +762,18 @@
         {
           "kind" : "file",
           "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/WindowProtocol.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/CBridge.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/Debounce.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/TimeoutCache.swift"
         },
         {
           "kind" : "file",

@@ -176,4 +176,20 @@ public enum WindowActionType: Int, Codable, CaseIterable, Sendable {
 public enum WindowActionCategory: Sendable {
     case halves, thirds, fourths, sixths, corners
     case max, size, move, display, other
+
+    /// Human-readable display name for this category.
+    public var displayName: String {
+        switch self {
+        case .halves: return "Halves"
+        case .thirds: return "Thirds"
+        case .fourths: return "Fourths"
+        case .sixths: return "Sixths"
+        case .corners: return "Corners"
+        case .max: return "Maximize"
+        case .size: return "Size"
+        case .move: return "Move"
+        case .display: return "Display"
+        case .other: return "Other"
+        }
+    }
 }

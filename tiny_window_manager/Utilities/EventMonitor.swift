@@ -25,6 +25,7 @@
 //
 
 import Cocoa
+import WindowManagerCore
 
 // MARK: - EventMonitor Protocol
 
@@ -221,7 +222,7 @@ public class ActiveEventMonitor: EventMonitor {
             options: .defaultTap,
             eventsOfInterest: mask.rawValue,
             callback: tapCallback,
-            userInfo: CUtil.bridge(obj: self)  // Convert self to a C-compatible pointer
+            userInfo: CBridge.toPointer(self)  // Convert self to a C-compatible pointer
         )
 
         // If tap creation succeeded, set up a run loop thread to process events
@@ -281,7 +282,7 @@ fileprivate func tapCallback(
     if let pointerToMonitor = refcon {
 
         // Convert the C pointer back to our Swift object
-        let eventMonitor: ActiveEventMonitor = CUtil.bridge(ptr: pointerToMonitor)
+        let eventMonitor: ActiveEventMonitor = CBridge.fromPointer(pointerToMonitor)
 
         // Check for special "tap disabled" events
         // The system can disable taps if they take too long or cause issues

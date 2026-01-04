@@ -8,6 +8,7 @@
 
 import Foundation
 import KeyboardShortcuts
+import WindowManagerCore
 
 // MARK: - Defaults Extension for Config Import/Export
 

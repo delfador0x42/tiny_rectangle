@@ -9,6 +9,7 @@
 //
 
 import SwiftUI
+import WindowManagerCore
 
 // MARK: - Menu State
 

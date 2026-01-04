@@ -315,6 +315,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    // MARK: - Todo Mode
+
+    /// Sets up or refreshes the todo mode feature.
+    func initializeTodo(_ bringToFront: Bool = true) {
+        TodoManager.registerUnregisterToggleShortcut()
+        TodoManager.registerUnregisterReflowShortcut()
+        TodoManager.moveAllIfNeeded(bringToFront)
+    }
+
     // MARK: - Welcome & Preferences Windows
 
     /// Shows the welcome window for first-time users.

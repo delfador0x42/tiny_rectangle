@@ -9,6 +9,7 @@
 import SwiftUI
 import ServiceManagement
 import Sparkle
+import WindowManagerCore
 
 // MARK: - General Settings View
 

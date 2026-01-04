@@ -7,6 +7,7 @@
 
 import Foundation
 import KeyboardShortcuts
+import WindowManagerCore
 
 // MARK: - KeyboardShortcuts.Name Extension
 
