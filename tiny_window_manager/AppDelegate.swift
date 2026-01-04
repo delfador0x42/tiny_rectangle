@@ -58,9 +58,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Allows users to disable shortcuts for specific apps
     private var applicationToggle: ApplicationToggle!
 
-    /// Factory for creating window position calculations
-    private var windowCalculationFactory: WindowCalculationFactory!
-
     /// Handles "drag window to screen edge" snapping behavior
     private var snappingManager: SnappingManager!
 
@@ -316,7 +313,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func accessibilityTrusted() {
         print(#function, "called")
         // Create all the core managers now that we have permissions
-        self.windowCalculationFactory = WindowCalculationFactory()
         self.windowManager = WindowManager()
         self.shortcutManager = ShortcutManager(windowManager: windowManager)
         self.applicationToggle = ApplicationToggle(shortcutManager: shortcutManager)

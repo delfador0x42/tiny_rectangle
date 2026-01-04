@@ -140,6 +140,87 @@ enum WindowAction: Int, Codable {
     case leftTodo = 68             // Custom todo layout (left)
     case rightTodo = 69            // Custom todo layout (right)
 
+    // MARK: - Action Metadata
+
+    /// Metadata for display properties (displayName, image).
+    /// Consolidates multiple switch statements into a single dictionary lookup.
+    private struct ActionMetadata {
+        let displayKey: String?      // Localization key (nil = no display name)
+        let displayValue: String?    // Default localized value
+        let imageName: String?       // Image asset name (nil = empty NSImage)
+
+        init(displayKey: String? = nil, displayValue: String? = nil, imageName: String? = nil) {
+            self.displayKey = displayKey
+            self.displayValue = displayValue
+            self.imageName = imageName
+        }
+    }
+
+    /// Metadata dictionary for all actions with display properties.
+    /// Actions not in this dictionary use defaults (no displayName, empty image).
+    private static let metadata: [WindowAction: ActionMetadata] = [
+        // Halves
+        .leftHalf: ActionMetadata(displayKey: "Xc8-Sm-pig.title", displayValue: "Left Half", imageName: "leftHalfTemplate"),
+        .rightHalf: ActionMetadata(displayKey: "F8S-GI-LiB.title", displayValue: "Right Half", imageName: "rightHalfTemplate"),
+        .centerHalf: ActionMetadata(displayKey: "bRX-dV-iAR.title", displayValue: "Center Half", imageName: "halfWidthCenterTemplate"),
+        .topHalf: ActionMetadata(displayKey: "d7y-s8-7GE.title", displayValue: "Top Half", imageName: "topHalfTemplate"),
+        .bottomHalf: ActionMetadata(displayKey: "ec4-FB-fMa.title", displayValue: "Bottom Half", imageName: "bottomHalfTemplate"),
+
+        // Corners
+        .topLeft: ActionMetadata(displayKey: "adp-cN-qkh.title", displayValue: "Top Left", imageName: "topLeftTemplate"),
+        .topRight: ActionMetadata(displayKey: "0Ak-33-SM7.title", displayValue: "Top Right", imageName: "topRightTemplate"),
+        .bottomLeft: ActionMetadata(displayKey: "6ma-hP-5xX.title", displayValue: "Bottom Left", imageName: "bottomLeftTemplate"),
+        .bottomRight: ActionMetadata(displayKey: "J6t-sg-Wwz.title", displayValue: "Bottom Right", imageName: "bottomRightTemplate"),
+
+        // Thirds
+        .firstThird: ActionMetadata(displayKey: "F12-EV-Lfz.title", displayValue: "First Third", imageName: "firstThirdTemplate"),
+        .centerThird: ActionMetadata(displayKey: "7YK-9Z-lzw.title", displayValue: "Center Third", imageName: "centerThirdTemplate"),
+        .lastThird: ActionMetadata(displayKey: "cRm-wn-Yv6.title", displayValue: "Last Third", imageName: "lastThirdTemplate"),
+        .firstTwoThirds: ActionMetadata(displayKey: "3zd-xE-oWl.title", displayValue: "First Two Thirds", imageName: "firstTwoThirdsTemplate"),
+        .centerTwoThirds: ActionMetadata(displayKey: "oSu-n4-8Yu.title", displayValue: "Center Two Thirds", imageName: "centerTwoThirdsTemplate"),
+        .lastTwoThirds: ActionMetadata(displayKey: "08q-Ce-1QL.title", displayValue: "Last Two Thirds", imageName: "lastTwoThirdsTemplate"),
+
+        // Fourths
+        .firstFourth: ActionMetadata(displayKey: "Q6Q-6J-okH.title", displayValue: "First Fourth", imageName: "leftFourthTemplate"),
+        .secondFourth: ActionMetadata(displayKey: "Fko-xs-gN5.title", displayValue: "Second Fourth", imageName: "centerLeftFourthTemplate"),
+        .thirdFourth: ActionMetadata(displayKey: "ZTK-rS-b17.title", displayValue: "Third Fourth", imageName: "centerRightFourthTemplate"),
+        .lastFourth: ActionMetadata(displayKey: "6HX-rn-VIp.title", displayValue: "Last Fourth", imageName: "rightFourthTemplate"),
+        .firstThreeFourths: ActionMetadata(displayKey: "T9Z-QF-gwc.title", displayValue: "First Three Fourths", imageName: "firstThreeFourthsTemplate"),
+        .centerThreeFourths: ActionMetadata(displayKey: "Vph-Z0-euH.title", displayValue: "Center Three Fourths", imageName: "centerThreeFourthsTemplate"),
+        .lastThreeFourths: ActionMetadata(displayKey: "nwX-h6-fwm.title", displayValue: "Last Three Fourths", imageName: "lastThreeFourthsTemplate"),
+
+        // Sixths
+        .topLeftSixth: ActionMetadata(displayKey: "mFt-Kg-UYG.title", displayValue: "Top Left Sixth", imageName: "topLeftSixthTemplate"),
+        .topCenterSixth: ActionMetadata(displayKey: "TTx-7X-Wie.title", displayValue: "Top Center Sixth", imageName: "topCenterSixthTemplate"),
+        .topRightSixth: ActionMetadata(displayKey: "f3Q-q7-Pcy.title", displayValue: "Top Right Sixth", imageName: "topRightSixthTemplate"),
+        .bottomLeftSixth: ActionMetadata(displayKey: "LqQ-pM-jRN.title", displayValue: "Bottom Left Sixth", imageName: "bottomLeftSixthTemplate"),
+        .bottomCenterSixth: ActionMetadata(displayKey: "iOQ-1e-esP.title", displayValue: "Bottom Center Sixth", imageName: "bottomCenterSixthTemplate"),
+        .bottomRightSixth: ActionMetadata(displayKey: "m2F-eA-g7w.title", displayValue: "Bottom Right Sixth", imageName: "bottomRightSixthTemplate"),
+
+        // Maximize & Size Actions
+        .maximize: ActionMetadata(displayKey: "8oe-J2-oUU.title", displayValue: "Maximize", imageName: "maximizeTemplate"),
+        .almostMaximize: ActionMetadata(displayKey: "e57-QJ-6bL.title", displayValue: "Almost Maximize", imageName: "almostMaximizeTemplate"),
+        .maximizeHeight: ActionMetadata(displayKey: "6DV-cd-fda.title", displayValue: "Maximize Height", imageName: "maximizeHeightTemplate"),
+        .larger: ActionMetadata(displayKey: "Eah-KL-kbn.title", displayValue: "Larger", imageName: "makeLargerTemplate"),
+        .smaller: ActionMetadata(displayKey: "MzN-CJ-ASD.title", displayValue: "Smaller", imageName: "makeSmallerTemplate"),
+        .largerWidth: ActionMetadata(imageName: "largerWidthTemplate"),
+        .smallerWidth: ActionMetadata(imageName: "smallerWidthTemplate"),
+
+        // Centering & Positioning
+        .center: ActionMetadata(displayKey: "8Bg-SZ-hDO.title", displayValue: "Center", imageName: "centerTemplate"),
+        .restore: ActionMetadata(displayKey: "C9v-g0-DH8.title", displayValue: "Restore", imageName: "restoreTemplate"),
+
+        // Display Navigation
+        .previousDisplay: ActionMetadata(displayKey: "QwF-QN-YH7.title", displayValue: "Previous Display", imageName: "prevDisplayTemplate"),
+        .nextDisplay: ActionMetadata(displayKey: "Jnd-Lc-nlh.title", displayValue: "Next Display", imageName: "nextDisplayTemplate"),
+
+        // Movement
+        .moveLeft: ActionMetadata(displayKey: "v2f-bX-xiM.title", displayValue: "Move Left", imageName: "moveLeftTemplate"),
+        .moveRight: ActionMetadata(displayKey: "rzr-Qq-702.title", displayValue: "Move Right", imageName: "moveRightTemplate"),
+        .moveUp: ActionMetadata(displayKey: "HOm-BV-2jc.title", displayValue: "Move Up", imageName: "moveUpTemplate"),
+        .moveDown: ActionMetadata(displayKey: "1Rc-Od-eP5.title", displayValue: "Move Down", imageName: "moveDownTemplate"),
+    ]
+
     // MARK: - Active Actions List
 
     /// All actions that appear in the menu, in display order.
@@ -244,242 +325,19 @@ enum WindowAction: Int, Codable {
     /// A string identifier for this action.
     /// Used for notifications and as a unique key.
     var name: String {
-        // Using String(describing:) would be cleaner, but this explicit mapping
-        // ensures stability if case names ever change
-        switch self {
-        case .leftHalf: return "leftHalf"
-        case .rightHalf: return "rightHalf"
-        case .maximize: return "maximize"
-        case .maximizeHeight: return "maximizeHeight"
-        case .previousDisplay: return "previousDisplay"
-        case .nextDisplay: return "nextDisplay"
-        case .larger: return "larger"
-        case .smaller: return "smaller"
-        case .bottomHalf: return "bottomHalf"
-        case .topHalf: return "topHalf"
-        case .center: return "center"
-        case .bottomLeft: return "bottomLeft"
-        case .bottomRight: return "bottomRight"
-        case .topLeft: return "topLeft"
-        case .topRight: return "topRight"
-        case .restore: return "restore"
-        case .firstThird: return "firstThird"
-        case .firstTwoThirds: return "firstTwoThirds"
-        case .centerThird: return "centerThird"
-        case .centerTwoThirds: return "centerTwoThirds"
-        case .lastTwoThirds: return "lastTwoThirds"
-        case .lastThird: return "lastThird"
-        case .moveLeft: return "moveLeft"
-        case .moveRight: return "moveRight"
-        case .moveUp: return "moveUp"
-        case .moveDown: return "moveDown"
-        case .almostMaximize: return "almostMaximize"
-        case .centerHalf: return "centerHalf"
-        case .firstFourth: return "firstFourth"
-        case .secondFourth: return "secondFourth"
-        case .thirdFourth: return "thirdFourth"
-        case .lastFourth: return "lastFourth"
-        case .firstThreeFourths: return "firstThreeFourths"
-        case .centerThreeFourths: return "centerThreeFourths"
-        case .lastThreeFourths: return "lastThreeFourths"
-        case .topLeftSixth: return "topLeftSixth"
-        case .topCenterSixth: return "topCenterSixth"
-        case .topRightSixth: return "topRightSixth"
-        case .bottomLeftSixth: return "bottomLeftSixth"
-        case .bottomCenterSixth: return "bottomCenterSixth"
-        case .bottomRightSixth: return "bottomRightSixth"
-        case .specified: return "specified"
-        case .reverseAll: return "reverseAll"
-        case .topLeftNinth: return "topLeftNinth"
-        case .topCenterNinth: return "topCenterNinth"
-        case .topRightNinth: return "topRightNinth"
-        case .middleLeftNinth: return "middleLeftNinth"
-        case .middleCenterNinth: return "middleCenterNinth"
-        case .middleRightNinth: return "middleRightNinth"
-        case .bottomLeftNinth: return "bottomLeftNinth"
-        case .bottomCenterNinth: return "bottomCenterNinth"
-        case .bottomRightNinth: return "bottomRightNinth"
-        case .topLeftThird: return "topLeftThird"
-        case .topRightThird: return "topRightThird"
-        case .bottomLeftThird: return "bottomLeftThird"
-        case .bottomRightThird: return "bottomRightThird"
-        case .topLeftEighth: return "topLeftEighth"
-        case .topCenterLeftEighth: return "topCenterLeftEighth"
-        case .topCenterRightEighth: return "topCenterRightEighth"
-        case .topRightEighth: return "topRightEighth"
-        case .bottomLeftEighth: return "bottomLeftEighth"
-        case .bottomCenterLeftEighth: return "bottomCenterLeftEighth"
-        case .bottomCenterRightEighth: return "bottomCenterRightEighth"
-        case .bottomRightEighth: return "bottomRightEighth"
-        case .doubleHeightUp: return "doubleHeightUp"
-        case .doubleHeightDown: return "doubleHeightDown"
-        case .doubleWidthLeft: return "doubleWidthLeft"
-        case .doubleWidthRight: return "doubleWidthRight"
-        case .halveHeightUp: return "halveHeightUp"
-        case .halveHeightDown: return "halveHeightDown"
-        case .halveWidthLeft: return "halveWidthLeft"
-        case .halveWidthRight: return "halveWidthRight"
-        case .tileAll: return "tileAll"
-        case .cascadeAll: return "cascadeAll"
-        case .leftTodo: return "leftTodo"
-        case .rightTodo: return "rightTodo"
-        case .cascadeActiveApp: return "cascadeActiveApp"
-        case .centerProminently: return "centerProminently"
-        case .largerWidth: return "largerWidth"
-        case .smallerWidth: return "smallerWidth"
-        case .largerHeight: return "largerHeight"
-        case .smallerHeight: return "smallerHeight"
-        }
+        String(describing: self)
     }
 
     // MARK: - Localization
 
     /// The human-readable name shown in the UI (localized).
     /// Returns nil for actions that don't appear in standard menus.
-    /// The `key` is used to look up the localized string in Main.strings.
     var displayName: String? {
-        var key: String
-        var value: String
-
-        switch self {
-        case .leftHalf:
-            key = "Xc8-Sm-pig.title"
-            value = "Left Half"
-        case .rightHalf:
-            key = "F8S-GI-LiB.title"
-            value = "Right Half"
-        case .maximize:
-            key = "8oe-J2-oUU.title"
-            value = "Maximize"
-        case .maximizeHeight:
-            key = "6DV-cd-fda.title"
-            value = "Maximize Height"
-        case .previousDisplay:
-            key = "QwF-QN-YH7.title"
-            value = "Previous Display"
-        case .nextDisplay:
-            key = "Jnd-Lc-nlh.title"
-            value = "Next Display"
-        case .larger:
-            key = "Eah-KL-kbn.title"
-            value = "Larger"
-        case .smaller:
-            key = "MzN-CJ-ASD.title"
-            value = "Smaller"
-        case .bottomHalf:
-            key = "ec4-FB-fMa.title"
-            value = "Bottom Half"
-        case .topHalf:
-            key = "d7y-s8-7GE.title"
-            value = "Top Half"
-        case .center:
-            key = "8Bg-SZ-hDO.title"
-            value = "Center"
-        case .bottomLeft:
-            key = "6ma-hP-5xX.title"
-            value = "Bottom Left"
-        case .bottomRight:
-            key = "J6t-sg-Wwz.title"
-            value = "Bottom Right"
-        case .topLeft:
-            key = "adp-cN-qkh.title"
-            value = "Top Left"
-        case .topRight:
-            key = "0Ak-33-SM7.title"
-            value = "Top Right"
-        case .restore:
-            key = "C9v-g0-DH8.title"
-            value = "Restore"
-        case .firstThird:
-            key = "F12-EV-Lfz.title"
-            value = "First Third"
-        case .firstTwoThirds:
-            key = "3zd-xE-oWl.title"
-            value = "First Two Thirds"
-        case .centerThird:
-            key = "7YK-9Z-lzw.title"
-            value = "Center Third"
-        case .centerTwoThirds:
-            key = "oSu-n4-8Yu.title"
-            value = "Center Two Thirds"
-        case .lastTwoThirds:
-            key = "08q-Ce-1QL.title"
-            value = "Last Two Thirds"
-        case .lastThird:
-            key = "cRm-wn-Yv6.title"
-            value = "Last Third"
-        case .moveLeft:
-            key = "v2f-bX-xiM.title"
-            value = "Move Left"
-        case .moveRight:
-            key = "rzr-Qq-702.title"
-            value = "Move Right"
-        case .moveUp:
-            key = "HOm-BV-2jc.title"
-            value = "Move Up"
-        case .moveDown:
-            key = "1Rc-Od-eP5.title"
-            value = "Move Down"
-        case .almostMaximize:
-            key = "e57-QJ-6bL.title"
-            value = "Almost Maximize"
-        case .centerHalf:
-            key = "bRX-dV-iAR.title"
-            value = "Center Half"
-        case .firstFourth:
-            key = "Q6Q-6J-okH.title"
-            value = "First Fourth"
-        case .secondFourth:
-            key = "Fko-xs-gN5.title"
-            value = "Second Fourth"
-        case .thirdFourth:
-            key = "ZTK-rS-b17.title"
-            value = "Third Fourth"
-        case .lastFourth:
-            key = "6HX-rn-VIp.title"
-            value = "Last Fourth"
-        case .firstThreeFourths:
-            key = "T9Z-QF-gwc.title"
-            value = "First Three Fourths"
-        case .centerThreeFourths:
-            key = "Vph-Z0-euH.title"
-            value = "Center Three Fourths"
-        case .lastThreeFourths:
-            key = "nwX-h6-fwm.title"
-            value = "Last Three Fourths"
-        case .topLeftSixth:
-            key = "mFt-Kg-UYG.title"
-            value = "Top Left Sixth"
-        case .topCenterSixth:
-            key = "TTx-7X-Wie.title"
-            value = "Top Center Sixth"
-        case .topRightSixth:
-            key = "f3Q-q7-Pcy.title"
-            value = "Top Right Sixth"
-        case .bottomLeftSixth:
-            key = "LqQ-pM-jRN.title"
-            value = "Bottom Left Sixth"
-        case .bottomCenterSixth:
-            key = "iOQ-1e-esP.title"
-            value = "Bottom Center Sixth"
-        case .bottomRightSixth:
-            key = "m2F-eA-g7w.title"
-            value = "Bottom Right Sixth"
-        case .topLeftNinth, .topCenterNinth, .topRightNinth, .middleLeftNinth, .middleCenterNinth, .middleRightNinth, .bottomLeftNinth, .bottomCenterNinth, .bottomRightNinth:
-            return nil
-        case .topLeftThird, .topRightThird, .bottomLeftThird, .bottomRightThird:
-            return nil
-        case .topLeftEighth, .topCenterLeftEighth, .topCenterRightEighth, .topRightEighth,
-                .bottomLeftEighth, .bottomCenterLeftEighth, .bottomCenterRightEighth, .bottomRightEighth:
-            return nil
-        case .doubleHeightUp, .doubleHeightDown, .doubleWidthLeft, .doubleWidthRight, .halveHeightUp, .halveHeightDown, .halveWidthLeft, .halveWidthRight:
-            return nil
-        case .specified, .reverseAll, .tileAll, .cascadeAll, .leftTodo, .rightTodo, .cascadeActiveApp:
-            return nil
-        case .centerProminently, .largerWidth, .smallerWidth, .largerHeight, .smallerHeight:
+        guard let meta = Self.metadata[self],
+              let key = meta.displayKey,
+              let value = meta.displayValue else {
             return nil
         }
-
         return NSLocalizedString(key, tableName: "Main", value: value, comment: "")
     }
 
@@ -610,89 +468,10 @@ enum WindowAction: Int, Codable {
     /// Returns an empty NSImage for actions without dedicated icons.
     /// Template images (ending in "Template") adapt to light/dark mode automatically.
     var image: NSImage {
-        switch self {
-        case .leftHalf: return NSImage(imageLiteralResourceName: "leftHalfTemplate")
-        case .rightHalf: return NSImage(imageLiteralResourceName: "rightHalfTemplate")
-        case .maximize: return NSImage(imageLiteralResourceName: "maximizeTemplate")
-        case .maximizeHeight: return NSImage(imageLiteralResourceName: "maximizeHeightTemplate")
-        case .previousDisplay: return NSImage(imageLiteralResourceName: "prevDisplayTemplate")
-        case .nextDisplay: return NSImage(imageLiteralResourceName: "nextDisplayTemplate")
-        case .larger: return NSImage(imageLiteralResourceName: "makeLargerTemplate")
-        case .smaller: return NSImage(imageLiteralResourceName: "makeSmallerTemplate")
-        case .bottomHalf: return NSImage(imageLiteralResourceName: "bottomHalfTemplate")
-        case .topHalf: return NSImage(imageLiteralResourceName: "topHalfTemplate")
-        case .center: return NSImage(imageLiteralResourceName: "centerTemplate")
-        case .bottomLeft: return NSImage(imageLiteralResourceName: "bottomLeftTemplate")
-        case .bottomRight: return NSImage(imageLiteralResourceName: "bottomRightTemplate")
-        case .topLeft: return NSImage(imageLiteralResourceName: "topLeftTemplate")
-        case .topRight: return NSImage(imageLiteralResourceName: "topRightTemplate")
-        case .restore: return NSImage(imageLiteralResourceName: "restoreTemplate")
-        case .firstThird: return NSImage(imageLiteralResourceName: "firstThirdTemplate")
-        case .firstTwoThirds: return NSImage(imageLiteralResourceName: "firstTwoThirdsTemplate")
-        case .centerThird: return NSImage(imageLiteralResourceName: "centerThirdTemplate")
-        case .centerTwoThirds: return NSImage(imageLiteralResourceName: "centerTwoThirdsTemplate")
-        case .lastTwoThirds: return NSImage(imageLiteralResourceName: "lastTwoThirdsTemplate")
-        case .lastThird: return NSImage(imageLiteralResourceName: "lastThirdTemplate")
-        case .moveLeft: return NSImage(imageLiteralResourceName: "moveLeftTemplate")
-        case .moveRight: return NSImage(imageLiteralResourceName: "moveRightTemplate")
-        case .moveUp: return NSImage(imageLiteralResourceName: "moveUpTemplate")
-        case .moveDown: return NSImage(imageLiteralResourceName: "moveDownTemplate")
-        case .almostMaximize: return NSImage(imageLiteralResourceName: "almostMaximizeTemplate")
-        case .centerHalf: return NSImage(imageLiteralResourceName: "halfWidthCenterTemplate")
-        case .firstFourth: return NSImage(imageLiteralResourceName: "leftFourthTemplate")
-        case .secondFourth: return NSImage(imageLiteralResourceName: "centerLeftFourthTemplate")
-        case .thirdFourth: return NSImage(imageLiteralResourceName: "centerRightFourthTemplate")
-        case .lastFourth: return NSImage(imageLiteralResourceName: "rightFourthTemplate")
-        case .firstThreeFourths: return NSImage(imageLiteralResourceName: "firstThreeFourthsTemplate")
-        case .centerThreeFourths: return NSImage(imageLiteralResourceName: "centerThreeFourthsTemplate")
-        case .lastThreeFourths: return NSImage(imageLiteralResourceName: "lastThreeFourthsTemplate")
-        case .topLeftSixth: return NSImage(imageLiteralResourceName: "topLeftSixthTemplate")
-        case .topCenterSixth: return NSImage(imageLiteralResourceName: "topCenterSixthTemplate")
-        case .topRightSixth: return NSImage(imageLiteralResourceName: "topRightSixthTemplate")
-        case .bottomLeftSixth: return NSImage(imageLiteralResourceName: "bottomLeftSixthTemplate")
-        case .bottomCenterSixth: return NSImage(imageLiteralResourceName: "bottomCenterSixthTemplate")
-        case .bottomRightSixth: return NSImage(imageLiteralResourceName: "bottomRightSixthTemplate")
-        case .topLeftNinth: return NSImage()
-        case .topCenterNinth: return NSImage()
-        case .topRightNinth: return NSImage()
-        case .middleLeftNinth: return NSImage()
-        case .middleCenterNinth: return NSImage()
-        case .middleRightNinth: return NSImage()
-        case .bottomLeftNinth: return NSImage()
-        case .bottomCenterNinth: return NSImage()
-        case .bottomRightNinth: return NSImage()
-        case .topLeftThird: return NSImage()
-        case .topRightThird: return NSImage()
-        case .bottomLeftThird: return NSImage()
-        case .bottomRightThird: return NSImage()
-        case .topLeftEighth: return  NSImage()
-        case .topCenterLeftEighth: return  NSImage()
-        case .topCenterRightEighth: return  NSImage()
-        case .topRightEighth: return  NSImage()
-        case .bottomLeftEighth: return  NSImage()
-        case .bottomCenterLeftEighth: return  NSImage()
-        case .bottomCenterRightEighth: return  NSImage()
-        case .bottomRightEighth: return  NSImage()
-        case .doubleHeightUp: return  NSImage()
-        case .doubleHeightDown: return  NSImage()
-        case .doubleWidthLeft: return  NSImage()
-        case .doubleWidthRight: return  NSImage()
-        case .halveHeightUp: return  NSImage()
-        case .halveHeightDown: return  NSImage()
-        case .halveWidthLeft: return  NSImage()
-        case .halveWidthRight: return  NSImage()
-        case .specified, .reverseAll: return NSImage()
-        case .tileAll: return NSImage()
-        case .cascadeAll: return NSImage()
-        case .leftTodo: return NSImage()
-        case .rightTodo: return NSImage()
-        case .cascadeActiveApp: return NSImage()
-        case .centerProminently: return NSImage()
-        case .largerWidth: return NSImage(imageLiteralResourceName: "largerWidthTemplate")
-        case .smallerWidth: return NSImage(imageLiteralResourceName: "smallerWidthTemplate")
-        case .largerHeight: return NSImage()
-        case .smallerHeight: return NSImage()
+        guard let imageName = Self.metadata[self]?.imageName else {
+            return NSImage()
         }
+        return NSImage(imageLiteralResourceName: imageName)
     }
 
     // MARK: - Gap/Margin Properties
@@ -785,6 +564,23 @@ enum WindowAction: Int, Codable {
             return .display
         default:
             return nil
+        }
+    }
+
+    // MARK: - Window Calculation
+
+    /// Returns the appropriate window calculation for this action.
+    /// Some actions (restore, tileAll, etc.) handle their own logic and return nil.
+    var calculation: WindowCalculation? {
+        switch self {
+        case .nextDisplay, .previousDisplay:
+            return NextPrevDisplayCalculation.shared
+        case .specified:
+            return SpecifiedCalculation.shared
+        case .restore, .tileAll, .cascadeAll, .cascadeActiveApp, .reverseAll:
+            return nil
+        default:
+            return SimpleCalculation.shared
         }
     }
 }

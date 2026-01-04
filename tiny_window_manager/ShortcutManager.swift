@@ -271,3 +271,4 @@ final class ShortcutManager {
         return parameters.action == lastAction
     }
 }
+

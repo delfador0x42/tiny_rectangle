@@ -682,7 +682,7 @@ class SnappingManager {
     /// Uses the same calculation as the actual snap action, including gaps.
     func getBoxRect(hotSpot: SnapArea, currentWindow: Window) -> CGRect? {
         print(#function, "called")
-        guard let calculation = WindowCalculationFactory.calculation(for: hotSpot.action) else {
+        guard let calculation = hotSpot.action.calculation else {
             return nil
         }
 
