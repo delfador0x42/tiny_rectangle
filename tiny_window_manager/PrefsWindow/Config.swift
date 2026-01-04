@@ -17,7 +17,6 @@ extension Defaults {
 
     /// Converts all current user settings and shortcuts into a JSON string.
     static func encoded() -> String? {
-        /// print print(#function, "called")
         guard let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else {
             return nil
         }
@@ -37,7 +36,6 @@ extension Defaults {
 
     /// Gathers all keyboard shortcuts from window actions.
     private static func collectAllShortcuts() -> [String: Shortcut] {
-        /// print print(#function, "called")
         var shortcuts = [String: Shortcut]()
 
         for action in WindowAction.active {
@@ -54,7 +52,6 @@ extension Defaults {
 
     /// Gathers all user preferences into a codable format.
     private static func collectAllDefaults() -> [String: CodableDefault] {
-        /// print print(#function, "called")
         var codableDefaults = [String: CodableDefault]()
 
         for exportableDefault in Defaults.array {
@@ -66,7 +63,6 @@ extension Defaults {
 
     /// Converts a Config object to a formatted JSON string.
     private static func encodeConfigToJSON(_ config: Config) -> String? {
-        /// print print(#function, "called")
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
 
@@ -85,7 +81,6 @@ extension Defaults {
 
     /// Parses a JSON string into a Config object.
     static func convert(jsonString: String) -> Config? {
-        /// print print(#function, "called")
         guard let jsonData = jsonString.data(using: .utf8) else {
             return nil
         }
@@ -96,7 +91,6 @@ extension Defaults {
 
     /// Loads configuration from a JSON file and applies it to the app.
     static func load(fileUrl: URL) {
-        /// print print(#function, "called")
         guard let jsonString = try? String(contentsOf: fileUrl, encoding: .utf8),
               let config = convert(jsonString: jsonString) else {
             return
@@ -109,7 +103,6 @@ extension Defaults {
 
     /// Restores user preferences from a config object.
     private static func restoreDefaults(from config: Config) {
-        /// print print(#function, "called")
         for availableDefault in Defaults.array {
             if let codedDefault = config.defaults[availableDefault.key] {
                 availableDefault.load(from: codedDefault)
@@ -119,7 +112,6 @@ extension Defaults {
 
     /// Restores keyboard shortcuts from a config object.
     private static func restoreShortcuts(from config: Config) {
-        /// print print(#function, "called")
         for action in WindowAction.active {
             if let shortcut = config.shortcuts[action.name] {
                 // KeyboardShortcuts.Key uses Int for rawValue (non-optional init)
@@ -138,7 +130,6 @@ extension Defaults {
 
     /// Checks for a config file in the Application Support directory and loads it.
     static func loadFromSupportDir() {
-        /// print print(#function, "called")
         guard let supportURL = getSupportDir() else { return }
         let appSupportURL = supportURL.appendingPathComponent("tiny_window_manager", isDirectory: true)
         let configURL = appSupportURL.appendingPathComponent("tiny_window_managerConfig.json")
@@ -152,7 +143,6 @@ extension Defaults {
 
     /// Renames or removes the config file after it's been loaded.
     private static func archiveConfigFile(at configURL: URL, in directory: URL) {
-        /// print print(#function, "called")
         let newFilename = "tiny_window_managerConfig\(timestamp()).json"
         let archivedURL = directory.appendingPathComponent(newFilename)
 
@@ -173,13 +163,11 @@ extension Defaults {
     // MARK: Helper Functions
 
     private static func getSupportDir() -> URL? {
-        /// print print(#function, "called")
         let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         return paths.first
     }
 
     private static func timestamp() -> String {
-        /// print print(#function, "called")
         let formatter = DateFormatter()
         formatter.dateFormat = "y-MM-dd_H-mm-ss-SSSS"
         return formatter.string(from: Date())

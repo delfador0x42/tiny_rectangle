@@ -10,6 +10,7 @@
 import Foundation
 import Carbon
 import Cocoa
+import WindowManagerCore
 
 // MARK: - Keyboard Modifier Constants
 
@@ -587,6 +588,20 @@ enum WindowAction: Int, Codable {
 
 // MARK: - SubWindowAction Enum
 
+/// Categories for grouping window actions in menus and settings.
+enum WindowActionCategory: String, CaseIterable {
+    case fourths = "Fourths"
+    case sixths = "Sixths"
+    case move = "Move"
+    case thirds = "Thirds"
+    case size = "Size"
+    case display = "Display"
+
+    var displayName: String {
+        return rawValue
+    }
+}
+
 /// Represents window positions used internally for calculations.
 /// This is more granular than WindowAction - it includes orientation-specific
 /// variants (landscape vs portrait) for sixths, etc.
@@ -801,5 +816,30 @@ struct Shortcut: Codable {
         /// print print(#function, "called")
         self.keyCode = keyCode
         self.modifierFlags = modifierFlags
+    }
+}
+
+// MARK: - WindowActionType Bridge
+
+extension WindowAction {
+    /// Converts this WindowAction to its corresponding WindowActionType.
+    ///
+    /// Both enums share the same raw values, so conversion is straightforward.
+    var actionType: WindowActionType? {
+        WindowActionType(rawValue: self.rawValue)
+    }
+
+    /// Creates a WindowAction from a WindowActionType.
+    ///
+    /// Both enums share the same raw values, so conversion is straightforward.
+    init?(actionType: WindowActionType) {
+        self.init(rawValue: actionType.rawValue)
+    }
+}
+
+extension WindowActionType {
+    /// Converts this WindowActionType to its corresponding WindowAction.
+    var windowAction: WindowAction? {
+        WindowAction(rawValue: self.rawValue)
     }
 }

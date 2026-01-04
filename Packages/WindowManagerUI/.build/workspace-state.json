@@ -1,0 +1,27 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "windowmanagercore",
+          "kind" : "fileSystem",
+          "location" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore",
+          "name" : "WindowManagerCore"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore"
+        },
+        "subpath" : "windowmanagercore"
+      }
+    ],
+    "prebuilts" : [
+
+    ]
+  },
+  "version" : 7
+}

@@ -1,0 +1,54 @@
+{
+  "": {
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/master.swiftdeps"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/Sources/WindowManagerUI/Components/TilePreview.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/TilePreview.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/TilePreview.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/TilePreview~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/TilePreview.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/TilePreview.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/Sources/WindowManagerUI/ViewModels/SettingsViewModel.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/SettingsViewModel.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/SettingsViewModel.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/SettingsViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/SettingsViewModel.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/SettingsViewModel.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/Sources/WindowManagerUI/ViewModels/ShortcutViewModel.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutViewModel.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutViewModel.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutViewModel~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutViewModel.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutViewModel.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/Sources/WindowManagerUI/Views/GeneralSettingsView.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/GeneralSettingsView.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/GeneralSettingsView.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/GeneralSettingsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/GeneralSettingsView.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/GeneralSettingsView.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/Sources/WindowManagerUI/Views/ShortcutsView.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutsView.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutsView.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutsView.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/ShortcutsView.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/Sources/WindowManagerUI/Views/WelcomeView.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WelcomeView.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WelcomeView.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WelcomeView~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WelcomeView.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WelcomeView.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/Sources/WindowManagerUI/WindowManagerUI.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WindowManagerUI.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WindowManagerUI.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WindowManagerUI~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WindowManagerUI.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerUI/.build/arm64-apple-macosx/debug/WindowManagerUI.build/WindowManagerUI.dia"
+  }
+}

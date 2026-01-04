@@ -55,7 +55,6 @@ enum MacTilingDefaults: String {
     /// If the key doesn't exist, we assume it's enabled.
     ///
     var enabled: Bool {
-        /// print print(#function, "called")
         // Only relevant for macOS 15 and later
         guard #available(macOS 15, *) else {
             return false
@@ -86,7 +85,6 @@ enum MacTilingDefaults: String {
     /// The change takes effect immediately.
     ///
     func disable() {
-        /// print print(#function, "called")
         // Try to access Apple's WindowManager preferences
         guard let windowManagerDefaults = UserDefaults(suiteName: "com.apple.WindowManager") else {
             return
@@ -105,7 +103,6 @@ enum MacTilingDefaults: String {
     /// Opens the Desktop & Dock section of System Settings where tiling options are configured.
     ///
     static func openSystemSettings() {
-        /// print print(#function, "called")
         // This special URL scheme opens System Settings directly to the Desktop & Dock pane
         let settingsURL = URL(string: "x-apple.systempreferences:com.apple.preference.Desktop-Settings.extension")!
         NSWorkspace.shared.open(settingsURL)
@@ -121,7 +118,6 @@ enum MacTilingDefaults: String {
     /// This is typically called when the app launches to ensure a smooth user experience.
     ///
     static func checkForBuiltInTiling(skipIfAlreadyNotified: Bool) {
-        /// print print(#function, "called")
         // Only relevant for macOS 15+
         guard #available(macOS 15, *) else { return }
 
@@ -152,7 +148,6 @@ enum MacTilingDefaults: String {
     /// Checks if macOS's top-edge tiling conflicts with our top snap area.
     ///
     private static var isTopTilingConflicting: Bool {
-        /// print print(#function, "called")
         // Top-edge tiling was added in macOS 15.1
         guard #available(macOS 15.1, *) else {
             return false
@@ -170,7 +165,6 @@ enum MacTilingDefaults: String {
     /// since our app has a custom top snap area configured.
     ///
     private static func resolveTopTilingConflict() {
-        /// print print(#function, "called")
         Logger.log("Automatically disabling macOS top edge tiling to resolve conflict with macOS.")
 
         // Disable the conflicting macOS feature
@@ -200,7 +194,6 @@ enum MacTilingDefaults: String {
     /// 3. Dismiss (do nothing)
     ///
     private static func resolveStandardTilingConflict() {
-        /// print print(#function, "called")
         // Show the conflict dialog
         let userChoice = AlertUtil.threeButtonAlert(
             question: "Conflict with macOS tiling".localized,
@@ -253,7 +246,6 @@ enum MacTilingDefaults: String {
     /// Disables all macOS tiling features.
     ///
     private static func disableMacTiling() {
-        /// print print(#function, "called")
         tilingByEdgeDrag.disable()
         tilingOptionAccelerator.disable()
         topTilingByEdgeDrag.disable()

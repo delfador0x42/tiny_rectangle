@@ -72,7 +72,6 @@ class StageUtil {
     /// Determines strip position when Dock is at the bottom.
     /// For right-to-left languages, strip goes on the right; otherwise left.
     private static func positionForBottomDock() -> StageStripPosition {
-        /// print print(#function, "called")
         if #available(macOS 13, *) {
             let isRightToLeft = Locale.current.language.characterDirection == .rightToLeft
             return isRightToLeft ? .right : .left
@@ -86,7 +85,6 @@ class StageUtil {
     /// - Parameter screen: The screen to check (defaults to main screen)
     /// - Returns: true if the strip is visible with at least 2 window groups
     static func isStageStripVisible(_ screen: NSScreen? = .main) -> Bool {
-        /// print print(#function, "called")
         guard let screen else {
             return false
         }
@@ -99,7 +97,6 @@ class StageUtil {
 
     /// Finds all WindowManager process windows that belong to the given screen
     private static func findWindowManagerWindows(on screen: NSScreen) -> [WindowInfo] {
-        /// print print(#function, "called")
         return WindowUtil.getWindowList().filter { windowInfo in
             isWindowManagerWindow(windowInfo, on: screen)
         }
@@ -107,7 +104,6 @@ class StageUtil {
 
     /// Checks if a window belongs to the WindowManager process and is on the given screen
     private static func isWindowManagerWindow(_ windowInfo: WindowInfo, on targetScreen: NSScreen) -> Bool {
-        /// print print(#function, "called")
         guard windowInfo.processName == "WindowManager" else {
             return false
         }
@@ -118,7 +114,6 @@ class StageUtil {
 
     /// Determines which screen a window belongs to based on its position
     private static func findScreenForWindow(_ windowInfo: WindowInfo) -> NSScreen? {
-        /// print print(#function, "called")
         let windowFrame = windowInfo.frame.screenFlipped
 
         // Find screens that vertically contain this window
@@ -152,7 +147,6 @@ class StageUtil {
     /// - Parameter screen: The screen to check (defaults to main screen)
     /// - Returns: Array of window ID arrays, where each inner array is a group
     private static func getStageStripWindowGroups(_ screen: NSScreen? = .main) -> [[CGWindowID]] {
-        /// print print(#function, "called")
         guard let screen else {
             return []
         }
@@ -181,7 +175,6 @@ class StageUtil {
         for screen: NSScreen,
         in appElement: AccessibilityElement
     ) -> AccessibilityElement? {
-        /// print print(#function, "called")
         guard let stripElements = appElement.getChildElements(.group) else {
             return nil
         }
@@ -200,7 +193,6 @@ class StageUtil {
     ///   - screen: The screen to check (defaults to main screen)
     /// - Returns: Array of window IDs in the same group, or nil if not found
     static func getStageStripWindowGroup(_ windowId: CGWindowID, _ screen: NSScreen? = .main) -> [CGWindowID]? {
-        /// print print(#function, "called")
         let allGroups = getStageStripWindowGroups(screen)
         return allGroups.first { group in
             group.contains(windowId)

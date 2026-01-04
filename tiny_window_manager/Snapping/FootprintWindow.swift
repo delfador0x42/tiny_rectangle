@@ -26,7 +26,6 @@ class FootprintWindow: NSWindow {
     // MARK: - Initialization
 
     init() {
-        /// print print(#function, "called")
         // Start with a zero-size rect (will be resized when shown)
         let initialRect = NSRect(x: 0, y: 0, width: 0, height: 0)
         super.init(contentRect: initialRect, styleMask: .titled, backing: .buffered, defer: false)
@@ -39,7 +38,6 @@ class FootprintWindow: NSWindow {
 
     /// Configures the window to appear as a transparent overlay
     private func configureWindowAppearance() {
-        /// print print(#function, "called")
         title = "tiny_window_manager"
         isOpaque = false
         hasShadow = false
@@ -56,7 +54,6 @@ class FootprintWindow: NSWindow {
 
     /// Configures how the window behaves in the window hierarchy
     private func configureWindowBehavior() {
-        /// print print(#function, "called")
         // Appear above most other windows (like a modal dialog)
         level = .modalPanel
 
@@ -69,7 +66,6 @@ class FootprintWindow: NSWindow {
 
     /// Hides all standard window buttons (close, minimize, zoom, toolbar)
     private func hideWindowControls() {
-        /// print print(#function, "called")
         standardWindowButton(.closeButton)?.isHidden = true
         standardWindowButton(.miniaturizeButton)?.isHidden = true
         standardWindowButton(.zoomButton)?.isHidden = true
@@ -78,7 +74,6 @@ class FootprintWindow: NSWindow {
 
     /// Creates the rounded rectangle view that shows the snap preview
     private func createFootprintView() {
-        /// print print(#function, "called")
         let boxView = NSBox()
         boxView.boxType = .custom
         boxView.borderColor = .lightGray
@@ -93,7 +88,6 @@ class FootprintWindow: NSWindow {
     /// Returns the appropriate corner radius based on macOS version.
     /// Newer macOS versions use more rounded corners in their UI.
     private func cornerRadiusForCurrentOS() -> CGFloat {
-        /// print print(#function, "called")
         if #available(macOS 26.0, *) {
             return 16  // Future macOS - most rounded
         } else if #available(macOS 11.0, *) {
@@ -140,7 +134,6 @@ class FootprintWindow: NSWindow {
 
     /// Shows the footprint window, optionally with a fade-in animation.
     override func orderFront(_ sender: Any?) {
-        /// print print(#function, "called")
         let fadeEnabled = !Defaults.footprintFade.userDisabled
 
         if fadeEnabled {
@@ -158,7 +151,6 @@ class FootprintWindow: NSWindow {
 
     /// Hides the footprint window, optionally with a fade-out animation.
     override func orderOut(_ sender: Any?) {
-        /// print print(#function, "called")
         let fadeEnabled = !Defaults.footprintFade.userDisabled
 
         if fadeEnabled {

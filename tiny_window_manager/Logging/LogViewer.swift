@@ -45,7 +45,6 @@ class Logger {
     ///
     /// - Parameter sender: The object that triggered this action (e.g., a menu item)
     static func showLogging(sender: Any?) {
-        /// print print(#function, "called")
         // Create the window controller if this is the first time opening
         if logWindowController == nil {
             logWindowController = LogWindowController.freshController()
@@ -66,7 +65,6 @@ class Logger {
     ///
     /// - Parameter string: The message to log
     static func log(_ string: String) {
-        /// print print(#function, "called")
         // Early exit if logging is disabled (avoids unnecessary work)
         if logging {
             logWindowController?.append(string)
@@ -90,7 +88,6 @@ class LogWindowController: NSWindowController, NSWindowDelegate {
     /// Called when the user clicks the "Clear" button.
     /// Removes all text from the log view.
     @IBAction func clearClicked(_ sender: Any) {
-        /// print print(#function, "called")
         (contentViewController as? LogViewController)?.clear()
     }
 
@@ -100,7 +97,6 @@ class LogWindowController: NSWindowController, NSWindowDelegate {
     ///
     /// - Parameter string: The message to append (timestamp is added automatically)
     func append(_ string: String) {
-        /// print print(#function, "called")
         // Create a timestamp for this log entry
         let datestamp = createTimestamp()
 
@@ -113,7 +109,6 @@ class LogWindowController: NSWindowController, NSWindowDelegate {
 
     /// Creates an ISO 8601 formatted timestamp for the current time.
     private func createTimestamp() -> String {
-        /// print print(#function, "called")
         if #available(OSX 10.12, *) {
             // Modern approach: ISO 8601 format (e.g., "2024-01-15T10:30:45-08:00")
             return ISO8601DateFormatter.string(
@@ -132,7 +127,6 @@ class LogWindowController: NSWindowController, NSWindowDelegate {
     /// Called when the log window is about to close.
     /// Disables logging and clears the log content.
     func windowWillClose(_ notification: Notification) {
-        /// print print(#function, "called")
         Logger.logging = false
         clearClicked(self)  // Clear the log to free memory
     }
@@ -147,7 +141,6 @@ extension LogWindowController {
     /// This is the proper way to create this controller since it's
     /// defined in a storyboard file (LogViewer.storyboard).
     static func freshController() -> LogWindowController {
-        /// print print(#function, "called")
         // Load from the LogViewer storyboard
         let storyboard = NSStoryboard(name: "LogViewer", bundle: nil)
         let identifier = "LogWindowController"
@@ -200,7 +193,6 @@ class LogViewController: NSViewController {
     ///
     /// - Parameter string: The text to append
     func append(_ string: String) {
-        /// print print(#function, "called")
         // Check if user is currently scrolled to the bottom
         let isScrolledToBottom = textView.visibleRect.maxY == textView.bounds.maxY
 
@@ -216,14 +208,12 @@ class LogViewController: NSViewController {
 
     /// Clears all text from the log view.
     func clear() {
-        /// print print(#function, "called")
         textView.string = ""
     }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
-        /// print print(#function, "called")
         // Make the text view read-only (users shouldn't edit log messages)
         textView.isEditable = false
     }
@@ -240,7 +230,6 @@ class KeyDownTextView: NSTextView {
 
     /// Intercepts key presses to handle window management shortcuts.
     override func keyDown(with event: NSEvent) {
-        /// print print(#function, "called")
         // Check if the Command key is held
         let isCommandPressed = event.modifierFlags.contains(.command)
 

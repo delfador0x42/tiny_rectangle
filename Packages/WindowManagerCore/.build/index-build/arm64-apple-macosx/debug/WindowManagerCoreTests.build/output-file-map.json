@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCoreTests.build/master.swiftdeps"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Tests/WindowManagerCoreTests/RectCalculatorTests.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCoreTests.build/RectCalculatorTests.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCoreTests.build/RectCalculatorTests.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCoreTests.build/RectCalculatorTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCoreTests.build/RectCalculatorTests.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/index-build/arm64-apple-macosx/debug/WindowManagerCoreTests.build/RectCalculatorTests.dia"
+  }
+}

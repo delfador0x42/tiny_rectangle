@@ -126,7 +126,6 @@ class SubsequentExecutionDefault: Default {
     /// Creates the default, loading any existing value from UserDefaults.
     /// Falls back to `.resize` (the Spectacle-style behavior) if no value is stored.
     init() {
-        /// print print(#function, "called")
         let storedIntValue = UserDefaults.standard.integer(forKey: key)
         value = SubsequentExecutionMode(rawValue: storedIntValue) ?? .resize
         initialized = true
@@ -167,7 +166,6 @@ class SubsequentExecutionDefault: Default {
 
     /// Load a value from an imported settings file.
     func load(from codable: CodableDefault) {
-        /// print print(#function, "called")
         if let intValue = codable.int,
            let mode = SubsequentExecutionMode(rawValue: intValue) {
             value = mode
@@ -176,7 +174,6 @@ class SubsequentExecutionDefault: Default {
 
     /// Convert the current value to a format suitable for export.
     func toCodable() -> CodableDefault {
-        /// print print(#function, "called")
         return CodableDefault(int: value.rawValue)
     }
 }

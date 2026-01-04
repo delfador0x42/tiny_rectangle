@@ -60,7 +60,7 @@ private struct GeneralSection: View {
             Toggle("Hide menu bar icon", isOn: $hideMenuBarIcon)
                 .onChange(of: hideMenuBarIcon) { _, newValue in
                     Defaults.hideMenuBarIcon.enabled = newValue
-                    tiny_window_managerStatusItem.instance.refreshVisibility()
+                    MenuBarState.shared.refreshVisibility()
                 }
 
             Toggle("Allow any shortcut (bypass system shortcut validation)", isOn: $allowAnyShortcut)

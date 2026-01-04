@@ -56,7 +56,6 @@ class TimeoutCache<Key: Hashable, Value> {
     /// Creates a new cache with the specified timeout.
     /// - Parameter timeout: How long entries remain valid, in milliseconds
     init(timeout: UInt64) {
-        /// print print(#function, "called")
         self.timeout = timeout
     }
 
@@ -79,7 +78,6 @@ class TimeoutCache<Key: Hashable, Value> {
 
     /// Retrieves a value from the cache if it exists and hasn't expired.
     private func getValue(forKey key: Key) -> Value? {
-        /// print print(#function, "called")
         // Look up the entry in our dictionary
         guard let entry = cache[key] else {
             return nil
@@ -98,7 +96,6 @@ class TimeoutCache<Key: Hashable, Value> {
 
     /// Stores a value in the cache, or removes it if the value is nil.
     private func setValue(_ value: Value?, forKey key: Key) {
-        /// print print(#function, "called")
         // Always remove the old entry first (if it exists)
         remove(key)
 
@@ -128,7 +125,6 @@ class TimeoutCache<Key: Hashable, Value> {
 
     /// Adds an entry to the end of the doubly-linked list.
     private func appendEntryToTail(_ entry: Entry) {
-        /// print print(#function, "called")
         // Link the old tail to this new entry
         tail?.next = entry
 
@@ -145,7 +141,6 @@ class TimeoutCache<Key: Hashable, Value> {
 
     /// Removes an entry from both the dictionary and the linked list.
     private func remove(_ key: Key) {
-        /// print print(#function, "called")
         guard let entry = cache[key] else {
             return
         }
@@ -175,7 +170,6 @@ class TimeoutCache<Key: Hashable, Value> {
     /// Removes expired entries from the cache, starting from the oldest.
     /// Rate-limited to avoid purging too frequently.
     private func purgeExpiredEntries() {
-        /// print print(#function, "called")
         // Don't purge too often (rate limiting)
         guard canPurgeNow else {
             return
@@ -225,8 +219,7 @@ extension TimeoutCache {
         }
 
         init(key: Key, value: Value, expirationTimestamp: UInt64, previous: Entry?) {
-            /// print print(#function, "called")
-            self.key = key
+                self.key = key
             self.value = value
             self.expirationTimestamp = expirationTimestamp
             self.previous = previous

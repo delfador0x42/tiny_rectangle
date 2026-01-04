@@ -37,7 +37,6 @@ class SnapAreaModel {
 
     /// Private initializer prevents creating additional instances
     private init() {
-        /// print print(#function, "called")
     }
 
     // MARK: - Default Configurations
@@ -115,7 +114,6 @@ class SnapAreaModel {
     ///   - directional: Which screen position to update (e.g., .tl, .t, .l)
     ///   - snapAreaConfig: The new configuration, or nil to disable snapping at this position
     func setConfig(type: DisplayOrientation, directional: Directional, snapAreaConfig: SnapAreaConfig?) {
-        /// print print(#function, "called")
         switch type {
         case .landscape:
             setLandscape(directional: directional, snapAreaConfig: snapAreaConfig)
@@ -126,7 +124,6 @@ class SnapAreaModel {
 
     /// Updates a single position in the landscape configuration.
     func setLandscape(directional: Directional, snapAreaConfig: SnapAreaConfig?) {
-        /// print print(#function, "called")
         var newConfig = landscape
         newConfig[directional] = snapAreaConfig
         Defaults.landscapeSnapAreas.typedValue = newConfig
@@ -134,7 +131,6 @@ class SnapAreaModel {
 
     /// Updates a single position in the portrait configuration.
     func setPortrait(directional: Directional, snapAreaConfig: SnapAreaConfig?) {
-        /// print print(#function, "called")
         var newConfig = portrait
         newConfig[directional] = snapAreaConfig
         Defaults.portraitSnapAreas.typedValue = newConfig
@@ -145,7 +141,6 @@ class SnapAreaModel {
     /// Migrates settings from older app versions to the current format.
     /// This handles backwards compatibility when upgrading the app.
     func migrate() {
-        /// print print(#function, "called")
         migrateSixthsSnapArea()
         migrateIgnoredSnapAreas()
     }
@@ -153,7 +148,6 @@ class SnapAreaModel {
     /// Migrates the legacy "sixths snap area" setting.
     /// In older versions, sixths were a separate toggle; now they're part of the config.
     private func migrateSixthsSnapArea() {
-        /// print print(#function, "called")
         guard Defaults.sixthsSnapArea.userEnabled else { return }
 
         setLandscape(directional: .t, snapAreaConfig: SnapAreaConfig(compound: .topSixths))
@@ -164,7 +158,6 @@ class SnapAreaModel {
     /// In older versions, users could disable specific snap areas via a bitmask;
     /// now they configure each area individually.
     private func migrateIgnoredSnapAreas() {
-        /// print print(#function, "called")
         let ignoredSnapAreas = SnapAreaOption(rawValue: Defaults.ignoredSnapAreas.value)
 
         // Nothing to migrate if no areas were ignored
@@ -239,7 +232,6 @@ struct SnapAreaConfig: Codable {
     ///
     /// Note: Typically you pass one or the other, not both.
     init(compound: CompoundSnapArea? = nil, action: WindowAction? = nil) {
-        /// print print(#function, "called")
         self.compound = compound
         self.action = action
     }

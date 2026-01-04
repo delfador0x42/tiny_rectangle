@@ -19,18 +19,11 @@ class MultiWindowManager {
     // MARK: - Public Methods
 
     /// Executes a multi-window action based on the provided parameters.
-    ///
-    /// This is the main entry point for multi-window operations.
-    /// It dispatches to the appropriate handler based on the action type.
-    ///
-    /// - Parameter parameters: Contains the action type and optional window element
     /// - Returns: `true` if the action was handled, `false` for unsupported actions
     static func execute(parameters: ExecutionParameters) -> Bool {
-        /// print print(#function, "called")
-        // TODO: Protocol and factory for all multi-window positioning algorithms
         switch parameters.action {
         case .reverseAll:
-            ReverseAllManager.reverseAll(windowElement: parameters.windowElement)
+            reverseAllWindows(windowElement: parameters.windowElement)
             return true
         case .tileAll:
             tileAllWindowsOnScreen(windowElement: parameters.windowElement)
@@ -56,7 +49,6 @@ class MultiWindowManager {
     /// - Parameter windowElement: Optional window to use for determining the current screen.
     ///                            If nil, uses the frontmost window.
     static func tileAllWindowsOnScreen(windowElement: AccessibilityElement? = nil) {
-        /// print print(#function, "called")
         guard let (screens, windows) = allWindowsOnScreen(windowElement: windowElement, sortByPID: true) else {
             return
         }
@@ -91,7 +83,6 @@ class MultiWindowManager {
     /// - Parameter windowElement: Optional window to use for determining the current screen.
     ///                            If nil, uses the frontmost window.
     static func cascadeAllWindowsOnScreen(windowElement: AccessibilityElement? = nil) {
-        /// print print(#function, "called")
         guard let (screens, windows) = allWindowsOnScreen(windowElement: windowElement, sortByPID: true) else {
             return
         }
@@ -117,7 +108,6 @@ class MultiWindowManager {
     /// - Parameter windowElement: Optional window to use for determining the current screen.
     ///                            If nil, uses the frontmost window.
     static func cascadeActiveAppWindowsOnScreen(windowElement: AccessibilityElement? = nil) {
-        /// print print(#function, "called")
         guard let (screens, windows) = allWindowsOnScreen(windowElement: windowElement, sortByPID: true),
               let frontWindowElement = AccessibilityElement.getFrontWindowElement()
         else {
@@ -156,6 +146,35 @@ class MultiWindowManager {
         }
     }
 
+    // MARK: - Reverse All Windows
+
+    /// Reverses the horizontal position of all windows on the current screen.
+    /// Each window is mirrored horizontally around the center of the screen.
+    static func reverseAllWindows(windowElement: AccessibilityElement? = nil) {
+        let screenDetection = ScreenDetection()
+        let referenceWindow = windowElement ?? AccessibilityElement.getFrontWindowElement()
+        guard let currentScreen = screenDetection.detectScreens(using: referenceWindow)?.currentScreen else { return }
+
+        let screenFrame = currentScreen.adjustedVisibleFrame()
+        let allWindows = AccessibilityElement.getAllWindowElements()
+
+        for window in allWindows {
+            if Defaults.todo.userEnabled && TodoManager.isTodoWindow(window) { continue }
+            let windowScreen = screenDetection.detectScreens(using: window)?.currentScreen
+            if windowScreen == currentScreen {
+                reverseWindowPosition(window, screenFrame: screenFrame)
+            }
+        }
+    }
+
+    /// Mirrors a single window's horizontal position around the screen's center.
+    private static func reverseWindowPosition(_ window: AccessibilityElement, screenFrame: CGRect) {
+        var windowFrame = window.frame
+        let distanceFromLeftEdge = windowFrame.minX - screenFrame.minX
+        windowFrame.origin.x = screenFrame.maxX - distanceFromLeftEdge - windowFrame.width
+        window.setFrame(windowFrame)
+    }
+
     // MARK: - Private Helpers
 
     /// Gathers all valid windows on the same screen as the reference window.
@@ -171,7 +190,6 @@ class MultiWindowManager {
     ///   - sortByPID: If true, sorts windows by process ID (groups windows by app)
     /// - Returns: A tuple of (screen info, filtered windows), or nil if detection fails
     private static func allWindowsOnScreen(windowElement: AccessibilityElement? = nil, sortByPID: Bool = false) -> (screens: UsableScreens, windows: [AccessibilityElement])? {
-        /// print print(#function, "called")
         let screenDetection = ScreenDetection()
 
         // Get the reference window (provided or frontmost)
@@ -233,7 +251,6 @@ class MultiWindowManager {
     ///   - column: Which column (0-based) this window belongs in
     ///   - row: Which row (0-based) this window belongs in
     private static func tileWindow(_ w: AccessibilityElement, screenFrame: CGRect, size: CGSize, column: Int, row: Int) {
-        /// print print(#function, "called")
         var rect = w.frame
 
         // TODO: save previous position in history
@@ -259,7 +276,6 @@ class MultiWindowManager {
     ///   - index: This window's position in the cascade (0 = bottom, higher = more on top)
     ///   - cascadeParameters: Optional parameters for smart cascading (used by cascadeActiveApp)
     private static func cascadeWindow(_ w: AccessibilityElement, screenFrame: CGRect, delta: CGFloat, index: Int, cascadeParameters: CascadeActiveAppParameters? = nil) {
-        /// print print(#function, "called")
         var rect = w.frame
 
         // TODO: save previous position in history
@@ -321,7 +337,6 @@ private struct CascadeActiveAppParameters {
     ///   - size: The desired window size (will be clamped to fit)
     ///   - delta: The offset between cascaded windows
     init(windowFrame: CGRect, screenFrame: CGRect, numWindows: Int, size: CGSize, delta: CGFloat) {
-        /// print print(#function, "called")
         // Determine cascade direction based on which half of the screen the window is in
         self.right = windowFrame.midX > screenFrame.midX
         self.bottom = windowFrame.midY > screenFrame.midY

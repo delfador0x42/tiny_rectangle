@@ -47,7 +47,6 @@ class SnapAreaViewController: NSViewController {
     // MARK: - Checkbox Toggle Actions
 
     @IBAction func toggleWindowSnapping(_ sender: NSButton) {
-        /// print print(#function, "called")
         let isEnabled = sender.state == .on
         Defaults.windowSnapping.enabled = isEnabled
         Notification.Name.windowSnapping.post(object: isEnabled)
@@ -59,26 +58,22 @@ class SnapAreaViewController: NSViewController {
     }
 
     @IBAction func toggleUnsnapRestore(_ sender: NSButton) {
-        /// print print(#function, "called")
         let isEnabled = sender.state == .on
         Defaults.unsnapRestore.enabled = isEnabled
     }
 
     @IBAction func toggleAnimateFootprint(_ sender: NSButton) {
-        /// print print(#function, "called")
         // Animation multiplier: 0 = no animation, 0.75 = animated
         let animationMultiplier: Float = sender.state == .on ? 0.75 : 0
         Defaults.footprintAnimationDurationMultiplier.value = animationMultiplier
     }
 
     @IBAction func toggleHapticFeedback(_ sender: NSButton) {
-        /// print print(#function, "called")
         let isEnabled = sender.state == .on
         Defaults.hapticFeedbackOnSnap.enabled = isEnabled
     }
 
     @IBAction func toggleMissionControlDragging(_ sender: NSButton) {
-        /// print print(#function, "called")
         // Note: This checkbox uses inverted logic (checked = disabled)
         let isEnabled = sender.state == .off
         Defaults.missionControlDragging.enabled = isEnabled
@@ -88,18 +83,15 @@ class SnapAreaViewController: NSViewController {
     // MARK: - Snap Area Dropdown Actions
 
     @IBAction func setLandscapeSnapArea(_ sender: NSPopUpButton) {
-        /// print print(#function, "called")
         setSnapArea(sender: sender, type: .landscape)
     }
 
     @IBAction func setPortraitSnapArea(_ sender: NSPopUpButton) {
-        /// print print(#function, "called")
         setSnapArea(sender: sender, type: .portrait)
     }
 
     /// Handles when user selects a new snap action from a dropdown
     private func setSnapArea(sender: NSPopUpButton, type: DisplayOrientation) {
-        /// print print(#function, "called")
         // The dropdown's tag identifies which screen edge/corner it controls
         guard let screenDirection = Directional(rawValue: sender.tag) else {
             return
@@ -121,7 +113,6 @@ class SnapAreaViewController: NSViewController {
     ///   - Positive (> -1): Single window actions (e.g., left half, maximize)
     ///   - Exactly -1: No action assigned
     private func createSnapAreaConfig(fromTag tag: Int) -> SnapAreaConfig? {
-        /// print print(#function, "called")
         if tag < -1, let compound = CompoundSnapArea(rawValue: tag) {
             return SnapAreaConfig(compound: compound)
         } else if tag > -1, let action = WindowAction(rawValue: tag) {
@@ -133,7 +124,6 @@ class SnapAreaViewController: NSViewController {
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
-        /// print print(#function, "called")
         loadCheckboxStates()
         loadSnapAreas()
         showHidePortrait()
@@ -142,7 +132,6 @@ class SnapAreaViewController: NSViewController {
 
     /// Sets checkbox states based on current user defaults
     private func loadCheckboxStates() {
-        /// print print(#function, "called")
         windowSnappingCheckbox.state = Defaults.windowSnapping.userDisabled ? .off : .on
         unsnapRestoreButton.state = Defaults.unsnapRestore.userDisabled ? .off : .on
         animateFootprintCheckbox.state = Defaults.footprintAnimationDurationMultiplier.value > 0 ? .on : .off
@@ -155,7 +144,6 @@ class SnapAreaViewController: NSViewController {
 
     /// Subscribes to notifications that require UI updates
     private func registerForNotifications() {
-        /// print print(#function, "called")
         // Reload snap areas when config is imported or reset to defaults
         Notification.Name.configImported.onPost { [weak self] _ in
             self?.loadSnapAreas()
@@ -188,13 +176,11 @@ class SnapAreaViewController: NSViewController {
 
     /// Shows or hides the portrait orientation settings based on connected displays
     func showHidePortrait() {
-        /// print print(#function, "called")
         portraitStackView.isHidden = !NSScreen.portraitDisplayConnected
     }
 
     /// Reloads all snap area dropdowns with current configuration
     func loadSnapAreas() {
-        /// print print(#function, "called")
         let landscapeDropdowns = [
             topLeftLandscapeSelect,
             topLandscapeSelect,
@@ -229,7 +215,6 @@ class SnapAreaViewController: NSViewController {
 
     /// Populates a snap area dropdown with available options and selects the current setting
     private func configureSnapAreaDropdown(_ dropdown: NSPopUpButton, orientation: DisplayOrientation) {
-        /// print print(#function, "called")
         guard let screenDirection = Directional(rawValue: dropdown.tag) else {
             return
         }
@@ -264,7 +249,6 @@ class SnapAreaViewController: NSViewController {
 
     /// Gets the snap area configuration for a given screen direction and orientation
     private func getSnapAreaConfig(for direction: Directional, orientation: DisplayOrientation) -> SnapAreaConfig? {
-        /// print print(#function, "called")
         switch orientation {
         case .landscape:
             return SnapAreaModel.instance.landscape[direction]
@@ -275,7 +259,6 @@ class SnapAreaViewController: NSViewController {
 
     /// Adds the "-" (no action) option to a dropdown
     private func addNoActionOption(to dropdown: NSPopUpButton) {
-        /// print print(#function, "called")
         dropdown.addItem(withTitle: "-")
         dropdown.menu?.items.first?.tag = -1
     }
@@ -287,7 +270,6 @@ class SnapAreaViewController: NSViewController {
         screenDirection: Directional,
         currentlySelectedTag: Int
     ) {
-        /// print print(#function, "called")
         for compoundArea in CompoundSnapArea.all {
             // Only show options compatible with this orientation and screen direction
             let isCompatibleOrientation = compoundArea.compatibleOrientation.contains(orientation)
@@ -313,7 +295,6 @@ class SnapAreaViewController: NSViewController {
 
     /// Adds single window action options (e.g., maximize, left half) to a dropdown
     private func addWindowActionOptions(to dropdown: NSPopUpButton, currentlySelectedTag: Int) {
-        /// print print(#function, "called")
         for windowAction in WindowAction.active {
             // Only include actions that support drag-snapping
             guard windowAction.isDragSnappable, let displayName = windowAction.displayName else {

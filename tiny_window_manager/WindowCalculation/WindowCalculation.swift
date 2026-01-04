@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import WindowManagerCore
 
 // ============================================================================
 // MARK: - Protocol
@@ -79,7 +80,7 @@ struct WindowCalculationParameters {
     let window: Window
     let usableScreens: UsableScreens
     let action: WindowAction
-    let lastAction: tiny_window_managerAction?
+    let lastAction: WindowActionRecord?
     let ignoreTodo: Bool
 
     func asRectParams(visibleFrame: CGRect? = nil, differentAction: WindowAction? = nil) -> RectCalculationParameters {
@@ -102,7 +103,7 @@ struct RectCalculationParameters {
     let window: Window
     let visibleFrameOfScreen: CGRect
     let action: WindowAction
-    let lastAction: tiny_window_managerAction?
+    let lastAction: WindowActionRecord?
 }
 
 struct RectResult {
@@ -553,7 +554,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
             return nil
         }
 
-        AppDelegate.windowHistory.lasttiny_window_managerActions.removeValue(forKey: params.window.id)
+        AppDelegate.windowHistory.lastWindowActions.removeValue(forKey: params.window.id)
 
         let newCalculationParams = RectCalculationParameters(
             window: rectParams.window,

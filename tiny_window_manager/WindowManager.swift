@@ -5,6 +5,7 @@
 //
 
 import Cocoa
+import WindowManagerCore
 
 // ============================================================================
 // MARK: - WindowManager
@@ -48,7 +49,6 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     init() {
-        /// print print(#function, "called")
         // Set up the chain of window movers for normal windows
         standardWindowMoverChain = [
             StandardWindowMover(),      // Primary: uses standard Accessibility APIs
@@ -73,19 +73,18 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     private func recordAction(windowId: CGWindowID, resultingRect: CGRect, action: WindowAction, subAction: SubWindowAction?) {
-        /// print print(#function, "called")
         // Check if this is the same action being repeated
         let newCount: Int
-        if let lasttiny_window_managerAction = AppDelegate.windowHistory.lasttiny_window_managerActions[windowId], lasttiny_window_managerAction.action == action {
+        if let lastWindowActionRecord = AppDelegate.windowHistory.lastWindowActions[windowId], lastWindowActionRecord.action == action {
             // Same action repeated - increment the count (used for cycling)
-            newCount = lasttiny_window_managerAction.count + 1
+            newCount = lastWindowActionRecord.count + 1
         } else {
             // Different action - start fresh
             newCount = 1
         }
 
         // Store this action in history, keyed by the window's unique ID
-        AppDelegate.windowHistory.lasttiny_window_managerActions[windowId] = tiny_window_managerAction(
+        AppDelegate.windowHistory.lastWindowActions[windowId] = WindowActionRecord(
             action: action,
             subAction: subAction,
             rect: resultingRect,  // Save resulting position so we can detect if user moved it manually
@@ -107,7 +106,6 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     func execute(_ parameters: ExecutionParameters) {
-        /// print print(#function, "called")
 
         // ====================================================================
         // STEP 1: Get the window we're going to manipulate
@@ -137,7 +135,7 @@ class WindowManager {
                 frontmostWindowElement.setFrame(restoreRect)
             }
             // Clear the action history for this window
-            AppDelegate.windowHistory.lasttiny_window_managerActions.removeValue(forKey: windowId)
+            AppDelegate.windowHistory.lastWindowActions.removeValue(forKey: windowId)
             return
         }
 
@@ -172,17 +170,17 @@ class WindowManager {
         let currentWindowRect: CGRect = frontmostWindowElement.frame
 
         // Look up what action was last performed on this window
-        var lasttiny_window_managerAction = AppDelegate.windowHistory.lasttiny_window_managerActions[windowId]
+        var lastWindowActionRecord = AppDelegate.windowHistory.lastWindowActions[windowId]
 
         // Check if the user manually moved/resized the window since our last action.
         // If the current position doesn't match what we recorded, the user moved it.
-        let windowMovedExternally = currentWindowRect != lasttiny_window_managerAction?.rect
+        let windowMovedExternally = currentWindowRect != lastWindowActionRecord?.rect
 
         if windowMovedExternally {
             // User moved the window manually - clear our history
             // This resets cycling behavior and updates the "restore" position
-            lasttiny_window_managerAction = nil
-            AppDelegate.windowHistory.lasttiny_window_managerActions.removeValue(forKey: windowId)
+            lastWindowActionRecord = nil
+            AppDelegate.windowHistory.lastWindowActions.removeValue(forKey: windowId)
         }
 
         // ====================================================================
@@ -229,7 +227,7 @@ class WindowManager {
         let windowCalculation = action.calculation
 
         // Package up all the info the calculation needs
-        let calculationParams = WindowCalculationParameters(window: currentWindow, usableScreens: usableScreens, action: action, lastAction: lasttiny_window_managerAction, ignoreTodo: ignoreTodo)
+        let calculationParams = WindowCalculationParameters(window: currentWindow, usableScreens: usableScreens, action: action, lastAction: lastWindowActionRecord, ignoreTodo: ignoreTodo)
 
         // Run the calculation to get the target rectangle
         guard var calcResult = windowCalculation?.calculate(calculationParams) else {
@@ -329,7 +327,6 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     func apply(result: ResultParameters) -> CGRect {
-        /// print print(#function, "called")
         // Choose the appropriate mover chain based on whether window is fixed-size
         let windowMoverChain = result.isFixedSize
         ? fixedSizeWindowMoverChain
@@ -359,7 +356,6 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     func windowMovedAcrossDisplays(windowElement: AccessibilityElement, resultingRect: CGRect) {
-        /// print print(#function, "called")
         // Bring the window to the front on the new display
         windowElement.bringToFront(force: true)
 
@@ -377,7 +373,6 @@ class WindowManager {
     // ------------------------------------------------------------------------
 
     func postProcess(result: ResultParameters, resultingRect: CGRect) {
-        /// print print(#function, "called")
         let calcResult = result.calcResult
 
         // Optionally move cursor to center of window (only for keyboard shortcuts)
@@ -422,21 +417,14 @@ class WindowManager {
     }
 }
 
-// ============================================================================
-// MARK: - tiny_window_managerAction Struct
-// ============================================================================
-// Represents a window action that was performed.
-// Stored in history to enable:
-// 1. Detecting if user manually moved the window (by comparing rect)
-// 2. Cycling through variations when same action is repeated
-// 3. Restore/undo functionality
-// ============================================================================
+// MARK: - WindowActionRecord
 
-struct tiny_window_managerAction {
-    let action: WindowAction      // What action was performed
-    let subAction: SubWindowAction?  // More specific variation (e.g., which third)
-    let rect: CGRect              // The resulting window position
-    let count: Int                // How many times this action was repeated
+/// Records a window action for history tracking (restore, cycling).
+struct WindowActionRecord {
+    let action: WindowAction
+    let subAction: SubWindowAction?
+    let rect: CGRect
+    let count: Int
 }
 
 // ============================================================================
@@ -455,7 +443,6 @@ struct ExecutionParameters {
     let source: ExecutionSource        // How was this triggered?
 
     init(_ action: WindowAction, updateRestoreRect: Bool = true, screen: NSScreen? = nil, windowElement: AccessibilityElement? = nil, windowId: CGWindowID? = nil, source: ExecutionSource = .keyboardShortcut) {
-        /// print print(#function, "called")
         self.action = action
         self.updateRestoreRect = updateRestoreRect
         self.screen = screen

@@ -19,22 +19,9 @@ struct ShortcutRecorder: View {
     }
 }
 
-// MARK: - Backwards Compatibility Aliases
+// MARK: - Backwards Compatibility Alias
 
-/// Alias for backwards compatibility with existing code.
 typealias MASShortcutRecorder = ShortcutRecorder
-
-/// A SwiftUI view that records keyboard shortcuts using a custom string key.
-struct ShortcutKeyRecorder: View {
-    let key: String
-
-    var body: some View {
-        KeyboardShortcuts.Recorder(for: KeyboardShortcuts.Name(key))
-    }
-}
-
-/// Alias for backwards compatibility with existing code.
-typealias MASShortcutKeyRecorder = ShortcutKeyRecorder
 
 // MARK: - Preview
 
