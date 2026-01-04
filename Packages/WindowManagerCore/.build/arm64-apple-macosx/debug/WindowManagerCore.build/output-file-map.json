@@ -44,12 +44,40 @@
     "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/ActionRecord.swiftdeps",
     "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/ActionRecord.dia"
   },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/CycleSize.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CycleSize.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CycleSize.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CycleSize~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CycleSize.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CycleSize.dia"
+  },
   "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Edge.swift": {
     "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Edge.d",
     "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Edge.swift.o",
     "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Edge~partial.swiftmodule",
     "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Edge.swiftdeps",
     "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Edge.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Shortcut.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Shortcut.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Shortcut.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Shortcut~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Shortcut.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Shortcut.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubWindowAction.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubWindowAction.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubWindowAction.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubWindowAction~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubWindowAction.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubWindowAction.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubsequentExecutionMode.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubsequentExecutionMode.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubsequentExecutionMode.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubsequentExecutionMode~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubsequentExecutionMode.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/SubsequentExecutionMode.dia"
   },
   "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/WindowActionType.swift": {
     "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/WindowActionType.d",
@@ -78,6 +106,27 @@
     "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/WindowProtocol~partial.swiftmodule",
     "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/WindowProtocol.swiftdeps",
     "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/WindowProtocol.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/CBridge.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CBridge.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CBridge.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CBridge~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CBridge.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/CBridge.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/Debounce.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Debounce.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Debounce.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Debounce~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Debounce.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/Debounce.dia"
+  },
+  "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/TimeoutCache.swift": {
+    "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/TimeoutCache.d",
+    "object": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/TimeoutCache.swift.o",
+    "swiftmodule": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/TimeoutCache~partial.swiftmodule",
+    "swift-dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/TimeoutCache.swiftdeps",
+    "diagnostics": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/TimeoutCache.dia"
   },
   "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/WindowManagerCore.swift": {
     "dependencies": "/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/.build/arm64-apple-macosx/debug/WindowManagerCore.build/WindowManagerCore.d",

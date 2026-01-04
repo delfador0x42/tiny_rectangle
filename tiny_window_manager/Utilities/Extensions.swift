@@ -15,13 +15,22 @@ import Foundation
 extension String {
 
     /// Returns the localized version of this string from the "Main" strings table.
-    ///
-    /// Example:
-    /// ```swift
-    /// let greeting = "hello_message".localized
-    /// ```
     var localized: String {
         return NSLocalizedString(self, tableName: "Main", comment: "")
+    }
+
+    /// Converts camelCase to words with spaces.
+    /// Example: "leftHalf" → "Left Half", "topRightSixth" → "Top Right Sixth"
+    var camelCaseToWords: String {
+        var result = ""
+        for char in self {
+            if char.isUppercase && !result.isEmpty {
+                result.append(" ")
+            }
+            result.append(char)
+        }
+        // Capitalize first letter
+        return result.prefix(1).uppercased() + result.dropFirst()
     }
 }
 
@@ -392,5 +401,45 @@ extension NSImage {
         rotatedImage.unlockFocus()
 
         return rotatedImage
+    }
+}
+
+// ============================================================================
+// MARK: - Alert Utilities
+// ============================================================================
+
+/// Utility functions for displaying alert dialogs.
+enum AlertUtil {
+
+    /// Shows a simple alert with one button (typically "OK").
+    static func oneButtonAlert(question: String, text: String, confirmText: String = "OK") {
+        let alert = createBaseAlert(question: question, text: text)
+        alert.addButton(withTitle: confirmText)
+        alert.runModal()
+    }
+
+    /// Shows an alert with two buttons (typically "OK" and "Cancel").
+    static func twoButtonAlert(question: String, text: String, confirmText: String = "OK", cancelText: String = "Cancel") -> NSApplication.ModalResponse {
+        let alert = createBaseAlert(question: question, text: text)
+        alert.addButton(withTitle: confirmText)
+        alert.addButton(withTitle: cancelText)
+        return alert.runModal()
+    }
+
+    /// Shows an alert with three buttons for more complex choices.
+    static func threeButtonAlert(question: String, text: String, buttonOneText: String, buttonTwoText: String, buttonThreeText: String) -> NSApplication.ModalResponse {
+        let alert = createBaseAlert(question: question, text: text)
+        alert.addButton(withTitle: buttonOneText)
+        alert.addButton(withTitle: buttonTwoText)
+        alert.addButton(withTitle: buttonThreeText)
+        return alert.runModal()
+    }
+
+    private static func createBaseAlert(question: String, text: String) -> NSAlert {
+        let alert = NSAlert()
+        alert.messageText = question
+        alert.informativeText = text
+        alert.alertStyle = .warning
+        return alert
     }
 }

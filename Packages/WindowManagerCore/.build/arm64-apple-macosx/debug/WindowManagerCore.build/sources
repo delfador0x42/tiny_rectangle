@@ -4,9 +4,16 @@
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Calculations/SnapAreaCalculator.swift
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Geometry/CGRectExtensions.swift
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/ActionRecord.swift
+/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/CycleSize.swift
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Edge.swift
+/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/Shortcut.swift
+/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubWindowAction.swift
+/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/SubsequentExecutionMode.swift
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Models/WindowActionType.swift
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/ScreenProtocol.swift
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/SettingsProtocol.swift
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Protocols/WindowProtocol.swift
+/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/CBridge.swift
+/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/Debounce.swift
+/Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/Utilities/TimeoutCache.swift
 /Users/tal/wudan/dojo/tiny_window_manager/Packages/WindowManagerCore/Sources/WindowManagerCore/WindowManagerCore.swift

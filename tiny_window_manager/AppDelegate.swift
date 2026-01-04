@@ -60,11 +60,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Manages double-click on title bar behavior
     private var titleBarManager: TitleBarManager!
 
-    // MARK: - Window Controllers
-
-    /// The preferences/settings window (created lazily when needed)
-    private var prefsWindowController: NSWindowController?
-
     // MARK: - App Switching Tracking
 
     /// Observes changes to the frontmost application
@@ -348,23 +343,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - IBActions (Menu Item Handlers)
 
-    /// Opens the preferences/settings window.
+    /// Opens the preferences/settings window using SwiftUI's Settings scene.
     @objc func openPreferences(_ sender: Any) {
-        // Lazily create the preferences window controller with SwiftUI view
-        if prefsWindowController == nil {
-            let hostingController = NSHostingController(rootView: PreferencesView())
-            let window = NSWindow(contentViewController: hostingController)
-            window.title = "Preferences"
-            window.styleMask = NSWindow.StyleMask([.titled, .closable, .miniaturizable, .resizable])
-            window.setContentSize(NSSize(width: 800, height: 580))
-            window.center()
-
-            prefsWindowController = NSWindowController(window: window)
-        }
-
-        // Bring our app to the front and show the window
         NSApp.activate(ignoringOtherApps: true)
-        prefsWindowController?.showWindow(self)
+        // Use the modern SwiftUI Settings scene (defined in TinyWindowManagerApp.swift)
+        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
     }
 
     /// Shows the standard macOS "About" panel.
