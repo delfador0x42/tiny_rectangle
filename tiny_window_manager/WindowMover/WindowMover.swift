@@ -95,7 +95,7 @@ class StandardWindowMover: WindowMover {
         frontmostWindowElement: AccessibilityElement?,
         action: WindowAction?
     ) {
-        print(#function, "called")
+        /// print print(#function, "called")
         // A "null" rect means the window doesn't exist or isn't accessible
         let currentWindowRect = frontmostWindowElement?.frame
         let windowIsInvalid = currentWindowRect?.isNull == true
@@ -127,7 +127,7 @@ class BestEffortWindowMover: WindowMover {
         frontmostWindowElement: AccessibilityElement?,
         action: WindowAction?
     ) {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let currentWindowRect = frontmostWindowElement?.frame else {
             return
         }
@@ -158,7 +158,7 @@ class BestEffortWindowMover: WindowMover {
     // MARK: - Private Helper Methods
 
     private func adjustHorizontalPosition(_ rect: CGRect, within screenBounds: CGRect) -> CGRect {
-        print(#function, "called")
+        /// print print(#function, "called")
         var adjusted = rect
 
         let windowLeftEdge = adjusted.minX
@@ -181,7 +181,7 @@ class BestEffortWindowMover: WindowMover {
     }
 
     private func adjustVerticalPosition(_ rect: CGRect, within screenBounds: CGRect) -> CGRect {
-        print(#function, "called")
+        /// print print(#function, "called")
         // macOS uses two coordinate systems - we need to flip for vertical calculations
         var adjusted = rect.screenFlipped
 
@@ -228,7 +228,7 @@ class CenteringFixedSizedWindowMover: WindowMover {
         frontmostWindowElement: AccessibilityElement?,
         action: WindowAction?
     ) {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let currentWindowRect = frontmostWindowElement?.frame else {
             return
         }
@@ -269,7 +269,7 @@ class CenteringFixedSizedWindowMover: WindowMover {
         targetSize: CGFloat,
         targetOrigin: CGFloat
     ) -> CGFloat {
-        print(#function, "called")
+        /// print print(#function, "called")
         let extraSpace = targetSize - windowSize
         let offsetToCenter = extraSpace / 2.0
         // Round to avoid subpixel positioning (which can cause blurry rendering)
@@ -310,7 +310,7 @@ class QuantizedWindowMover: WindowMover {
         frontmostWindowElement: AccessibilityElement?,
         action: WindowAction?
     ) {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard var actualWindowRect = frontmostWindowElement?.frame else {
             return
         }
@@ -351,7 +351,7 @@ class QuantizedWindowMover: WindowMover {
         currentRect: CGRect,
         targetRect: CGRect
     ) -> CGRect {
-        print(#function, "called")
+        /// print print(#function, "called")
         var actualWindowRect = currentRect
         var requestedRect = targetRect
 
@@ -379,12 +379,12 @@ class QuantizedWindowMover: WindowMover {
     }
 
     private func windowExceedsTarget(actual: CGRect, target: CGRect) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         return actual.width > target.width || actual.height > target.height
     }
 
     private func requestedSizeTooSmall(requested: CGRect, target: CGRect) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         let widthTooSmall = requested.width < target.width * minimumSizeRatio
         let heightTooSmall = requested.height < target.height * minimumSizeRatio
         return widthTooSmall || heightTooSmall
@@ -396,7 +396,7 @@ class QuantizedWindowMover: WindowMover {
         actualWindowSize: CGSize,
         withinTarget targetRect: CGRect
     ) -> CGRect {
-        print(#function, "called")
+        /// print print(#function, "called")
         var centeredRect = requestedRect
 
         let extraHorizontalSpace = targetRect.width - actualWindowSize.width

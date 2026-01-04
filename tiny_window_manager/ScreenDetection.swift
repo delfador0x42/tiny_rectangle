@@ -67,7 +67,7 @@ class ScreenDetection {
     /// - Parameter frontmostWindowElement: The window to find a screen for.
     /// - Returns: UsableScreens containing the current screen, adjacent screens, and screen order.
     func detectScreens(using frontmostWindowElement: AccessibilityElement?) -> UsableScreens? {
-        print(#function, "called")
+        /// print print(#function, "called")
         let screens = NSScreen.screens
 
         // Need at least one screen
@@ -124,7 +124,7 @@ class ScreenDetection {
     ///
     /// - Returns: UsableScreens for the screen containing the cursor.
     func detectScreensAtCursor() -> UsableScreens? {
-        print(#function, "called")
+        /// print print(#function, "called")
         let screens = NSScreen.screens
 
         // Single screen: just use normal detection
@@ -162,7 +162,7 @@ class ScreenDetection {
     ///   - screens: The list of screens to search.
     /// - Returns: The screen containing the most of the rectangle, or main screen as fallback.
     func screenContaining(_ rect: CGRect, screens: [NSScreen]) -> NSScreen? {
-        print(#function, "called")
+        /// print print(#function, "called")
         var result: NSScreen? = NSScreen.main
         var largestPercentageOfRectWithinFrameOfScreen: CGFloat = 0.0
 
@@ -196,7 +196,7 @@ class ScreenDetection {
     ///   - frameOfScreen: The screen's frame.
     /// - Returns: A value from 0.0 (no overlap) to 1.0 (fully contained).
     func percentageOf(_ rect: CGRect, withinFrameOfScreen frameOfScreen: CGRect) -> CGFloat {
-        print(#function, "called")
+        /// print print(#function, "called")
         let intersection = rect.intersection(frameOfScreen)
 
         // If no overlap, return 0
@@ -223,7 +223,7 @@ class ScreenDetection {
     ///   - screens: All screens in their navigation order.
     /// - Returns: AdjacentScreens with prev/next, or nil if navigation isn't possible.
     func adjacent(toFrameOfScreen frameOfScreen: CGRect, screens: [NSScreen]) -> AdjacentScreens? {
-        print(#function, "called")
+        /// print print(#function, "called")
 
         // TWO SCREENS: simple case - the other screen is both prev and next
         if screens.count == 2 {
@@ -280,7 +280,7 @@ class ScreenDetection {
     /// - Parameter screens: The screens to order.
     /// - Returns: Screens in navigation order.
     func order(screens: [NSScreen]) -> [NSScreen] {
-        print(#function, "called")
+        /// print print(#function, "called")
 
         // Option 1: Simple left-to-right ordering
         if Defaults.screensOrderedByX.userEnabled {
@@ -309,7 +309,7 @@ class ScreenDetection {
 
     /// Calculates the area of a rectangle.
     private func computeAreaOfRect(rect: CGRect) -> CGFloat {
-        print(#function, "called")
+        /// print print(#function, "called")
         return rect.size.width * rect.size.height
     }
 }
@@ -340,7 +340,7 @@ struct UsableScreens {
     let screensOrdered: [NSScreen]
 
     init(currentScreen: NSScreen, adjacentScreens: AdjacentScreens? = nil, numScreens: Int, screensOrdered: [NSScreen]? = nil) {
-        print(#function, "called")
+        /// print print(#function, "called")
         self.currentScreen = currentScreen
         self.adjacentScreens = adjacentScreens
         self.frameOfCurrentScreen = currentScreen.frame
@@ -379,7 +379,7 @@ extension NSScreen {
     ///   - ignoreStage: If true, don't subtract space for Stage Manager.
     /// - Returns: The adjusted frame where windows can be placed.
     func adjustedVisibleFrame(_ ignoreTodo: Bool = false, _ ignoreStage: Bool = false) -> CGRect {
-        print(#function, "called")
+        /// print print(#function, "called")
         var newFrame = visibleFrame
 
         // STAGE MANAGER ADJUSTMENT (macOS Ventura+)

@@ -3933,7 +3933,7 @@ DQ
                                                             </button>
                                                             <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="cbx-fa-jJh">
                                                                 <rect key="frame" x="0.0" y="0.0" width="127" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Animate footprint" bezelStyle="regularSquare" imagePosition="left" inset="2" id="kx2-tZ-lk8">
+                                                                <buttonCell key="cell" type="check" title="Animate foot/// print print" bezelStyle="regularSquare" imagePosition="left" inset="2" id="kx2-tZ-lk8">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
@@ -3941,7 +3941,7 @@ DQ
                                                                     <constraint firstAttribute="height" constant="16" id="Xlt-wM-rDc"/>
                                                                 </constraints>
                                                                 <connections>
-                                                                    <action selector="toggleAnimateFootprint:" target="t2d-Q7-RLy" id="qo7-sw-gbY"/>
+                                                                    <action selector="toggleAnimateFoot/// print print:" target="t2d-Q7-RLy" id="qo7-sw-gbY"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -4472,7 +4472,7 @@ DQ
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="animateFootprintCheckbox" destination="cbx-fa-jJh" id="KmN-pe-s68"/>
+                        <outlet property="animateFoot/// print printCheckbox" destination="cbx-fa-jJh" id="KmN-pe-s68"/>
                         <outlet property="bottomLandscapeSelect" destination="3c6-3h-J52" id="1a0-LW-wrh"/>
                         <outlet property="bottomLeftLandscapeSelect" destination="bVZ-3z-DYF" id="1Ql-jU-1fz"/>
                         <outlet property="bottomLeftPortraitSelect" destination="DPC-eZ-HIy" id="jdO-8U-dyU"/>

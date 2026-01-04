@@ -44,7 +44,7 @@ class TodoManager {
 
     /// Enables or disables todo mode.
     static func setTodoMode(_ enabled: Bool, _ bringToFront: Bool = true) {
-        print(#function, "called")
+        /// print print(#function, "called")
         Defaults.todoMode.enabled = enabled
         moveAllIfNeeded(bringToFront)
     }
@@ -72,7 +72,7 @@ class TodoManager {
     /// Gets the accessibility element for the todo window.
     /// Caches the window ID to avoid repeated lookups.
     private static func getTodoWindowElement() -> AccessibilityElement? {
-        print(#function, "called")
+        /// print print(#function, "called")
         // Get the bundle ID of the configured todo app
         guard let bundleId = Defaults.todoApplication.value,
               let windowElements = AccessibilityElement(bundleId)?.windowElements
@@ -106,13 +106,13 @@ class TodoManager {
 
     /// Returns true if a todo window exists (the todo app is running with a window open)
     static func hasTodoWindow() -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         return getTodoWindowElement() != nil
     }
 
     /// Returns true if the frontmost window is the todo window
     static func isTodoWindowFront() -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let windowElement = AccessibilityElement.getFrontWindowElement() else {
             return false
         }
@@ -121,7 +121,7 @@ class TodoManager {
 
     /// Checks if the given accessibility element is the todo window
     static func isTodoWindow(_ windowElement: AccessibilityElement) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let windowId = windowElement.windowId else {
             return false
         }
@@ -130,14 +130,14 @@ class TodoManager {
 
     /// Checks if the given window ID is the todo window
     static func isTodoWindow(_ windowId: CGWindowID) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         return getTodoWindowElement()?.windowId == windowId
     }
 
     /// Resets the cached todo window ID.
     /// Call this when the todo app changes or when windows may have changed.
     static func resetTodoWindow() {
-        print(#function, "called")
+        /// print print(#function, "called")
         todoWindowId = nil
         _ = getTodoWindowElement()  // Re-detect
     }
@@ -149,7 +149,7 @@ class TodoManager {
     ///
     /// - Parameter bringToFront: Whether to bring the todo window to the front (default: true)
     static func moveAll(_ bringToFront: Bool = true) {
-        print(#function, "called")
+        /// print print(#function, "called")
         // Update which screen the todo window is on
         TodoManager.refreshTodoScreen()
 
@@ -189,7 +189,7 @@ class TodoManager {
 
     /// Positions the todo window in its sidebar location
     private static func positionTodoWindow(_ todoWindow: AccessibilityElement, on screen: NSScreen) {
-        print(#function, "called")
+        /// print print(#function, "called")
         let adjustedVisibleFrame = screen.adjustedVisibleFrame(true)
         let sidebarWidth = getSidebarWidth(visibleFrameWidth: adjustedVisibleFrame.width)
         let isRightSide = Defaults.todoSidebarSide.value == .right
@@ -222,7 +222,7 @@ class TodoManager {
     /// - Parameter visibleFrameWidth: The width of the visible screen area
     /// - Returns: The sidebar width in pixels
     static func getSidebarWidth(visibleFrameWidth: CGFloat) -> CGFloat {
-        print(#function, "called")
+        /// print print(#function, "called")
         var sidebarWidth = Defaults.todoSidebarWidth.cgFloat
 
         // Handle percentage values stored as decimals (0.0 - 1.0)
@@ -245,7 +245,7 @@ class TodoManager {
     ///   - visibleFrameWidth: The width of the visible screen area
     /// - Returns: The converted width value
     static func convert(width: CGFloat, toUnit unit: TodoSidebarWidthUnit, visibleFrameWidth: CGFloat) -> CGFloat {
-        print(#function, "called")
+        /// print print(#function, "called")
         switch unit {
         case .pixels:
             // Convert percentage to pixels: (25% of 1000px = 250px)
@@ -259,7 +259,7 @@ class TodoManager {
     /// Moves all windows if todo mode is enabled.
     /// This is a conditional wrapper around moveAll().
     static func moveAllIfNeeded(_ bringToFront: Bool = true) {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard Defaults.todo.userEnabled && Defaults.todoMode.enabled else {
             return
         }
@@ -268,7 +268,7 @@ class TodoManager {
 
     /// Updates the todoScreen property based on where the todo window currently is
     static func refreshTodoScreen() {
-        print(#function, "called")
+        /// print print(#function, "called")
         let todoWindow = getTodoWindowElement()
         let screens = ScreenDetection().detectScreens(using: todoWindow)
         TodoManager.todoScreen = screens?.currentScreen
@@ -279,7 +279,7 @@ class TodoManager {
     /// Shifts a window to avoid overlapping the todo sidebar.
     /// If the window is too wide, it will be resized to fit.
     private static func shiftWindowOffSidebar(_ window: AccessibilityElement, screenVisibleFrame: CGRect) {
-        print(#function, "called")
+        /// print print(#function, "called")
         var rect = window.frame
         let halfGapWidth = CGFloat(Defaults.gapSize.value) / 2
 
@@ -303,7 +303,7 @@ class TodoManager {
 
     /// Shifts a window to the right to avoid the left sidebar
     private static func shiftWindowRight(_ rect: inout CGRect, safeMinX: CGFloat, screenMaxX: CGFloat) {
-        print(#function, "called")
+        /// print print(#function, "called")
         let overlap = safeMinX - rect.minX
 
         // Try to shift the window right
@@ -319,7 +319,7 @@ class TodoManager {
 
     /// Shifts a window to the left to avoid the right sidebar
     private static func shiftWindowLeft(_ rect: inout CGRect, safeMaxX: CGFloat, screenMinX: CGFloat) {
-        print(#function, "called")
+        /// print print(#function, "called")
         let overlap = rect.maxX - safeMaxX
 
         // Try to shift the window left
@@ -339,7 +339,7 @@ class TodoManager {
     /// - Parameter parameters: The execution parameters containing the action
     /// - Returns: true if a todo action was executed, false otherwise
     static func execute(parameters: ExecutionParameters) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         let todoActions: [WindowAction] = [.leftTodo, .rightTodo]
 
         if todoActions.contains(parameters.action) {

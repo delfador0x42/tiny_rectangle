@@ -41,7 +41,7 @@ class tiny_window_managerStatusItem {
 
     /// Private init enforces the singleton pattern - you can't create new instances
     private init() {
-        print(#function, "called")
+        /// print print(#function, "called")
     }
 
     // MARK: - Public Methods
@@ -49,7 +49,7 @@ class tiny_window_managerStatusItem {
     /// Shows or hides the menu bar icon based on user preferences.
     /// Call this when the app launches or when the user changes their preference.
     public func refreshVisibility() {
-        print(#function, "called")
+        /// print print(#function, "called")
         let shouldHideIcon = Defaults.hideMenuBarIcon.enabled
 
         if shouldHideIcon {
@@ -62,7 +62,7 @@ class tiny_window_managerStatusItem {
     /// Programmatically opens the status item's menu.
     /// Temporarily shows the icon if it's hidden, opens the menu, then respects visibility settings.
     public func openMenu() {
-        print(#function, "called")
+        /// print print(#function, "called")
         // Make sure the icon exists before trying to click it
         if !isCurrentlyInMenuBar {
             addToMenuBar()
@@ -79,7 +79,7 @@ class tiny_window_managerStatusItem {
 
     /// Creates and adds the status item to the macOS menu bar
     private func addToMenuBar() {
-        print(#function, "called")
+        /// print print(#function, "called")
         isCurrentlyInMenuBar = true
 
         // Create the status item with automatic width based on content
@@ -97,7 +97,7 @@ class tiny_window_managerStatusItem {
 
     /// Configures the status item's appearance and behavior
     private func configureStatusItem() {
-        print(#function, "called")
+        /// print print(#function, "called")
         // Set the icon image (should be a template image for proper dark/light mode support)
         nsStatusItem?.button?.image = NSImage(named: "StatusTemplate")
 
@@ -110,7 +110,7 @@ class tiny_window_managerStatusItem {
 
     /// Sets up an observer to detect when the user manually hides the icon
     private func startObservingVisibilityChanges() {
-        print(#function, "called")
+        /// print print(#function, "called")
         visibilityObserver = nsStatusItem?.observe(\.isVisible, options: [.old, .new]) { [weak self] _, change in
             self?.handleVisibilityChange(oldValue: change.oldValue, newValue: change.newValue)
         }
@@ -118,7 +118,7 @@ class tiny_window_managerStatusItem {
 
     /// Called when the status item's visibility changes
     private func handleVisibilityChange(oldValue: Bool?, newValue: Bool?) {
-        print(#function, "called")
+        /// print print(#function, "called")
         let wasVisible = oldValue == true
         let isNowHidden = newValue == false
 
@@ -134,7 +134,7 @@ class tiny_window_managerStatusItem {
 
     /// Removes the status item from the macOS menu bar
     private func removeFromMenuBar() {
-        print(#function, "called")
+        /// print print(#function, "called")
         isCurrentlyInMenuBar = false
 
         // Only remove if it exists

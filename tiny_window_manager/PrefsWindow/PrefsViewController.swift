@@ -101,7 +101,7 @@ class PrefsViewController: NSViewController {
     // MARK: - Lifecycle
 
     override func awakeFromNib() {
-        print(#function, "called")
+        /// print print(#function, "called")
 
         // Build the action-to-container mapping
         actionsToContainers = [
@@ -169,7 +169,7 @@ class PrefsViewController: NSViewController {
     // MARK: - Actions
 
     @IBAction func toggleShowMore(_ sender: NSButton) {
-        print(#function, "called")
+        /// print print(#function, "called")
         additionalShortcutsStackView.isHidden = !additionalShortcutsStackView.isHidden
         showMoreButton.title = additionalShortcutsStackView.isHidden ? "▶︎ ⋯" : "▼"
     }

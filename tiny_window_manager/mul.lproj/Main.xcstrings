@@ -8684,7 +8684,7 @@
       }
     },
     "aTl-1u-JFS.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Print…\"; ObjectID = \"aTl-1u-JFS\";",
+      "comment" : "Class = \"NSMenuItem\"; title = \"/// print print…\"; ObjectID = \"aTl-1u-JFS\";",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
@@ -27008,7 +27008,7 @@
       }
     },
     "kx2-tZ-lk8.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Animate footprint\"; ObjectID = \"kx2-tZ-lk8\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Animate foot/// print print\"; ObjectID = \"kx2-tZ-lk8\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
@@ -27020,19 +27020,19 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "ca-ES" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "de" : {
@@ -27044,7 +27044,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "es" : {
@@ -27068,7 +27068,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "it" : {
@@ -27104,7 +27104,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "nn" : {
@@ -27116,25 +27116,25 @@
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "ru" : {
@@ -27152,13 +27152,13 @@
         "sv-SE" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         },
         "uk" : {
@@ -27188,7 +27188,7 @@
         "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Animate footprint"
+            "value" : "Animate foot/// print print"
           }
         }
       }

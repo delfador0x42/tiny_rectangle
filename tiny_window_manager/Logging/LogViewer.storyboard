@@ -27,7 +27,7 @@
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="Efc-d5-q0y"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="zCn-Wl-gsE"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="Nei-0S-1mq"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbar/// print printItem" id="Nei-0S-1mq"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Vn6-3B-BfI"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="mkO-5w-oGc"/>
                             </allowedToolbarItems>

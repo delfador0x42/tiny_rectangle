@@ -26,7 +26,7 @@ protocol Calculation {
 class WindowCalculation: Calculation {
 
     func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
-        print(#function, "called")
+        /// print print(#function, "called")
         let rectResult = calculateRect(params.asRectParams())
         if rectResult.rect.isNull { return nil }
 
@@ -39,26 +39,26 @@ class WindowCalculation: Calculation {
     }
 
     func calculateRect(_ params: RectCalculationParameters) -> RectResult {
-        print(#function, "called")
+        /// print print(#function, "called")
         return RectResult(.null)
     }
 
     // MARK: - Helper Methods
 
     func rectCenteredWithinRect(_ rect1: CGRect, _ rect2: CGRect) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         let centeredMidX = abs(rect2.midX - rect1.midX) <= 1.0
         let centeredMidY = abs(rect2.midY - rect1.midY) <= 1.0
         return rect1.contains(rect2) && centeredMidX && centeredMidY
     }
 
     func rectFitsWithinRect(rect1: CGRect, rect2: CGRect) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         return rect1.width <= rect2.width && rect1.height <= rect2.height
     }
 
     func isRepeatedCommand(_ params: WindowCalculationParameters) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let lastAction = params.lastAction, lastAction.action == params.action else {
             return false
         }
@@ -83,7 +83,7 @@ struct WindowCalculationParameters {
     let ignoreTodo: Bool
 
     func asRectParams(visibleFrame: CGRect? = nil, differentAction: WindowAction? = nil) -> RectCalculationParameters {
-        print(#function, "called")
+        /// print print(#function, "called")
         return RectCalculationParameters(
             window: window,
             visibleFrameOfScreen: visibleFrame ?? usableScreens.currentScreen.adjustedVisibleFrame(ignoreTodo),
@@ -93,7 +93,7 @@ struct WindowCalculationParameters {
     }
 
     func withDifferentAction(_ differentAction: WindowAction) -> WindowCalculationParameters {
-        print(#function, "called")
+        /// print print(#function, "called")
         return .init(window: window, usableScreens: usableScreens, action: differentAction, lastAction: lastAction, ignoreTodo: ignoreTodo)
     }
 }
@@ -111,7 +111,7 @@ struct RectResult {
     let subAction: SubWindowAction?
 
     init(_ rect: CGRect, resultingAction: WindowAction? = nil, subAction: SubWindowAction? = nil) {
-        print(#function, "called")
+        /// print print(#function, "called")
         self.rect = rect
         self.resultingAction = resultingAction
         self.subAction = subAction
@@ -127,7 +127,7 @@ struct WindowCalculationResult {
 
     init(rect: CGRect, screen: NSScreen, resultingAction: WindowAction,
          resultingSubAction: SubWindowAction? = nil, resultingScreenFrame: CGRect? = nil) {
-        print(#function, "called")
+        /// print print(#function, "called")
         self.rect = rect
         self.screen = screen
         self.resultingAction = resultingAction
@@ -379,6 +379,19 @@ class SimpleCalculation: WindowCalculation {
     static let shared = SimpleCalculation()
     private static var cycleState = WindowCycleState()
 
+    /// Returns true if the next repeat of this action would wrap back to the start of the cycle.
+    static func wouldCycleWrap(for action: WindowAction) -> Bool {
+        let result = cycleState.wouldWrap(for: action)
+        /// print print("[CycleState] wouldCycleWrap for \(action): \(result) (cycleIndex: \(cycleState.cycleIndex), lastAction: \(String(describing: cycleState.lastAction)))")
+        return result
+    }
+
+    /// Resets the cycle state, causing the next action to start at position 0.
+    static func resetCycleState() {
+        /// print print("[CycleState] Resetting cycle state")
+        cycleState.reset()
+    }
+
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
         let action = params.action
         let screen = params.usableScreens.currentScreen
@@ -413,12 +426,23 @@ struct WindowCycleState {
 
     mutating func effectiveAction(for action: WindowAction) -> WindowAction {
         if lastAction == action {
+            let oldIndex = cycleIndex
             cycleIndex = (cycleIndex + 1) % action.cycleGroup.count
+            /// print print("[CycleState] effectiveAction: repeat action, advancing cycleIndex \(oldIndex) -> \(cycleIndex)")
         } else {
+            /// print print("[CycleState] effectiveAction: new action \(action), resetting cycleIndex to 0")
             lastAction = action
             cycleIndex = 0
         }
-        return action.cycleGroup[cycleIndex]
+        let result = action.cycleGroup[cycleIndex]
+        /// print print("[CycleState] effectiveAction returning: \(result) (from cycleGroup[\(cycleIndex)])")
+        return result
+    }
+
+    /// Returns true if the next call to effectiveAction would wrap back to the start of the cycle.
+    func wouldWrap(for action: WindowAction) -> Bool {
+        guard lastAction == action else { return false }
+        return cycleIndex == action.cycleGroup.count - 1
     }
 
     mutating func reset() {
@@ -473,7 +497,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
     static let shared = NextPrevDisplayCalculation()
 
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
-        print(#function, "called")
+        /// print print(#function, "called")
         let usableScreens = params.usableScreens
         guard usableScreens.numScreens > 1 else { return nil }
 
@@ -494,7 +518,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
     }
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
-        print(#function, "called")
+        /// print print(#function, "called")
         let wasMaximized = params.lastAction?.action == .maximize
         let autoMaximizeEnabled = !Defaults.autoMaximize.userDisabled
         let screen = params.visibleFrameOfScreen
@@ -512,7 +536,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
     }
 
     private func getTargetScreen(for action: WindowAction, from usableScreens: UsableScreens) -> NSScreen? {
-        print(#function, "called")
+        /// print print(#function, "called")
         switch action {
         case .nextDisplay: return usableScreens.adjacentScreens?.next
         case .previousDisplay: return usableScreens.adjacentScreens?.prev
@@ -522,7 +546,7 @@ class NextPrevDisplayCalculation: WindowCalculation {
 
     private func attemptToMatchLastAction(params: WindowCalculationParameters, rectParams: RectCalculationParameters,
                                           targetScreen: NSScreen) -> WindowCalculationResult? {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard Defaults.attemptMatchOnNextPrevDisplay.userEnabled,
               let lastAction = params.lastAction,
               let calculation = lastAction.action.calculation else {
@@ -553,13 +577,13 @@ final class SpecifiedCalculation: WindowCalculation {
     private let specifiedWidth: CGFloat
 
     override init() {
-        print(#function, "called")
+        /// print print(#function, "called")
         specifiedHeight = CGFloat(Defaults.specifiedHeight.value)
         specifiedWidth = CGFloat(Defaults.specifiedWidth.value)
     }
 
     override func calculateRect(_ params: RectCalculationParameters) -> RectResult {
-        print(#function, "called")
+        /// print print(#function, "called")
         let screen = params.visibleFrameOfScreen
         let windowWidth = specifiedWidth <= 1 ? screen.width * specifiedWidth : min(screen.width, round(specifiedWidth))
         let windowHeight = specifiedHeight <= 1 ? screen.height * specifiedHeight : round(specifiedHeight)
@@ -577,7 +601,7 @@ final class SpecifiedCalculation: WindowCalculation {
 class GapCalculation {
 
     static func applyGaps(_ rect: CGRect, dimension: Dimension = .both, sharedEdges: Edge = .none, gapSize: Float) -> CGRect {
-        print(#function, "called")
+        /// print print(#function, "called")
         let fullGap = CGFloat(gapSize)
         let halfGap = fullGap / 2
 
@@ -592,7 +616,7 @@ class GapCalculation {
     }
 
     private static func adjustForSharedHorizontalEdges(_ rect: CGRect, sharedEdges: Edge, dimension: Dimension, halfGap: CGFloat) -> CGRect {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard dimension.contains(.horizontal) else { return rect }
         var result = rect
         if sharedEdges.contains(.left) {
@@ -606,7 +630,7 @@ class GapCalculation {
     }
 
     private static func adjustForSharedVerticalEdges(_ rect: CGRect, sharedEdges: Edge, dimension: Dimension, halfGap: CGFloat) -> CGRect {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard dimension.contains(.vertical) else { return rect }
         var result = rect
         if sharedEdges.contains(.bottom) {

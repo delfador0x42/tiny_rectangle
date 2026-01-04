@@ -35,7 +35,7 @@ class ReverseAllManager {
     /// - Parameter windowElement: Optional window to determine which screen to use.
     ///                            If nil, uses the frontmost window's screen.
     static func reverseAll(windowElement: AccessibilityElement? = nil) {
-        print(#function, "called")
+        /// print print(#function, "called")
         let screenDetection = ScreenDetection()
 
         // Determine which screen to operate on based on the reference window
@@ -88,7 +88,7 @@ class ReverseAllManager {
     ///   - window: The window to reverse
     ///   - screenFrame: The usable area of the screen
     private static func reverseWindowPosition(_ window: AccessibilityElement, screenFrame: CGRect) {
-        print(#function, "called")
+        /// print print(#function, "called")
         var windowFrame = window.frame
 
         // Step 1: Calculate how far the window's left edge is from the screen's left edge

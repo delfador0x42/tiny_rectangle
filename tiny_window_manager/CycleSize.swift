@@ -88,7 +88,7 @@ enum CycleSize: Int, CaseIterable {
     /// - Parameter bits: An integer where each bit represents whether a size is selected.
     /// - Returns: A Set containing all the sizes whose bits are set to 1.
     static func fromBits(bits: Int) -> Set<CycleSize> {
-        print(#function, "called")
+        /// print print(#function, "called")
         return Set(
             Self.allCases.filter { cycleSize in
                 // Check if the bit at position `rawValue` is set to 1
@@ -203,7 +203,7 @@ extension Set where Element == CycleSize {
     ///
     /// This is the inverse of `CycleSize.fromBits(bits:)`.
     func toBits() -> Int {
-        print(#function, "called")
+        /// print print(#function, "called")
         var bits = 0
         for cycleSize in self {
             // Set the bit at position `rawValue` to 1
@@ -255,7 +255,7 @@ class CycleSizesDefault: Default {
 
     /// Creates the default, loading any existing value from UserDefaults.
     init() {
-        print(#function, "called")
+        /// print print(#function, "called")
         let storedBits = UserDefaults.standard.integer(forKey: key)
         value = CycleSize.fromBits(bits: storedBits)
         initialized = true
@@ -263,7 +263,7 @@ class CycleSizesDefault: Default {
 
     /// Load a value from an imported settings file.
     func load(from codable: CodableDefault) {
-        print(#function, "called")
+        /// print print(#function, "called")
         if let bits = codable.int {
             value = CycleSize.fromBits(bits: bits)
         }
@@ -271,7 +271,7 @@ class CycleSizesDefault: Default {
 
     /// Convert the current value to a format suitable for export.
     func toCodable() -> CodableDefault {
-        print(#function, "called")
+        /// print print(#function, "called")
         return CodableDefault(int: value.toBits())
     }
 }

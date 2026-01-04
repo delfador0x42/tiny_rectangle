@@ -268,19 +268,19 @@ enum WindowAction: Int, Codable {
 
     /// Triggers this action via a notification (default source: keyboard shortcut)
     func post() {
-        print(#function, "called")
+        /// print print(#function, "called")
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self))
     }
 
     /// Triggers this action as if it came from the menu bar
     func postMenu() {
-        print(#function, "called")
+        /// print print(#function, "called")
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self, source: .menuItem))
     }
 
     /// Triggers this action from a drag-to-snap gesture
     func postSnap(windowElement: AccessibilityElement?, windowId: CGWindowID?, screen: NSScreen) {
-        print(#function, "called")
+        /// print print(#function, "called")
         NotificationCenter.default.post(
             name: notificationName,
             object: ExecutionParameters(
@@ -296,13 +296,13 @@ enum WindowAction: Int, Codable {
 
     /// Triggers this action from a URL scheme
     func postUrl() {
-        print(#function, "called")
+        /// print print(#function, "called")
         NotificationCenter.default.post(name: notificationName, object: ExecutionParameters(self, source: .url))
     }
 
     /// Triggers this action from a title bar interaction
     func postTitleBar(windowElement: AccessibilityElement?) {
-        print(#function, "called")
+        /// print print(#function, "called")
         NotificationCenter.default.post(
             name: notificationName,
             object: ExecutionParameters(self, windowElement: windowElement, source: .titleBar)
@@ -798,7 +798,7 @@ struct Shortcut: Codable {
     ///   - modifierFlags: Bitmask of modifiers (e.g., ctrl|alt)
     ///   - keyCode: The virtual key code (e.g., kVK_LeftArrow)
     init(_ modifierFlags: UInt, _ keyCode: Int) {
-        print(#function, "called")
+        /// print print(#function, "called")
         self.keyCode = keyCode
         self.modifierFlags = modifierFlags
     }

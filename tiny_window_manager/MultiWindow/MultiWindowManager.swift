@@ -26,7 +26,7 @@ class MultiWindowManager {
     /// - Parameter parameters: Contains the action type and optional window element
     /// - Returns: `true` if the action was handled, `false` for unsupported actions
     static func execute(parameters: ExecutionParameters) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
         // TODO: Protocol and factory for all multi-window positioning algorithms
         switch parameters.action {
         case .reverseAll:
@@ -56,7 +56,7 @@ class MultiWindowManager {
     /// - Parameter windowElement: Optional window to use for determining the current screen.
     ///                            If nil, uses the frontmost window.
     static func tileAllWindowsOnScreen(windowElement: AccessibilityElement? = nil) {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let (screens, windows) = allWindowsOnScreen(windowElement: windowElement, sortByPID: true) else {
             return
         }
@@ -91,7 +91,7 @@ class MultiWindowManager {
     /// - Parameter windowElement: Optional window to use for determining the current screen.
     ///                            If nil, uses the frontmost window.
     static func cascadeAllWindowsOnScreen(windowElement: AccessibilityElement? = nil) {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let (screens, windows) = allWindowsOnScreen(windowElement: windowElement, sortByPID: true) else {
             return
         }
@@ -117,7 +117,7 @@ class MultiWindowManager {
     /// - Parameter windowElement: Optional window to use for determining the current screen.
     ///                            If nil, uses the frontmost window.
     static func cascadeActiveAppWindowsOnScreen(windowElement: AccessibilityElement? = nil) {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let (screens, windows) = allWindowsOnScreen(windowElement: windowElement, sortByPID: true),
               let frontWindowElement = AccessibilityElement.getFrontWindowElement()
         else {
@@ -171,7 +171,7 @@ class MultiWindowManager {
     ///   - sortByPID: If true, sorts windows by process ID (groups windows by app)
     /// - Returns: A tuple of (screen info, filtered windows), or nil if detection fails
     private static func allWindowsOnScreen(windowElement: AccessibilityElement? = nil, sortByPID: Bool = false) -> (screens: UsableScreens, windows: [AccessibilityElement])? {
-        print(#function, "called")
+        /// print print(#function, "called")
         let screenDetection = ScreenDetection()
 
         // Get the reference window (provided or frontmost)
@@ -233,7 +233,7 @@ class MultiWindowManager {
     ///   - column: Which column (0-based) this window belongs in
     ///   - row: Which row (0-based) this window belongs in
     private static func tileWindow(_ w: AccessibilityElement, screenFrame: CGRect, size: CGSize, column: Int, row: Int) {
-        print(#function, "called")
+        /// print print(#function, "called")
         var rect = w.frame
 
         // TODO: save previous position in history
@@ -259,7 +259,7 @@ class MultiWindowManager {
     ///   - index: This window's position in the cascade (0 = bottom, higher = more on top)
     ///   - cascadeParameters: Optional parameters for smart cascading (used by cascadeActiveApp)
     private static func cascadeWindow(_ w: AccessibilityElement, screenFrame: CGRect, delta: CGFloat, index: Int, cascadeParameters: CascadeActiveAppParameters? = nil) {
-        print(#function, "called")
+        /// print print(#function, "called")
         var rect = w.frame
 
         // TODO: save previous position in history
@@ -321,7 +321,7 @@ private struct CascadeActiveAppParameters {
     ///   - size: The desired window size (will be clamped to fit)
     ///   - delta: The offset between cascaded windows
     init(windowFrame: CGRect, screenFrame: CGRect, numWindows: Int, size: CGSize, delta: CGFloat) {
-        print(#function, "called")
+        /// print print(#function, "called")
         // Determine cascade direction based on which half of the screen the window is in
         self.right = windowFrame.midX > screenFrame.midX
         self.bottom = windowFrame.midY > screenFrame.midY

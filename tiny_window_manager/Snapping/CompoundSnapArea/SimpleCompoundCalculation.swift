@@ -23,7 +23,7 @@ struct SimpleCompoundCalculation: CompoundSnapAreaCalculation {
         directional: Directional,
         priorSnapArea: SnapArea?
     ) -> SnapArea? {
-        print(#function, "called")
+        /// print print(#function, "called")
 
         let frame = screen.frame
         let priorAction = priorSnapArea?.action

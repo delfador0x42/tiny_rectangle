@@ -57,7 +57,7 @@ public enum LaunchOnLogin {
 
     /// Registers the app to launch when the user logs in.
     private static func enableLaunchOnLogin() {
-        print(#function, "called")
+        /// print print(#function, "called")
         do {
             // Workaround: If already registered, unregister first.
             // This handles edge cases where the registration state is corrupted
@@ -74,7 +74,7 @@ public enum LaunchOnLogin {
 
     /// Unregisters the app from launching at login.
     private static func disableLaunchOnLogin() {
-        print(#function, "called")
+        /// print print(#function, "called")
         do {
             try SMAppService.mainApp.unregister()
         } catch {
@@ -84,7 +84,7 @@ public enum LaunchOnLogin {
 
     /// Logs an error that occurred while changing the launch-on-login setting.
     private static func logError(enabling: Bool, error: Error) {
-        print(#function, "called")
+        /// print print(#function, "called")
         let action = enabling ? "enable" : "disable"
         os_log("Failed to \(action) launch at login: \(error.localizedDescription)")
     }

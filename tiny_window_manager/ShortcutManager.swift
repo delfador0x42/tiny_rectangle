@@ -24,7 +24,7 @@ final class ShortcutManager {
     private let windowManager: WindowManager
 
     init(windowManager: WindowManager) {
-        print(#function, "called")
+        /// print print(#function, "called")
         self.windowManager = windowManager
         registerDefaults()
         bindAllShortcuts()
@@ -32,26 +32,26 @@ final class ShortcutManager {
     }
 
     deinit {
-        print(#function, "called")
+        /// print print(#function, "called")
         unsubscribeFromAllWindowActions()
     }
 
     // MARK: - Public API
 
     func reloadFromDefaults() {
-        print(#function, "called")
+        /// print print(#function, "called")
         registerDefaults()
     }
 
     func bindShortcuts() {
-        print(#function, "called")
+        /// print print(#function, "called")
         for action in WindowAction.active {
             KeyboardShortcuts.enable(.init(action))
         }
     }
 
     func unbindShortcuts() {
-        print(#function, "called")
+        /// print print(#function, "called")
         for action in WindowAction.active {
             KeyboardShortcuts.disable(.init(action))
         }
@@ -59,7 +59,7 @@ final class ShortcutManager {
 
     /// Returns the key equivalent string and modifier flags for menu display.
     func getKeyEquivalent(action: WindowAction) -> (String?, NSEvent.ModifierFlags)? {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard let shortcut = KeyboardShortcuts.getShortcut(for: .init(action)) else {
             return nil
         }
@@ -142,7 +142,7 @@ final class ShortcutManager {
     // MARK: - Private: Setup
 
     private func registerDefaults() {
-        print(#function, "called")
+        /// print print(#function, "called")
         for action in WindowAction.active {
             let name = KeyboardShortcuts.Name(action)
             // Only set default if user hasn't already set a shortcut
@@ -159,7 +159,7 @@ final class ShortcutManager {
     }
 
     private func bindAllShortcuts() {
-        print(#function, "called")
+        /// print print(#function, "called")
         for action in WindowAction.active {
             KeyboardShortcuts.onKeyUp(for: .init(action)) {
                 action.post()
@@ -168,7 +168,7 @@ final class ShortcutManager {
     }
 
     private func defaultShortcutForAction(_ action: WindowAction) -> Shortcut? {
-        print(#function, "called")
+        /// print print(#function, "called")
         if Defaults.alternateDefaultShortcuts.enabled {
             return action.alternateDefault
         } else {
@@ -179,7 +179,7 @@ final class ShortcutManager {
     // MARK: - Notifications
 
     private func subscribeToAllWindowActions() {
-        print(#function, "called")
+        /// print print(#function, "called")
         for action in WindowAction.active {
             NotificationCenter.default.addObserver(
                 self,
@@ -191,12 +191,12 @@ final class ShortcutManager {
     }
 
     private func unsubscribeFromAllWindowActions() {
-        print(#function, "called")
+        /// print print(#function, "called")
         NotificationCenter.default.removeObserver(self)
     }
 
     @objc private func windowActionTriggered(notification: NSNotification) {
-        print(#function, "called")
+        /// print print(#function, "called")
         guard var parameters = notification.object as? ExecutionParameters else {
             return
         }
@@ -211,32 +211,73 @@ final class ShortcutManager {
     // MARK: - Cycle Monitor Logic
 
     private func adjustParametersForCycleMonitorIfNeeded(_ parameters: ExecutionParameters) -> ExecutionParameters {
-        print(#function, "called")
-        guard Defaults.subsequentExecutionMode.value == .cycleMonitor else {
-            return parameters
-        }
+        /// print print(#function, "called")
+        let mode = Defaults.subsequentExecutionMode.value
+        /// print print("[CycleMonitor] Mode: \(mode), Action: \(parameters.action)")
 
+        // Skip for size/display actions
         guard parameters.action.classification != .size,
               parameters.action.classification != .display else {
+            /// print print("[CycleMonitor] Skipping - action classification is size or display")
             return parameters
         }
 
         guard let windowElement = parameters.windowElement ?? AccessibilityElement.getFrontWindowElement(),
               let windowId = parameters.windowId ?? windowElement.getWindowId() else {
+            /// print print("[CycleMonitor] Failed to get window element or ID")
             NSSound.beep()
             return parameters
         }
 
-        guard isRepeatAction(parameters: parameters, windowElement: windowElement, windowId: windowId) else {
+        let isRepeat = isRepeatAction(parameters: parameters, windowElement: windowElement, windowId: windowId)
+        /// print print("[CycleMonitor] Is repeat action: \(isRepeat)")
+        guard isRepeat else {
             return parameters
         }
 
-        guard let nextScreen = ScreenDetection()
-            .detectScreens(using: windowElement)?
-            .adjacentScreens?
-            .next else {
+        // Determine if we should move to next monitor
+        let shouldMoveToNextMonitor: Bool
+        switch mode {
+        case .cycleMonitor:
+            // Always move on repeat
+            shouldMoveToNextMonitor = true
+            /// print print("[CycleMonitor] cycleMonitor mode - always move on repeat")
+        case .resize:
+            // Only move when the cycle would wrap back to start
+            let wouldWrap = SimpleCalculation.wouldCycleWrap(for: parameters.action)
+            /// print print("[CycleMonitor] resize mode - wouldCycleWrap: \(wouldWrap) (cycleGroup count: \(parameters.action.cycleGroup.count))")
+            shouldMoveToNextMonitor = wouldWrap
+        default:
+            /// print print("[CycleMonitor] Mode \(mode) not handled, returning unchanged")
             return parameters
         }
+
+        guard shouldMoveToNextMonitor else {
+            /// print print("[CycleMonitor] Not moving to next monitor (continuing cycle on current screen)")
+            return parameters
+        }
+
+        let screenDetection = ScreenDetection()
+        guard let usableScreens = screenDetection.detectScreens(using: windowElement) else {
+            /// print print("[CycleMonitor] Failed to detect screens")
+            return parameters
+        }
+
+        /// print print("[CycleMonitor] Current screen: \(usableScreens.currentScreen.localizedName)")
+        /// print print("[CycleMonitor] Number of screens: \(usableScreens.numScreens)")
+
+        if let adjacent = usableScreens.adjacentScreens {
+            /// print print("[CycleMonitor] Adjacent screens - next: \(adjacent.next.localizedName), prev: \(adjacent.prev.localizedName)")
+        } else {
+            /// print print("[CycleMonitor] No adjacent screens available (single monitor setup)")
+            return parameters
+        }
+
+        guard let nextScreen = usableScreens.adjacentScreens?.next else {
+            return parameters
+        }
+
+        /// print print("[CycleMonitor] Moving window to next screen: \(nextScreen.localizedName)")
 
         let updated = ExecutionParameters(
             parameters.action,
@@ -246,14 +287,17 @@ final class ShortcutManager {
             windowId: windowId
         )
 
+        // Reset cycle state so the action starts fresh on the new monitor
+        SimpleCalculation.resetCycleState()
         AppDelegate.windowHistory.lasttiny_window_managerActions.removeValue(forKey: windowId)
+        /// print print("[CycleMonitor] Cycle state reset, moving to \(nextScreen.localizedName)")
         return updated
     }
 
     private func isRepeatAction(parameters: ExecutionParameters,
                                 windowElement: AccessibilityElement,
                                 windowId: CGWindowID) -> Bool {
-        print(#function, "called")
+        /// print print(#function, "called")
 
         if parameters.action == .maximize {
             let screenSize = ScreenDetection()
