@@ -30,6 +30,7 @@ import Foundation
 
 /// Central manager for snap area configurations.
 /// This is a singleton - access via `SnapAreaModel.instance`.
+@MainActor
 class SnapAreaModel {
 
     /// The shared instance (singleton pattern)

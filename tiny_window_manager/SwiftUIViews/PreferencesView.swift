@@ -343,33 +343,272 @@ struct TilePreview: View {
     }
 }
 
-// MARK: - String Extension for Display Names
-
-extension String {
-    /// Converts camelCase to "Title Case Words"
-    /// Example: "topLeftSixth" -> "Top Left Sixth"
-    var camelCaseToWords: String {
-        let pattern = "([a-z])([A-Z])"
-        let regex = try? NSRegularExpression(pattern: pattern)
-        let range = NSRange(startIndex..., in: self)
-        let result = regex?.stringByReplacingMatches(in: self, range: range, withTemplate: "$1 $2") ?? self
-        return result.prefix(1).uppercased() + result.dropFirst()
-    }
-}
-
 // MARK: - Snap Areas View
 
 struct SnapAreasView: View {
+    @State private var windowSnapping: Bool = !(Defaults.windowSnapping.userDisabled)
+    @State private var unsnapRestore: Bool = !(Defaults.unsnapRestore.userDisabled)
+    @State private var animateFootprint: Bool = Defaults.footprintAnimationDurationMultiplier.value > 0
+    @State private var hapticFeedback: Bool = Defaults.hapticFeedbackOnSnap.userEnabled
+    @State private var missionControlDraggingDisabled: Bool = Defaults.missionControlDragging.userDisabled
+    @State private var showPortrait: Bool = NSScreen.portraitDisplayConnected
+
     var body: some View {
-        VStack {
-            Text("Snap Areas")
-                .font(.title2)
-                .foregroundColor(.secondary)
-            Text("Configure snap areas for window management")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                // General Settings Section
+                snapSettingsSection
+
+                Divider()
+
+                // Landscape Snap Areas
+                landscapeSection
+
+                // Portrait Snap Areas (conditional)
+                if showPortrait {
+                    Divider()
+                    portraitSection
+                }
+            }
+            .padding(30)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            refreshSettings()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didChangeScreenParametersNotification)) { _ in
+            showPortrait = NSScreen.portraitDisplayConnected
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .configImported)) { _ in
+            refreshSettings()
+        }
+    }
+
+    private func refreshSettings() {
+        windowSnapping = !(Defaults.windowSnapping.userDisabled)
+        unsnapRestore = !(Defaults.unsnapRestore.userDisabled)
+        animateFootprint = Defaults.footprintAnimationDurationMultiplier.value > 0
+        hapticFeedback = Defaults.hapticFeedbackOnSnap.userEnabled
+        missionControlDraggingDisabled = Defaults.missionControlDragging.userDisabled
+        showPortrait = NSScreen.portraitDisplayConnected
+    }
+
+    // MARK: - Settings Section
+
+    private var snapSettingsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Snap Settings")
+                .font(.headline)
+
+            Toggle("Enable window snapping", isOn: $windowSnapping)
+                .onChange(of: windowSnapping) { _, newValue in
+                    Defaults.windowSnapping.enabled = newValue
+                    Notification.Name.windowSnapping.post(object: newValue)
+                    if newValue {
+                        MacTilingDefaults.checkForBuiltInTiling(skipIfAlreadyNotified: false)
+                    }
+                }
+
+            Toggle("Restore window size when unsnapped", isOn: $unsnapRestore)
+                .onChange(of: unsnapRestore) { _, newValue in
+                    Defaults.unsnapRestore.enabled = newValue
+                }
+
+            Toggle("Animate snap preview", isOn: $animateFootprint)
+                .onChange(of: animateFootprint) { _, newValue in
+                    Defaults.footprintAnimationDurationMultiplier.value = newValue ? 0.75 : 0
+                }
+
+            Toggle("Haptic feedback on snap", isOn: $hapticFeedback)
+                .onChange(of: hapticFeedback) { _, newValue in
+                    Defaults.hapticFeedbackOnSnap.enabled = newValue
+                }
+
+            if missionControlDraggingDisabled {
+                Toggle("Disable Mission Control dragging", isOn: $missionControlDraggingDisabled)
+                    .onChange(of: missionControlDraggingDisabled) { _, newValue in
+                        Defaults.missionControlDragging.enabled = !newValue
+                        Notification.Name.missionControlDragging.post(object: !newValue)
+                    }
+            }
+        }
+    }
+
+    // MARK: - Landscape Section
+
+    private var landscapeSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Landscape Snap Areas")
+                .font(.headline)
+
+            SnapAreaGrid(orientation: .landscape)
+        }
+    }
+
+    // MARK: - Portrait Section
+
+    private var portraitSection: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Portrait Snap Areas")
+                .font(.headline)
+
+            SnapAreaGrid(orientation: .portrait)
+        }
+    }
+}
+
+// MARK: - Snap Area Grid
+
+struct SnapAreaGrid: View {
+    let orientation: DisplayOrientation
+
+    var body: some View {
+        VStack(spacing: 8) {
+            // Top row: TL, T, TR
+            HStack(spacing: 8) {
+                SnapAreaDropdown(directional: .tl, orientation: orientation)
+                SnapAreaDropdown(directional: .t, orientation: orientation)
+                SnapAreaDropdown(directional: .tr, orientation: orientation)
+            }
+
+            // Middle row: L, (screen preview), R
+            HStack(spacing: 8) {
+                SnapAreaDropdown(directional: .l, orientation: orientation)
+
+                // Screen preview
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.gray.opacity(0.2))
+                    .frame(height: 60)
+                    .overlay(
+                        Text(orientation == .landscape ? "⬜" : "▯")
+                            .font(.title)
+                            .foregroundColor(.secondary)
+                    )
+
+                SnapAreaDropdown(directional: .r, orientation: orientation)
+            }
+
+            // Bottom row: BL, B, BR
+            HStack(spacing: 8) {
+                SnapAreaDropdown(directional: .bl, orientation: orientation)
+                SnapAreaDropdown(directional: .b, orientation: orientation)
+                SnapAreaDropdown(directional: .br, orientation: orientation)
+            }
+        }
+    }
+}
+
+// MARK: - Snap Area Dropdown
+
+struct SnapAreaDropdown: View {
+    let directional: Directional
+    let orientation: DisplayOrientation
+
+    @State private var selectedTag: Int = -1
+
+    private var currentConfig: SnapAreaConfig? {
+        switch orientation {
+        case .landscape:
+            return SnapAreaModel.instance.landscape[directional]
+        case .portrait:
+            return SnapAreaModel.instance.portrait[directional]
+        }
+    }
+
+    var body: some View {
+        Menu {
+            // No action option
+            Button("-") {
+                selectedTag = -1
+                saveSelection(tag: -1)
+            }
+
+            Divider()
+
+            // Compound snap areas
+            ForEach(compatibleCompoundAreas, id: \.rawValue) { compound in
+                Button(compound.displayName) {
+                    selectedTag = compound.rawValue
+                    saveSelection(tag: compound.rawValue)
+                }
+            }
+
+            if !compatibleCompoundAreas.isEmpty {
+                Divider()
+            }
+
+            // Window actions
+            ForEach(dragSnappableActions, id: \.rawValue) { action in
+                Button {
+                    selectedTag = action.rawValue
+                    saveSelection(tag: action.rawValue)
+                } label: {
+                    if let displayName = action.displayName {
+                        Label(displayName, image: "")
+                    }
+                }
+            }
+        } label: {
+            Text(currentSelectionTitle)
+                .font(.system(size: 11))
+                .lineLimit(1)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+                .background(Color(nsColor: .controlBackgroundColor))
+                .cornerRadius(6)
+        }
+        .menuStyle(.borderlessButton)
+        .frame(minWidth: 140)
+        .onAppear {
+            loadCurrentSelection()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .configImported)) { _ in
+            loadCurrentSelection()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .defaultSnapAreas)) { _ in
+            loadCurrentSelection()
+        }
+    }
+
+    private var currentSelectionTitle: String {
+        if selectedTag < -1, let compound = CompoundSnapArea(rawValue: selectedTag) {
+            return compound.displayName
+        } else if selectedTag > -1, let action = WindowAction(rawValue: selectedTag) {
+            return action.displayName ?? action.name.camelCaseToWords
+        }
+        return "-"
+    }
+
+    private var compatibleCompoundAreas: [CompoundSnapArea] {
+        CompoundSnapArea.all.filter { compound in
+            compound.compatibleOrientation.contains(orientation) &&
+            compound.compatibleDirectionals.contains(directional)
+        }
+    }
+
+    private var dragSnappableActions: [WindowAction] {
+        WindowAction.active.filter { $0.isDragSnappable && $0.displayName != nil }
+    }
+
+    private func loadCurrentSelection() {
+        selectedTag = currentConfig?.action?.rawValue ?? currentConfig?.compound?.rawValue ?? -1
+    }
+
+    private func saveSelection(tag: Int) {
+        let config: SnapAreaConfig?
+        if tag < -1, let compound = CompoundSnapArea(rawValue: tag) {
+            config = SnapAreaConfig(compound: compound)
+        } else if tag > -1, let action = WindowAction(rawValue: tag) {
+            config = SnapAreaConfig(action: action)
+        } else {
+            config = nil
+        }
+
+        SnapAreaModel.instance.setConfig(
+            type: orientation,
+            directional: directional,
+            snapAreaConfig: config
+        )
     }
 }
 

@@ -2,60 +2,16 @@
 //  Defaults.swift
 //  tiny_window_manager
 //
-//  This file manages all user preferences (settings) for the application.
-//
-//  WHAT IS THIS FILE FOR?
-//  ----------------------
-//  Apps need to remember user settings between launches. macOS provides "UserDefaults"
-//  for this - a simple key-value store that persists data to disk automatically.
-//
-//  This file wraps UserDefaults with type-safe Swift classes, so instead of writing:
-//      UserDefaults.standard.bool(forKey: "launchOnLogin")
-//  We can write:
-//      Defaults.launchOnLogin.enabled
-//
-//  WHY USE WRAPPER CLASSES?
-//  ------------------------
-//  1. Type Safety: Each setting has a specific type (Bool, Float, String, etc.)
-//  2. Auto-Save: When you change a value, it automatically saves to UserDefaults
-//  3. Import/Export: Settings can be exported to JSON and imported from JSON
-//  4. Defaults: Some settings have default values if the user hasn't set them
-//
-//  HOW IT WORKS:
-//  -------------
-//  1. Each setting is a static property on the `Defaults` class
-//  2. Each property is an instance of a wrapper class (BoolDefault, FloatDefault, etc.)
-//  3. When you read/write the wrapper's value, it reads/writes UserDefaults
-//  4. The `Default` protocol enables import/export functionality
-//
-//  WRAPPER CLASS TYPES:
-//  --------------------
-//  - BoolDefault:         For true/false settings
-//  - OptionalBoolDefault: For true/false/unset (tri-state) settings
-//  - StringDefault:       For text settings
-//  - FloatDefault:        For decimal number settings
-//  - IntDefault:          For whole number settings
-//  - IntEnumDefault:      For enum settings stored as integers
-//  - JSONDefault:         For complex objects stored as JSON strings
+//  Type-safe wrappers for UserDefaults with auto-save and import/export support.
 //
 
 import Cocoa
+import SwiftUI
 import WindowManagerCore
 
-// MARK: - Main Defaults Class
+// MARK: - Defaults
 
-/// Central registry of all user preferences in the application.
-///
-/// Access settings like this:
-/// ```swift
-/// // Reading a boolean setting
-/// if Defaults.launchOnLogin.enabled {
-///     // do something
-/// }
-///
-/// // Writing a setting (automatically saved)
-/// Defaults.gapSize.value = 10.0
-/// ```
+/// Central registry of all user preferences. Access via `Defaults.settingName`.
 class Defaults {
 
     // MARK: - General App Settings
@@ -445,10 +401,7 @@ class Defaults {
 
 // MARK: - Import/Export Support
 
-/// A simple container for serializing any default value type.
-/// Used when exporting settings to JSON or importing from JSON.
-///
-/// Only one of the properties will be non-nil, depending on the setting type.
+/// Container for serializing default values to JSON.
 struct CodableDefault: Codable {
     let bool: Bool?
     let int: Int?
@@ -463,164 +416,70 @@ struct CodableDefault: Codable {
     }
 }
 
-// MARK: - Default Protocol
-
-/// Protocol that all setting wrapper classes must implement.
-///
-/// This enables:
-/// 1. Iterating over all settings (via Defaults.array)
-/// 2. Exporting settings to JSON (via toCodable)
-/// 3. Importing settings from JSON (via load)
+/// Protocol for settings import/export.
 protocol Default {
-    /// The UserDefaults key where this setting is stored.
     var key: String { get }
-
-    /// Load a value from an imported CodableDefault.
     func load(from codable: CodableDefault)
-
-    /// Convert the current value to a CodableDefault for export.
     func toCodable() -> CodableDefault
 }
 
-// MARK: - Boolean Setting
+// MARK: - Wrapper Classes
 
-/// Wrapper for a simple true/false setting.
-///
-/// Example usage:
-/// ```swift
-/// static let launchOnLogin = BoolDefault(key: "launchOnLogin")
-///
-/// // Reading
-/// if Defaults.launchOnLogin.enabled { ... }
-///
-/// // Writing (automatically saves to UserDefaults)
-/// Defaults.launchOnLogin.enabled = true
-/// ```
+/// Boolean setting wrapper.
 class BoolDefault: Default {
-
-    /// The UserDefaults key.
     public private(set) var key: String
-
-    /// Flag to prevent saving during initialization.
-    /// Without this, setting the initial value would trigger an unnecessary save.
     private var initialized = false
 
-    /// The current value. Setting this automatically saves to UserDefaults.
     var enabled: Bool {
-        didSet {
-            if initialized {
-                UserDefaults.standard.set(enabled, forKey: key)
-            }
-        }
+        didSet { if initialized { UserDefaults.standard.set(enabled, forKey: key) } }
     }
 
-    /// Creates a BoolDefault, loading any existing value from UserDefaults.
     init(key: String) {
         self.key = key
         enabled = UserDefaults.standard.bool(forKey: key)
         initialized = true
     }
 
-    func load(from codable: CodableDefault) {
-        if let value = codable.bool {
-            self.enabled = value
-        }
-    }
-
-    func toCodable() -> CodableDefault {
-        return CodableDefault(bool: enabled)
-    }
+    func load(from codable: CodableDefault) { if let v = codable.bool { enabled = v } }
+    func toCodable() -> CodableDefault { CodableDefault(bool: enabled) }
 }
 
-// MARK: - Optional Boolean Setting (Tri-State)
-
-/// Wrapper for a true/false/unset setting.
-///
-/// This is useful when you need to distinguish between:
-/// - User explicitly enabled (true)
-/// - User explicitly disabled (false)
-/// - User hasn't set it yet (nil) - app uses its own default behavior
-///
-/// STORAGE FORMAT:
-/// Since UserDefaults doesn't support Optional<Bool>, we store as Int:
-/// - 0 = nil (not set)
-/// - 1 = true
-/// - 2 = false
+/// Optional boolean (tri-state: true/false/nil) wrapper. Stored as Int: 0=nil, 1=true, 2=false.
 class OptionalBoolDefault: Default {
-
     public private(set) var key: String
     private var initialized = false
 
-    /// The current value. nil means the user hasn't explicitly set this.
     var enabled: Bool? {
         didSet {
-            if initialized {
-                // Convert Bool? to Int for storage
-                if enabled == true {
-                    UserDefaults.standard.set(1, forKey: key)
-                } else if enabled == false {
-                    UserDefaults.standard.set(2, forKey: key)
-                } else {
-                    UserDefaults.standard.set(0, forKey: key)
-                }
-            }
+            guard initialized else { return }
+            UserDefaults.standard.set(enabled == true ? 1 : (enabled == false ? 2 : 0), forKey: key)
         }
     }
 
-    /// Convenience: true if user explicitly disabled this setting.
     var userDisabled: Bool { enabled == false }
-
-    /// Convenience: true if user explicitly enabled this setting.
     var userEnabled: Bool { enabled == true }
-
-    /// Convenience: true if user hasn't set this setting.
     var notSet: Bool { enabled == nil }
 
     init(key: String) {
         self.key = key
-        let intValue = UserDefaults.standard.integer(forKey: key)
-        set(using: intValue)
+        let v = UserDefaults.standard.integer(forKey: key)
+        enabled = v == 1 ? true : (v == 2 ? false : nil)
         initialized = true
     }
 
-    /// Convert stored Int back to Bool?.
-    private func set(using intValue: Int) {
-        switch intValue {
-        case 0: enabled = nil
-        case 1: enabled = true
-        case 2: enabled = false
-        default: break
-        }
-    }
-
     func load(from codable: CodableDefault) {
-        if let value = codable.int {
-            set(using: value)
-        }
+        if let v = codable.int { enabled = v == 1 ? true : (v == 2 ? false : nil) }
     }
-
-    func toCodable() -> CodableDefault {
-        guard let enabled = enabled else { return CodableDefault(int: 0) }
-        let intValue = enabled ? 1 : 2
-        return CodableDefault(int: intValue)
-    }
+    func toCodable() -> CodableDefault { CodableDefault(int: enabled == true ? 1 : (enabled == false ? 2 : 0)) }
 }
 
-// MARK: - String Setting
-
-/// Wrapper for a text string setting.
+/// String setting wrapper.
 class StringDefault: Default {
-
     public private(set) var key: String
     private var initialized = false
 
-    /// The current value. nil if not set.
     var value: String? {
-        didSet {
-            if initialized {
-                UserDefaults.standard.set(value, forKey: key)
-            }
-        }
+        didSet { if initialized { UserDefaults.standard.set(value, forKey: key) } }
     }
 
     init(key: String) {
@@ -629,130 +488,57 @@ class StringDefault: Default {
         initialized = true
     }
 
-    func load(from codable: CodableDefault) {
-        value = codable.string
-    }
-
-    func toCodable() -> CodableDefault {
-        return CodableDefault(string: value)
-    }
+    func load(from codable: CodableDefault) { value = codable.string }
+    func toCodable() -> CodableDefault { CodableDefault(string: value) }
 }
 
-// MARK: - Float Setting
-
-/// Wrapper for a decimal number (Float) setting.
+/// Float setting wrapper.
 class FloatDefault: Default {
-
     public private(set) var key: String
     private var initialized = false
 
-    /// The current value.
     var value: Float {
-        didSet {
-            if initialized {
-                UserDefaults.standard.set(value, forKey: key)
-            }
-        }
+        didSet { if initialized { UserDefaults.standard.set(value, forKey: key) } }
     }
 
-    /// Convenience: get value as CGFloat for use with Core Graphics.
     var cgFloat: CGFloat { CGFloat(value) }
 
-    /// Creates a FloatDefault with an optional default value.
-    /// The defaultValue is used if UserDefaults returns 0 (meaning not set).
     init(key: String, defaultValue: Float = 0) {
         self.key = key
         value = UserDefaults.standard.float(forKey: key)
-
-        // If value is 0 and we have a non-zero default, use the default
-        // (UserDefaults returns 0 for unset float keys)
-        if defaultValue != 0 && value == 0 {
-            value = defaultValue
-        }
+        if defaultValue != 0 && value == 0 { value = defaultValue }
         initialized = true
     }
 
-    func load(from codable: CodableDefault) {
-        if let float = codable.float {
-            value = float
-        }
-    }
-
-    func toCodable() -> CodableDefault {
-        return CodableDefault(float: value)
-    }
+    func load(from codable: CodableDefault) { if let v = codable.float { value = v } }
+    func toCodable() -> CodableDefault { CodableDefault(float: value) }
 }
 
-// MARK: - Integer Setting
-
-/// Wrapper for a whole number (Int) setting.
+/// Integer setting wrapper.
 class IntDefault: Default {
-
     public private(set) var key: String
     private var initialized = false
 
-    /// The current value.
     var value: Int {
-        didSet {
-            if initialized {
-                UserDefaults.standard.set(value, forKey: key)
-            }
-        }
+        didSet { if initialized { UserDefaults.standard.set(value, forKey: key) } }
     }
 
-    /// Creates an IntDefault with an optional default value.
     init(key: String, defaultValue: Int = 0) {
         self.key = key
         value = UserDefaults.standard.integer(forKey: key)
-
-        // If value is 0 and we have a non-zero default, use the default
-        if defaultValue != 0 && value == 0 {
-            value = defaultValue
-        }
+        if defaultValue != 0 && value == 0 { value = defaultValue }
         initialized = true
     }
 
-    func load(from codable: CodableDefault) {
-        if let int = codable.int {
-            value = int
-        }
-    }
-
-    func toCodable() -> CodableDefault {
-        return CodableDefault(int: value)
-    }
+    func load(from codable: CodableDefault) { if let v = codable.int { value = v } }
+    func toCodable() -> CodableDefault { CodableDefault(int: value) }
 }
 
-// MARK: - JSON Setting (Complex Objects)
-
-/// Wrapper for complex objects stored as JSON strings.
-///
-/// This allows storing arrays, dictionaries, or custom Codable types in UserDefaults.
-/// The object is serialized to JSON for storage and deserialized when read.
-///
-/// Example:
-/// ```swift
-/// static let ignoredApps = JSONDefault<[String]>(key: "ignoredApps")
-///
-/// // Reading
-/// if let apps = Defaults.ignoredApps.typedValue {
-///     // print(apps) // ["com.apple.finder", "com.apple.safari"]
-/// }
-///
-/// // Writing
-/// Defaults.ignoredApps.typedValue = ["com.apple.finder"]
-/// ```
+/// JSON-encoded complex object wrapper.
 class JSONDefault<T: Codable>: StringDefault {
-
     private var typeInitialized = false
-
-    /// The deserialized typed value.
     var typedValue: T? {
-        didSet {
-            if typeInitialized {
-                saveToJSON(typedValue)
-            }
-        }
+        didSet { if typeInitialized { saveToJSON(typedValue) } }
     }
 
     override init(key: String) {
@@ -761,16 +547,12 @@ class JSONDefault<T: Codable>: StringDefault {
         typeInitialized = true
     }
 
-    /// Creates a JSONDefault with a default value if nothing is stored.
     init(key: String, defaultValue: T) {
-        if typedValue == nil {
-            typedValue = defaultValue
-        }
+        if typedValue == nil { typedValue = defaultValue }
         super.init(key: key)
     }
 
     override func load(from codable: CodableDefault) {
-        // Only reload if the JSON string actually changed
         if value != codable.string {
             value = codable.string
             typeInitialized = false
@@ -779,27 +561,57 @@ class JSONDefault<T: Codable>: StringDefault {
         }
     }
 
-    /// Decode the JSON string into the typed value.
     private func loadFromJSON() {
-        guard let jsonString = value else { return }
-        guard let jsonData = jsonString.data(using: .utf8) else { return }
-
-        let decoder = JSONDecoder()
-        typedValue = try? decoder.decode(T.self, from: jsonData)
+        guard let json = value, let data = json.data(using: .utf8) else { return }
+        typedValue = try? JSONDecoder().decode(T.self, from: data)
     }
 
-    /// Encode the typed value to a JSON string and save it.
     private func saveToJSON(_ obj: T?) {
-        let encoder = JSONEncoder()
-
-        if let jsonData = try? encoder.encode(obj) {
-            let jsonString = String(data: jsonData, encoding: .utf8)
-            // Only update if changed (avoids unnecessary disk writes)
-            if jsonString != value {
-                value = jsonString
-            }
+        if let data = try? JSONEncoder().encode(obj), let json = String(data: data, encoding: .utf8), json != value {
+            value = json
         }
     }
+}
+
+/// CycleSize set wrapper (stored as bitmask).
+class CycleSizesDefault: Default {
+    public private(set) var key: String = "selectedCycleSizes"
+    private var initialized = false
+
+    var value: Set<CycleSize> {
+        didSet { if initialized { UserDefaults.standard.set(value.toBits(), forKey: key) } }
+    }
+
+    init() {
+        value = CycleSize.fromBits(bits: UserDefaults.standard.integer(forKey: key))
+        initialized = true
+    }
+
+    func load(from codable: CodableDefault) { if let bits = codable.int { value = CycleSize.fromBits(bits: bits) } }
+    func toCodable() -> CodableDefault { CodableDefault(int: value.toBits()) }
+}
+
+/// SubsequentExecutionMode wrapper.
+class SubsequentExecutionDefault: Default {
+    public private(set) var key: String = "subsequentExecutionMode"
+    private var initialized = false
+
+    var value: SubsequentExecutionMode {
+        didSet { if initialized { UserDefaults.standard.set(value.rawValue, forKey: key) } }
+    }
+
+    init() {
+        value = SubsequentExecutionMode(rawValue: UserDefaults.standard.integer(forKey: key)) ?? .resize
+        initialized = true
+    }
+
+    var resizes: Bool { value == .resize || value == .acrossAndResize }
+    var traversesDisplays: Bool { value == .acrossMonitor || value == .acrossAndResize }
+
+    func load(from codable: CodableDefault) {
+        if let v = codable.int, let mode = SubsequentExecutionMode(rawValue: v) { value = mode }
+    }
+    func toCodable() -> CodableDefault { CodableDefault(int: value.rawValue) }
 }
 
 // MARK: - Enum Setting (Integer-Based)
@@ -874,9 +686,14 @@ struct CodableColor: Codable {
     var blue: CGFloat = 0.0
     var alpha: CGFloat? = 1.0
 
-    /// Convert back to NSColor for use in the UI.
+    /// Convert back to NSColor for use in AppKit.
     var nsColor: NSColor {
         return NSColor(red: red, green: green, blue: blue, alpha: alpha ?? 1.0)
+    }
+
+    /// Convert to SwiftUI Color.
+    var color: Color {
+        return Color(red: red, green: green, blue: blue, opacity: alpha ?? 1.0)
     }
 
     /// Create from an NSColor.
@@ -925,4 +742,57 @@ struct DefaultsAdapter: SettingsProtocol {
 extension Defaults {
     /// Shared settings adapter for use with WindowManagerCore calculators.
     static let settings: SettingsProtocol = DefaultsAdapter()
+}
+
+// MARK: - Observable Settings for SwiftUI
+
+/// Observable settings wrapper for SwiftUI views.
+@Observable @MainActor
+final class ObservableSettings {
+    static let shared = ObservableSettings()
+
+    private init() {
+        NotificationCenter.default.addObserver(forName: .configImported, object: nil, queue: .main) { [weak self] _ in
+            self?.refreshAll()
+        }
+    }
+
+    var launchOnLogin: Bool {
+        get { Defaults.launchOnLogin.enabled }
+        set { Defaults.launchOnLogin.enabled = newValue }
+    }
+    var hideMenuBarIcon: Bool {
+        get { Defaults.hideMenuBarIcon.enabled }
+        set { Defaults.hideMenuBarIcon.enabled = newValue }
+    }
+    var allowAnyShortcut: Bool {
+        get { Defaults.allowAnyShortcut.enabled }
+        set { Defaults.allowAnyShortcut.enabled = newValue }
+    }
+    var gapSize: Float {
+        get { Defaults.gapSize.value }
+        set { Defaults.gapSize.value = newValue }
+    }
+    var windowSnappingEnabled: Bool {
+        get { Defaults.windowSnapping.enabled ?? true }
+        set { Defaults.windowSnapping.enabled = newValue }
+    }
+    var applyGapsToMaximize: Bool {
+        get { Defaults.applyGapsToMaximize.enabled ?? true }
+        set { Defaults.applyGapsToMaximize.enabled = newValue }
+    }
+    var todoEnabled: Bool {
+        get { Defaults.todo.userEnabled }
+        set { Defaults.todo.enabled = newValue }
+    }
+    var todoModeActive: Bool {
+        get { Defaults.todoMode.enabled }
+        set { Defaults.todoMode.enabled = newValue }
+    }
+    var todoSidebarWidth: Float {
+        get { Defaults.todoSidebarWidth.value }
+        set { Defaults.todoSidebarWidth.value = newValue }
+    }
+
+    func refreshAll() {}
 }

@@ -6,6 +6,7 @@ import Foundation
 
 /// Strategy pattern for moving/resizing windows. Movers run in sequence,
 /// each potentially adjusting the window position.
+@MainActor
 protocol WindowMover {
     func moveWindowRect(
         _ windowRect: CGRect,
@@ -19,6 +20,7 @@ protocol WindowMover {
 // MARK: - StandardWindowMover
 
 /// Basic mover that directly applies the requested frame.
+@MainActor
 class StandardWindowMover: WindowMover {
     func moveWindowRect(
         _ windowRect: CGRect,
@@ -37,6 +39,7 @@ class StandardWindowMover: WindowMover {
 // MARK: - BestEffortWindowMover
 
 /// Shifts windows back on-screen if they overflow due to minimum size constraints.
+@MainActor
 class BestEffortWindowMover: WindowMover {
     func moveWindowRect(
         _ windowRect: CGRect,
@@ -83,6 +86,7 @@ class BestEffortWindowMover: WindowMover {
 // MARK: - CenteringFixedSizedWindowMover
 
 /// Centers fixed-size windows (that can't resize) within the target area.
+@MainActor
 class CenteringFixedSizedWindowMover: WindowMover {
     func moveWindowRect(
         _ windowRect: CGRect,

@@ -56,6 +56,7 @@ import Cocoa
 /// - Which screen a window is on
 /// - Which screens are adjacent for "next/previous display" actions
 /// - The proper order of screens for navigation
+@MainActor
 class ScreenDetection {
 
     // MARK: - Main Detection Methods
@@ -358,6 +359,7 @@ struct AdjacentScreens {
 
 // MARK: - NSScreen Extension
 
+@MainActor
 extension NSScreen {
 
     /// Returns the visible frame adjusted for Stage Manager, Todo sidebar, and screen edge gaps.

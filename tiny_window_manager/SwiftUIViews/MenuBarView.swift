@@ -15,9 +15,14 @@ import WindowManagerCore
 
 /// Observable state for the menu bar, shared between SwiftUI and AppKit components.
 /// Uses the modern @Observable macro for automatic change tracking without @Published.
+///
+/// Access via AppServices:
+/// - SwiftUI: `@Environment(AppServices.self) var services`
+/// - AppKit: `AppServices.shared.menuBarState`
 @Observable @MainActor
 final class MenuBarState {
-    static let shared = MenuBarState()
+    /// Legacy accessor - use AppServices.shared.menuBarState instead for new code.
+    static var shared: MenuBarState { AppServices.shared.menuBarState }
 
     var isAccessibilityAuthorized = false
     var isMenuBarVisible = true
@@ -33,7 +38,7 @@ final class MenuBarState {
     var todoAppIsActive = false
     var isTodoWindowFront = false
 
-    private init() {
+    init() {
         // Initialize with safe defaults only - don't call refresh() here
         // because ApplicationToggle and other objects may not exist yet.
         // The menu's onAppear will call refresh() when actually shown.

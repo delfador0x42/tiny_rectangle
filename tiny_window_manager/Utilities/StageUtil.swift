@@ -19,6 +19,7 @@ enum StageStripPosition {
 // MARK: - Stage Utility
 
 /// Provides utilities for detecting and interacting with macOS Stage Manager
+@MainActor
 class StageUtil {
 
     // MARK: - User Defaults Access

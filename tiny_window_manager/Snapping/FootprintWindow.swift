@@ -12,9 +12,39 @@
 //  - Optionally fades in/out smoothly instead of appearing instantly
 //  - Works around macOS Stage Manager quirks
 //
+//  The content is now rendered using SwiftUI (FootprintView) for modern styling.
+//
 
 import Cocoa
+import SwiftUI
 
+// MARK: - SwiftUI Footprint View
+
+/// SwiftUI view for the snap preview footprint.
+/// This provides a modern, declarative way to style the footprint overlay.
+struct FootprintView: View {
+    /// The fill color for the footprint.
+    var fillColor: Color
+
+    /// The border width for the footprint.
+    var borderWidth: CGFloat
+
+    /// Corner radius calculated for current macOS version.
+    var cornerRadius: CGFloat
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: cornerRadius)
+            .fill(fillColor)
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(Color.gray.opacity(0.5), lineWidth: borderWidth)
+            )
+    }
+}
+
+// MARK: - FootprintWindow (NSWindow subclass)
+
+@MainActor
 class FootprintWindow: NSWindow {
 
     // MARK: - Properties
@@ -72,17 +102,22 @@ class FootprintWindow: NSWindow {
         standardWindowButton(.toolbarButton)?.isHidden = true
     }
 
-    /// Creates the rounded rectangle view that shows the snap preview
+    /// Creates the SwiftUI-based footprint view
     private func createFootprintView() {
-        let boxView = NSBox()
-        boxView.boxType = .custom
-        boxView.borderColor = .lightGray
-        boxView.borderWidth = CGFloat(Defaults.footprintBorderWidth.value)
-        boxView.cornerRadius = cornerRadiusForCurrentOS()
-        boxView.wantsLayer = true
-        boxView.fillColor = Defaults.footprintColor.typedValue?.nsColor ?? NSColor.black
+        let fillColor = Defaults.footprintColor.typedValue?.color ?? Color.black
+        let borderWidth = CGFloat(Defaults.footprintBorderWidth.value)
+        let cornerRadius = cornerRadiusForCurrentOS()
 
-        contentView = boxView
+        let footprintView = FootprintView(
+            fillColor: fillColor,
+            borderWidth: borderWidth,
+            cornerRadius: cornerRadius
+        )
+
+        // Host the SwiftUI view in the window
+        let hostingView = NSHostingView(rootView: footprintView)
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        contentView = hostingView
     }
 
     /// Returns the appropriate corner radius based on macOS version.

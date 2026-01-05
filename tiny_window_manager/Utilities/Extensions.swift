@@ -405,10 +405,53 @@ extension NSImage {
 }
 
 // ============================================================================
-// MARK: - Alert Utilities
+// MARK: - SwiftUI Alert State
 // ============================================================================
 
-/// Utility functions for displaying alert dialogs.
+/// Observable state for displaying alerts in SwiftUI views.
+///
+/// Usage in SwiftUI:
+/// ```swift
+/// @Environment(AlertState.self) var alertState
+///
+/// .alert(alertState.title, isPresented: alertState.isPresented) {
+///     Button("OK") { alertState.dismiss() }
+/// } message: {
+///     Text(alertState.message)
+/// }
+/// ```
+///
+/// Triggering from anywhere:
+/// ```swift
+/// AlertState.shared.show(title: "Error", message: "Something went wrong")
+/// ```
+@Observable @MainActor
+final class AlertState {
+    static let shared = AlertState()
+
+    var title = ""
+    var message = ""
+    var isPresented = false
+
+    private init() {}
+
+    func show(title: String, message: String) {
+        self.title = title
+        self.message = message
+        self.isPresented = true
+    }
+
+    func dismiss() {
+        isPresented = false
+    }
+}
+
+// ============================================================================
+// MARK: - Alert Utilities (AppKit)
+// ============================================================================
+
+/// Utility functions for displaying alert dialogs in AppKit contexts.
+/// For SwiftUI contexts, use AlertState instead.
 enum AlertUtil {
 
     /// Shows a simple alert with one button (typically "OK").

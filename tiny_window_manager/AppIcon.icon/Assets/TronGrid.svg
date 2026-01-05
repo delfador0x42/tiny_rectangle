@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Tron glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowStrong" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="15" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Gradient for the window -->
+    <linearGradient id="windowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00FFFF;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#0080FF;stop-opacity:0.1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Grid lines - horizontal -->
+  <g stroke="#00FFFF" stroke-opacity="0.15" stroke-width="1">
+    <line x1="0" y1="128" x2="1024" y2="128"/>
+    <line x1="0" y1="256" x2="1024" y2="256"/>
+    <line x1="0" y1="384" x2="1024" y2="384"/>
+    <line x1="0" y1="512" x2="1024" y2="512"/>
+    <line x1="0" y1="640" x2="1024" y2="640"/>
+    <line x1="0" y1="768" x2="1024" y2="768"/>
+    <line x1="0" y1="896" x2="1024" y2="896"/>
+  </g>
+
+  <!-- Grid lines - vertical -->
+  <g stroke="#00FFFF" stroke-opacity="0.15" stroke-width="1">
+    <line x1="128" y1="0" x2="128" y2="1024"/>
+    <line x1="256" y1="0" x2="256" y2="1024"/>
+    <line x1="384" y1="0" x2="384" y2="1024"/>
+    <line x1="512" y1="0" x2="512" y2="1024"/>
+    <line x1="640" y1="0" x2="640" y2="1024"/>
+    <line x1="768" y1="0" x2="768" y2="1024"/>
+    <line x1="896" y1="0" x2="896" y2="1024"/>
+  </g>
+
+  <!-- Main window outline with glow -->
+  <g filter="url(#glowStrong)">
+    <rect x="200" y="280" width="624" height="464" rx="24" ry="24"
+          fill="url(#windowGrad)" stroke="#00FFFF" stroke-width="4"/>
+  </g>
+
+  <!-- Title bar -->
+  <rect x="200" y="280" width="624" height="56" rx="24" ry="24"
+        fill="#00FFFF" fill-opacity="0.2"/>
+  <rect x="200" y="312" width="624" height="24"
+        fill="#0a0a1a"/>
+
+  <!-- Window control dots with glow -->
+  <g filter="url(#glow)">
+    <circle cx="248" cy="308" r="14" fill="#FF5F57"/>
+    <circle cx="296" cy="308" r="14" fill="#FFBD2E"/>
+    <circle cx="344" cy="308" r="14" fill="#28CA42"/>
+  </g>
+
+  <!-- Circuit traces -->
+  <g stroke="#00FFFF" stroke-width="2" fill="none" filter="url(#glow)">
+    <!-- Left trace -->
+    <path d="M100 512 L180 512 L180 400 L200 400"/>
+    <!-- Right trace -->
+    <path d="M924 512 L844 512 L844 600 L824 600"/>
+    <!-- Bottom trace -->
+    <path d="M512 850 L512 780 L400 780 L400 744"/>
+    <!-- Top trace -->
+    <path d="M512 174 L512 244 L600 244 L600 280"/>
+  </g>
+
+  <!-- Corner accents -->
+  <g stroke="#00FFFF" stroke-width="3" fill="none" filter="url(#glow)">
+    <path d="M160 320 L160 240 L240 240"/>
+    <path d="M864 320 L864 240 L784 240"/>
+    <path d="M160 704 L160 784 L240 784"/>
+    <path d="M864 704 L864 784 L784 784"/>
+  </g>
+</svg>

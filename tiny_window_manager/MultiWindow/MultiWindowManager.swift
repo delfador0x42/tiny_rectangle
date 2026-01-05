@@ -14,6 +14,7 @@ import Cocoa
 /// - **Reverse**: Reverses the order/positions of windows
 ///
 /// All operations work on the current screen where the frontmost window is located.
+@MainActor
 class MultiWindowManager {
 
     // MARK: - Public Methods

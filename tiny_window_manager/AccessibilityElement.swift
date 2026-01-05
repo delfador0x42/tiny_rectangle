@@ -48,6 +48,7 @@ import Foundation
 ///     window.setFrame(CGRect(x: 0, y: 0, width: 800, height: 600))
 /// }
 /// ```
+@MainActor
 class AccessibilityElement {
 
     // MARK: - Properties

@@ -15,57 +15,26 @@ import Cocoa
 // MARK: - Logger Class
 
 /// A simple static logger that displays messages in a floating window.
-///
-/// This is primarily used for debugging during development. The log window
-/// only accumulates messages while it's open - if closed, messages are discarded.
-///
-/// ## Example Usage:
-/// ```swift
-/// // Open the log window (usually from a menu item)
-/// Logger.showLogging(sender: nil)
-///
-/// // Log messages from anywhere in the app
-/// Logger.log("Window moved to left half")
-/// Logger.log("Keyboard shortcut triggered: Cmd+Opt+Left")
-/// ```
 class Logger {
 
-    // MARK: - Properties
-
     /// Whether the log window is currently open and accepting messages.
-    /// When false, calls to `log()` are ignored for performance.
     static var logging = false
 
     /// The window controller for the log viewer (created lazily when first opened)
     static private var logWindowController: LogWindowController?
 
-    // MARK: - Public Methods
-
     /// Opens the log viewer window and starts capturing log messages.
-    ///
-    /// - Parameter sender: The object that triggered this action (e.g., a menu item)
     static func showLogging(sender: Any?) {
-        // Create the window controller if this is the first time opening
         if logWindowController == nil {
-            logWindowController = LogWindowController.freshController()
+            logWindowController = LogWindowController()
         }
-
-        // Bring the app to the foreground and show the log window
         NSApp.activate(ignoringOtherApps: true)
         logWindowController?.showWindow(sender)
-
-        // Start accepting log messages
         logging = true
     }
 
     /// Adds a timestamped message to the log window.
-    ///
-    /// Messages are only displayed if the log window is open.
-    /// This is intentionally lightweight when logging is disabled.
-    ///
-    /// - Parameter string: The message to log
     static func log(_ string: String) {
-        // Early exit if logging is disabled (avoids unnecessary work)
         if logging {
             logWindowController?.append(string)
         }
@@ -75,179 +44,151 @@ class Logger {
 // MARK: - LogWindowController Class
 
 /// The window controller that manages the log viewer window.
-///
-/// This class:
-/// - Creates and manages the log window
-/// - Adds timestamps to log messages
-/// - Handles the "Clear" button
-/// - Cleans up when the window closes
 class LogWindowController: NSWindowController, NSWindowDelegate {
 
-    // MARK: - Actions
+    private let logViewController = LogViewController()
 
-    /// Called when the user clicks the "Clear" button.
-    /// Removes all text from the log view.
+    convenience init() {
+        // Create toolbar with clear button
+        let clearButton = NSButton(title: "Clear", target: nil, action: #selector(clearClicked(_:)))
+        clearButton.bezelStyle = .rounded
+
+        let toolbar = NSStackView(views: [NSView(), clearButton])
+        toolbar.orientation = .horizontal
+        toolbar.distribution = .fill
+        toolbar.edgeInsets = NSEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+
+        // Create main container with toolbar and log view
+        let container = NSStackView(views: [toolbar, NSView()])
+        container.orientation = .vertical
+        container.distribution = .fill
+        container.spacing = 0
+
+        // Create the window
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 600, height: 400),
+            styleMask: [.titled, .closable, .miniaturizable, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        window.title = "tiny_window_manager Log"
+        window.minSize = NSSize(width: 300, height: 200)
+        window.center()
+
+        self.init(window: window)
+
+        // Set up the view hierarchy
+        window.contentViewController = logViewController
+        window.delegate = self
+        clearButton.target = self
+    }
+
     @IBAction func clearClicked(_ sender: Any) {
-        (contentViewController as? LogViewController)?.clear()
+        logViewController.clear()
     }
 
-    // MARK: - Logging Methods
-
-    /// Appends a timestamped message to the log view.
-    ///
-    /// - Parameter string: The message to append (timestamp is added automatically)
     func append(_ string: String) {
-        // Create a timestamp for this log entry
-        let datestamp = createTimestamp()
-
-        // Format: "2024-01-15T10:30:45-08:00: Your message here\n"
+        let datestamp = ISO8601DateFormatter.string(
+            from: Date(),
+            timeZone: TimeZone.current,
+            formatOptions: .withInternetDateTime
+        )
         let formattedMessage = datestamp + ": " + string + "\n"
-
-        // Add to the text view
-        (contentViewController as? LogViewController)?.append(formattedMessage)
+        logViewController.append(formattedMessage)
     }
 
-    /// Creates an ISO 8601 formatted timestamp for the current time.
-    private func createTimestamp() -> String {
-        if #available(OSX 10.12, *) {
-            // Modern approach: ISO 8601 format (e.g., "2024-01-15T10:30:45-08:00")
-            return ISO8601DateFormatter.string(
-                from: Date(),
-                timeZone: TimeZone.current,
-                formatOptions: .withInternetDateTime
-            )
-        } else {
-            // Fallback for older macOS: Unix timestamp (e.g., "1705340045.123")
-            return String(NSDate().timeIntervalSince1970)
-        }
-    }
-
-    // MARK: - NSWindowDelegate
-
-    /// Called when the log window is about to close.
-    /// Disables logging and clears the log content.
     func windowWillClose(_ notification: Notification) {
         Logger.logging = false
-        clearClicked(self)  // Clear the log to free memory
-    }
-}
-
-// MARK: - LogWindowController Storyboard Instantiation
-
-extension LogWindowController {
-
-    /// Creates a new LogWindowController from the storyboard.
-    ///
-    /// This is the proper way to create this controller since it's
-    /// defined in a storyboard file (LogViewer.storyboard).
-    static func freshController() -> LogWindowController {
-        // Load from the LogViewer storyboard
-        let storyboard = NSStoryboard(name: "LogViewer", bundle: nil)
-        let identifier = "LogWindowController"
-
-        guard let windowController = storyboard.instantiateController(withIdentifier: identifier) as? LogWindowController else {
-            fatalError("Unable to find LogWindowController in LogViewer.storyboard")
-        }
-
-        // Set ourselves as the window delegate to receive windowWillClose
-        windowController.window?.delegate = windowController
-
-        return windowController
+        clearClicked(self)
     }
 }
 
 // MARK: - LogViewController Class
 
 /// The view controller that contains the scrolling text view for log messages.
-///
-/// This controller manages the actual text display, including:
-/// - Appending styled text
-/// - Auto-scrolling to new content (smart scroll)
-/// - Clearing the log
 class LogViewController: NSViewController {
 
-    // MARK: - Outlets
+    private var textView: NSTextView!
+    private let font = NSFont(name: "Monaco", size: 10) ?? NSFont.systemFont(ofSize: 10)
 
-    /// The text view that displays log messages (connected in storyboard)
-    @IBOutlet var textView: NSTextView!
+    private var textColorAttribute: [NSAttributedString.Key: Any] {
+        [.foregroundColor: NSColor.textColor, .font: font]
+    }
 
-    // MARK: - Text Styling
+    override func loadView() {
+        // Create text view
+        textView = KeyDownTextView()
+        textView.isEditable = false
+        textView.isRichText = false
+        textView.font = font
+        textView.backgroundColor = NSColor.textBackgroundColor
+        textView.autoresizingMask = [.width, .height]
 
-    /// The monospace font used for log messages
-    let font = NSFont(name: "Monaco", size: 10) ?? NSFont.systemFont(ofSize: 10)
+        // Wrap in scroll view
+        let scrollView = NSScrollView()
+        scrollView.documentView = textView
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = true
+        scrollView.autohidesScrollers = true
+        scrollView.borderType = .noBorder
 
-    /// Text attributes applied to all log messages.
-    /// Uses Monaco font (monospace) for easy reading of technical logs.
-    let textColorAttribute: [NSAttributedString.Key: Any] = [
-        .foregroundColor: NSColor.textColor,
-        .font: NSFont(name: "Monaco", size: 10) ?? NSFont.systemFont(ofSize: 10)
-    ]
+        // Create toolbar with clear button
+        let clearButton = NSButton(title: "Clear", target: nil, action: nil)
+        clearButton.bezelStyle = .rounded
+        clearButton.target = self
+        clearButton.action = #selector(clearButtonClicked)
 
-    // MARK: - Public Methods
+        let spacer = NSView()
+        spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-    /// Appends styled text to the log view.
-    ///
-    /// Includes "smart scroll" behavior: if the user is already scrolled to
-    /// the bottom, new content will auto-scroll into view. If they've scrolled
-    /// up to read older messages, new content won't interrupt them.
-    ///
-    /// - Parameter string: The text to append
+        let toolbar = NSStackView(views: [spacer, clearButton])
+        toolbar.orientation = .horizontal
+        toolbar.edgeInsets = NSEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+
+        // Main container
+        let container = NSStackView(views: [toolbar, scrollView])
+        container.orientation = .vertical
+        container.distribution = .fill
+        container.spacing = 0
+
+        // Configure scroll view to expand
+        scrollView.setContentHuggingPriority(.defaultLow, for: .vertical)
+
+        self.view = container
+    }
+
+    @objc private func clearButtonClicked() {
+        clear()
+    }
+
     func append(_ string: String) {
-        // Check if user is currently scrolled to the bottom
         let isScrolledToBottom = textView.visibleRect.maxY == textView.bounds.maxY
-
-        // Add the new text with styling
         let styledText = NSAttributedString(string: string, attributes: textColorAttribute)
         textView.textStorage?.append(styledText)
-
-        // Only auto-scroll if user was already at the bottom
         if isScrolledToBottom {
             textView.scrollToEndOfDocument(self)
         }
     }
 
-    /// Clears all text from the log view.
     func clear() {
         textView.string = ""
-    }
-
-    // MARK: - Lifecycle
-
-    override func viewDidLoad() {
-        // Make the text view read-only (users shouldn't edit log messages)
-        textView.isEditable = false
     }
 }
 
 // MARK: - KeyDownTextView Class
 
 /// A custom NSTextView subclass that handles keyboard shortcuts.
-///
-/// This allows the log window to respond to standard macOS shortcuts:
-/// - Cmd+W: Close the window
-/// - Cmd+H: Hide the window
 class KeyDownTextView: NSTextView {
 
-    /// Intercepts key presses to handle window management shortcuts.
     override func keyDown(with event: NSEvent) {
-        // Check if the Command key is held
         let isCommandPressed = event.modifierFlags.contains(.command)
-
         if isCommandPressed {
-            // Handle Command+key combinations
             switch event.charactersIgnoringModifiers {
-            case "w":
-                // Cmd+W: Close the window
-                self.window?.close()
-            case "h":
-                // Cmd+H: Hide the window (minimize to dock)
-                self.window?.orderOut(self)
-            default:
-                // Let other Cmd+key combinations pass through
-                super.keyDown(with: event)
+            case "w": window?.close()
+            case "h": window?.orderOut(self)
+            default: super.keyDown(with: event)
             }
         } else {
-            // Non-command keys: pass to default handler
             super.keyDown(with: event)
         }
     }

@@ -27,6 +27,7 @@ import os.log            // For system logging
 /// In macOS, the AppDelegate is the central coordinator for your app. It receives
 /// notifications about app lifecycle events (launch, quit, become active, etc.)
 /// and is responsible for setting up the app's core functionality.
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Static Properties (Shared Across the App)
@@ -34,8 +35,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Bundle ID used for the "launch at login" helper app
     static let launcherAppId = "com.wudan.tiny_window_manager"
 
-    /// Tracks window positions so users can "undo" window movements
-    static let windowHistory = WindowHistory()
+    /// Tracks window positions so users can "undo" window movements.
+    /// Access via AppServices.shared.windowHistory for new code.
+    static var windowHistory: WindowHistory { AppServices.shared.windowHistory }
 
     /// Sparkle framework controller for checking/installing app updates
     static let updaterController = SPUStandardUpdaterController(updaterDelegate: nil, userDriverDelegate: nil)
@@ -78,6 +80,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// 3. Check/request accessibility permissions
     /// 4. Register for notifications we care about
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // Ensure we stay in the background as a menu bar app (don't steal focus on launch)
+        NSApp.setActivationPolicy(.accessory)
+
         // Load any config file that was dropped in the support directory
         Defaults.loadFromSupportDir()
 

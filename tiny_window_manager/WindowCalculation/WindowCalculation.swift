@@ -17,6 +17,7 @@ typealias Dimension = WindowManagerCore.Dimension
 // ============================================================================
 
 /// A type that can calculate window rectangles for positioning.
+@MainActor
 protocol Calculation {
     func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult?
     func calculateRect(_ params: RectCalculationParameters) -> RectResult
@@ -27,6 +28,7 @@ protocol Calculation {
 // ============================================================================
 
 /// The base class for all window position calculations.
+@MainActor
 class WindowCalculation: Calculation {
 
     func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
@@ -74,6 +76,7 @@ struct Window {
     let rect: CGRect
 }
 
+@MainActor
 struct WindowCalculationParameters {
     let window: Window
     let usableScreens: UsableScreens
@@ -150,7 +153,8 @@ extension WindowAction {
 
 /// The main calculation class that handles most window actions.
 class SimpleCalculation: WindowCalculation {
-    static let shared = SimpleCalculation()
+    /// Legacy accessor - use AppServices.shared.simpleCalculation for new code.
+    static var shared: SimpleCalculation { AppServices.shared.simpleCalculation }
     private static var cycleState = WindowCycleState()
 
     /// Returns true if the next repeat of this action would wrap back to the start of the cycle.
@@ -225,7 +229,8 @@ struct WindowCycleState {
 
 /// Handles moving windows between multiple displays.
 class NextPrevDisplayCalculation: WindowCalculation {
-    static let shared = NextPrevDisplayCalculation()
+    /// Legacy accessor - use AppServices.shared.nextPrevDisplayCalculation for new code.
+    static var shared: NextPrevDisplayCalculation { AppServices.shared.nextPrevDisplayCalculation }
 
     override func calculate(_ params: WindowCalculationParameters) -> WindowCalculationResult? {
                 let usableScreens = params.usableScreens
@@ -299,7 +304,8 @@ class NextPrevDisplayCalculation: WindowCalculation {
 
 /// Calculates a window rectangle with a user-specified size, centered on the screen.
 final class SpecifiedCalculation: WindowCalculation {
-    static let shared = SpecifiedCalculation()
+    /// Legacy accessor - use AppServices.shared.specifiedCalculation for new code.
+    static var shared: SpecifiedCalculation { AppServices.shared.specifiedCalculation }
     private let specifiedHeight: CGFloat
     private let specifiedWidth: CGFloat
 

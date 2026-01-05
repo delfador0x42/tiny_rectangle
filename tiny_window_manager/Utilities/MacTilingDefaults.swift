@@ -31,6 +31,7 @@ import Foundation
 /// Each case corresponds to a specific setting in System Settings → Desktop & Dock → Windows.
 /// The raw value is the actual key name used in macOS's UserDefaults.
 ///
+@MainActor
 enum MacTilingDefaults: String {
 
     // MARK: - Cases

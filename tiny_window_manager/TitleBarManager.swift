@@ -26,6 +26,7 @@ import Foundation
 /// ## Requirements:
 /// - macOS's built-in title bar double-click action must be disabled
 /// - User must have configured a double-click action in settings
+@MainActor
 class TitleBarManager {
 
     // MARK: - Properties

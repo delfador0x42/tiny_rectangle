@@ -102,7 +102,7 @@ extension WindowAction {
 
     /// The icon image for this action (derived from case name with overrides).
     var image: NSImage {
-        let imageName = imageNameOverrides[self] ?? "\(name)Template"
+        let imageName = Self.imageNameOverrides[self] ?? "\(name)Template"
         return NSImage(imageLiteralResourceName: imageName)
     }
 
@@ -250,6 +250,7 @@ extension WindowAction {
     // MARK: - Window Calculation
 
     /// Returns the appropriate window calculation for this action.
+    @MainActor
     var calculation: WindowCalculation? {
         switch self {
         case .nextDisplay, .previousDisplay:
@@ -260,6 +261,16 @@ extension WindowAction {
             return nil
         default:
             return SimpleCalculation.shared
+        }
+    }
+
+    /// Whether this action can extend outside the current screen area (e.g., for multi-display moves).
+    var allowedToExtendOutsideCurrentScreenArea: Bool {
+        switch self {
+        case .nextDisplay, .previousDisplay:
+            return true
+        default:
+            return false
         }
     }
 }

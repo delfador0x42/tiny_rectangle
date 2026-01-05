@@ -40,6 +40,7 @@ struct SnapArea: Equatable {
 
 // MARK: - Snapping Manager
 
+@MainActor
 class SnappingManager {
 
     // MARK: - App Ignore List

@@ -86,13 +86,9 @@ class AccessibilityAuthorization {
 
     // MARK: - Private Methods
 
-    /// Creates and displays the authorization prompt window from the storyboard.
+    /// Creates and displays the authorization prompt window.
     private func showAuthorizationPrompt() {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
-        accessibilityWindowController = storyboard.instantiateController(
-            withIdentifier: "AccessibilityWindowController"
-        ) as? NSWindowController
-
+        accessibilityWindowController = AccessibilityAuthorizationWindowController()
         NSApp.activate(ignoringOtherApps: true)
         accessibilityWindowController?.showWindow(self)
     }

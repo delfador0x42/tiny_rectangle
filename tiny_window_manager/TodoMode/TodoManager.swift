@@ -30,6 +30,7 @@ import WindowManagerCore
 
 /// Manages the "Todo Mode" feature - a persistent sidebar for a designated todo app.
 /// This is a static-only class (all methods and properties are static).
+@MainActor
 class TodoManager {
 
     // MARK: - Window Tracking

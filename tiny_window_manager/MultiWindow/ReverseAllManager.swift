@@ -22,6 +22,7 @@ import Cocoa
 /// [C   ] [  B  ] [    A]
 /// ```
 /// Each window moves to its mirror position on the opposite side of the screen.
+@MainActor
 class ReverseAllManager {
 
     // MARK: - Public Methods

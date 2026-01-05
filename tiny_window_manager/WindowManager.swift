@@ -25,6 +25,7 @@ import WindowManagerCore
 // 5. Keep track of history for undo/restore functionality
 // ============================================================================
 
+@MainActor
 class WindowManager {
 
     // ------------------------------------------------------------------------

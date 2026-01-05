@@ -13,10 +13,16 @@ struct TinyWindowManagerApp: App {
     // Bridge to existing AppDelegate for core functionality
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    // Access shared menu state - uses @Bindable for bindings with @Observable
-    @Bindable private var menuState = MenuBarState.shared
+    // App services container for dependency injection
+    private let services = AppServices.shared
+
+    // Access menu state via services
+    @Bindable private var menuState: MenuBarState
 
     init() {
+        // Initialize menuState from services
+        self._menuState = Bindable(AppServices.shared.menuBarState)
+
         // Require macOS 15.0 or later
         if #unavailable(macOS 15.0) {
             let alert = NSAlert()
@@ -34,11 +40,13 @@ struct TinyWindowManagerApp: App {
         MenuBarExtra(isInserted: $menuState.isMenuBarVisible) {
             if menuState.isAccessibilityAuthorized {
                 MainMenuView()
+                    .environment(services)
                     .onAppear {
                         menuState.refresh()
                     }
             } else {
                 UnauthorizedMenuView()
+                    .environment(services)
             }
         } label: {
             Image("StatusTemplate")
@@ -49,6 +57,7 @@ struct TinyWindowManagerApp: App {
         // Settings window (Preferences)
         Settings {
             PreferencesView()
+                .environment(services)
         }
     }
 }

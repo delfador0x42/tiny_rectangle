@@ -20,6 +20,7 @@ extension KeyboardShortcuts.Name {
 
 // MARK: - ShortcutManager
 
+@MainActor
 final class ShortcutManager {
 
     private let windowManager: WindowManager
@@ -181,7 +182,7 @@ final class ShortcutManager {
         }
     }
 
-    private func unsubscribeFromAllWindowActions() {
+    nonisolated private func unsubscribeFromAllWindowActions() {
         NotificationCenter.default.removeObserver(self)
     }
 

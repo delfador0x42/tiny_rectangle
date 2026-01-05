@@ -56,6 +56,7 @@ import Cocoa
 ///     // Safari has window management disabled
 /// }
 /// ```
+@MainActor
 class ApplicationToggle: NSObject {
 
     // MARK: - Properties
@@ -121,9 +122,10 @@ class ApplicationToggle: NSObject {
     /// After calling this:
     /// - The app is added to the disabled list
     /// - If it's the current app, shortcuts are immediately disabled
-    public func disableApp(appBundleId: String? = frontAppId) {
-        if let appBundleId {
-            disabledApps.insert(appBundleId)
+    public func disableApp(appBundleId: String? = nil) {
+        let bundleId = appBundleId ?? Self.frontAppId
+        if let bundleId {
+            disabledApps.insert(bundleId)
             saveDisabledApps()
             disableShortcuts()
         }
@@ -136,9 +138,10 @@ class ApplicationToggle: NSObject {
     /// After calling this:
     /// - The app is removed from the disabled list
     /// - If it's the current app, shortcuts are immediately enabled
-    public func enableApp(appBundleId: String? = frontAppId) {
-        if let appBundleId {
-            disabledApps.remove(appBundleId)
+    public func enableApp(appBundleId: String? = nil) {
+        let bundleId = appBundleId ?? Self.frontAppId
+        if let bundleId {
+            disabledApps.remove(bundleId)
             saveDisabledApps()
             enableShortcuts()
         }

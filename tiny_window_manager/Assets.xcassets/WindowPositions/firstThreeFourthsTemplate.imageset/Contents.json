@@ -6,10 +6,12 @@
       "scale" : "1x"
     },
     {
+      "filename" : "firstThreeFourthsTemplate@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "firstThreeFourthsTemplate@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
